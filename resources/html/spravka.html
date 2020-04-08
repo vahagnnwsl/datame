@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>DataMe</title>
+	<meta name="description" content="DataMe">
+	<meta name="keywords" content="DataMe">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="img/favicon.png">
+
+	<link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="libs/swiper/swiper.min.css">
+	<link rel="stylesheet" href="libs/fancybox/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="libs/scrollbar/jquery.mcustomscrollbar.css">
+	<link rel="stylesheet" href="libs/selectstyle/jquery.formstyler.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic" rel="stylesheet">
+	<link rel="stylesheet" href="css/fonts.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/media.css">
+</head>
+<body>
+
+	<!-- PAGE WRAPPER -->
+	<div class="page_wrapper">
+		
+		<!-- HEADER -->
+		<header class="main_header" id="header">
+			<div class="container">
+				<a href="index.html" class="logo"></a>
+				<button type="button" class="toggle_menu">
+					<span class='sandwich'>
+						<span class="sw-topper"></span>
+						<span class="sw-bottom"></span>
+						<span class="sw-footer"></span>
+					</span>
+				</button>
+				<div class="nav_block">
+					<ul class="main_nav">
+						<li><a href="index.html">Главная</a></li>
+						<li><a href="about.html">О компании</a></li>
+						<li class="active"><a href="spravka.html">Тарифы</a></li>
+						<li><a href="api.html">API-доступ</a></li>
+						<li><a href="faq.html">FAQ</a></li>
+						<li><a href="spravka.html">Оферта</a></li>
+					</ul>
+				</div>
+				<div class="user_block">
+					<div class="btns">
+						<a href="reg.html" class="reg_btn">Зарегистрироваться</a>
+						<a href="join.html" class="join_btn">Войти</a>
+					</div>
+					<div class="active_user hidden">
+						<div class="inner">
+							<button type="button" class="user_btn">
+								<span class="photo">
+									<img src="img/photo_small.jpg" alt="img">
+								</span>
+								<span class="name">Петрыкин Георгий</span>
+							</button>
+							<ul class="user_nav">
+								<li><a href="user.html">Моя страница</a></li>
+								<li><a href="messages.html">Сообщения <span>2</span></a></li>
+								<li><a href="#">Настройки</a></li>
+								<li class="exit_link"><a href="#">Выйти</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- END HEADER -->
+
+		<!-- REFERENCE SECTION -->
+		<section class="reference_section" id="reference_section">
+			<div class="container">
+				<div class="wrapper">
+					<table class="info_table">
+						<tr>
+							<th colspan="2">ОБЩИЕ СВЕДЕНИЯ О ПРОВЕРЯЕМОМ ЛИЦЕ</th>
+						</tr>
+						<tr>
+							<td>Фамилия, имя, отчество</td>
+							<td>Иванов Иван Иванович</td>
+						</tr>
+						<tr>
+							<td>Фамилия, имя, отчество на английском</td>
+							<td>Ivanov Ivan Ivanovich</td>
+						</tr>
+						<tr>
+							<td>Дата рождения</td>
+							<td>01.01.1980</td>
+						</tr>
+						<tr>
+							<td>Полный возраст</td>
+							<td>38 лет</td>
+						</tr>
+						<tr>
+							<td>Место рождения</td>
+							<td>г. Москва</td>
+						</tr>
+						<tr>
+							<td>Адрес регистрации</td>
+							<td>г. Москва, ул. 26 Бакинских комиссаров, <br>
+							д. 16, кв. 29</td>
+						</tr>
+						<tr>
+							<td>ИНН</td>
+							<td>771122334455</td>
+						</tr>
+						<tr>
+							<td>СНИЛС</td>
+							<td>123-456-789 00</td>
+						</tr>
+					</table>
+					<table class="info_table">
+						<tr>
+							<th colspan="2">Паспорт</th>
+						</tr>
+						<tr>
+							<td>Серия и номер</td>
+							<td>4500 123456</td>
+						</tr>
+						<tr>
+							<td>Дата выдачи</td>
+							<td>01.01.2002 года</td>
+						</tr>
+						<tr>
+							<td>Кем выдан</td>
+							<td>УФМС России по району Ломоносовский гор. Москвы в САО</td>
+						</tr>
+						<tr>
+							<td>Код подразделения</td>
+							<td>770-123</td>
+						</tr>
+						<tr>
+							<td>Состояние</td>
+							<td class="red">Не действительный</td>
+						</tr>
+						<tr>
+							<td>Срок действия</td>
+							<td>01.01.2015 года</td>
+						</tr>
+						<tr>
+							<td>Кросс-проверка</td>
+							<td>
+								<ul>
+									<li>Серия паспорта соответствует дате выдачи паспорта</li>
+									<li class="no">Серия паспорта соответствует региону выдачи паспорта</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td>Принадлежность подразделения</td>
+							<td>УФМС (в настоящее время ГУВМ)</td>
+						</tr>
+						<tr>
+							<td>Дополнительная информация</td>
+							<td>Паспорт выдан лицу в 22 года (через 2 года после плановой замены паспорта). Необходимо уточнить у проверяемого лица причину внеплановой замены паспорта (утеря, кража, смена фамилии, умышленная порча, иное)</td>
+						</tr>
+					</table>
+					<table class="info_table">
+						<tr>
+							<th colspan="2">Руководство</th>
+						</tr>
+						<tr>
+							<td>Наименование компании</td>
+							<td>ООО «Рога и копыта»</td>
+						</tr>
+						<tr>
+							<td>ИНН / КПП</td>
+							<td>7799123456 / 77010010</td>
+						</tr>
+						<tr>
+							<td>ОГРН</td>
+							<td>1112234222321</td>
+						</tr>
+						<tr>
+							<td>Статус</td>
+							<td class="green">Действующее</td>
+						</tr>
+						<tr>
+							<td>Дата регистрации</td>
+							<td>01.01.2010</td>
+						</tr>
+						<tr>
+							<td>Основной вид деятельности</td>
+							<td>46.01 Производства металла</td>
+						</tr>
+						<tr>
+							<td>Иные разрешенные виды деятельности</td>
+							<td>46.01 Производства металла <br>
+							46.01 Производства металла <br>
+							46.01 Производства металла</td>
+						</tr>
+						<tr>
+							<td>Юридический адрес</td>
+							<td>123007, гор. Москва, ул. Академика Королева, д. 12</td>
+						</tr>
+						<tr>
+							<td>Пенсионный фонд</td>
+							<td>123123123123</td>
+						</tr>
+						<tr>
+							<td>Фонд социального страхования</td>
+							<td>123123123123</td>
+						</tr>
+						<tr>
+							<td>Учредители</td>
+							<td>Петров Петр Петрович <br>
+							ИНН 771231231231 <br><br>
+							Петров Петр Петрович <br>
+							ИНН 771231231231</td>
+						</tr>
+						<tr>
+							<td>Руководитель</td>
+							<td>Петров Петр Петрович <br>
+							ИНН 771231231231</td>
+						</tr>
+					</table>
+					<table class="info_table">
+						<tr>
+							<th colspan="2">учредительство</th>
+						</tr>
+						<tr>
+							<td>Наименование компании</td>
+							<td>ООО «Рога и копыта»</td>
+						</tr>
+						<tr>
+							<td>ИНН / КПП</td>
+							<td>7799123456 / 77010010</td>
+						</tr>
+						<tr>
+							<td>ОГРН</td>
+							<td>1112234222321</td>
+						</tr>
+						<tr>
+							<td>Статус</td>
+							<td class="green">Действующее</td>
+						</tr>
+						<tr>
+							<td>Дата регистрации</td>
+							<td>01.01.2010</td>
+						</tr>
+						<tr>
+							<td>Основной вид деятельности</td>
+							<td>46.01 Производства металла</td>
+						</tr>
+						<tr>
+							<td>Иные разрешенные виды деятельности</td>
+							<td>46.01 Производства металла <br>
+							46.01 Производства металла <br>
+							46.01 Производства металла</td>
+						</tr>
+						<tr>
+							<td>Юридический адрес</td>
+							<td>123007, гор. Москва, ул. Академика Королева, д. 12</td>
+						</tr>
+						<tr>
+							<td>Пенсионный фонд</td>
+							<td>123123123123</td>
+						</tr>
+						<tr>
+							<td>Фонд социального страхования</td>
+							<td>123123123123</td>
+						</tr>
+						<tr>
+							<td>Учредители</td>
+							<td>Петров Петр Петрович <br>
+							ИНН 771231231231 <br><br>
+							Петров Петр Петрович <br>
+							ИНН 771231231231</td>
+						</tr>
+						<tr>
+							<td>Руководитель</td>
+							<td>Петров Петр Петрович <br>
+							ИНН 771231231231</td>
+						</tr>
+					</table>
+					<table class="info_table">
+						<tr>
+							<th colspan="2">ЗАДОЛЖЕННОСТЬ ПЕРЕД ГОСУДАРСТВЕННЫМИ ОРГАНАМИ</th>
+						</tr>
+						<tr>
+							<td>Вид задолженности</td>
+							<td>Транспортный налог</td>
+						</tr>
+						<tr>
+							<td>Категория</td>
+							<td>Пени</td>
+						</tr>
+						<tr>
+							<td>Сумма задолженност</td>
+							<td>234 рубля</td>
+						</tr>
+						<tr>
+							<td>Номер начисления</td>
+							<td>1234567890123890</td>
+						</tr>
+						<tr class="big_border">
+							<td>Налоговая инспекция</td>
+							<td>ИФНС № 46 по гор. Москве</td>
+						</tr>
+						<tr>
+							<td>Вид задолженности</td>
+							<td>Транспортный налог</td>
+						</tr>
+						<tr>
+							<td>Категория</td>
+							<td>Начисление</td>
+						</tr>
+						<tr>
+							<td>Сумма задолженности</td>
+							<td>10 235 рублей</td>
+						</tr>
+						<tr>
+							<td>Номер начисления</td>
+							<td>1234567890123890</td>
+						</tr>
+						<tr>
+							<td>Налоговая инспекция</td>
+							<td>ИФНС № 46 по гор. Москве</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="mid">Общее количество задолженностей – <strong>2</strong>, на общую сумму <strong>10 469 рублей</strong></td>
+						</tr>
+					</table>
+					<table class="info_table">
+						<tr>
+							<th colspan="2">ИСПОЛНИТЕЛЬНЫЕ ПРОИЗВОДСТВА</th>
+						</tr>
+						<tr>
+							<td colspan="2" class="mid_blue">Действующие</td>
+						</tr>
+						<tr>
+							<td>Номер исполнительного производства</td>
+							<td>12312312-ИП</td>
+						</tr>
+						<tr>
+							<td>12312312-ИП</td>
+							<td>12.12.2016</td>
+						</tr>
+						<tr>
+							<td>Регион начисления</td>
+							<td>гор. Москва</td>
+						</tr>
+						<tr>
+							<td>Вид документа</td>
+							<td>Исполнительный лист</td>
+						</tr>
+						<tr>
+							<td>Дата документа</td>
+							<td>01.12.2016</td>
+						</tr>
+						<tr>
+							<td>Номер документа</td>
+							<td>123123123123</td>
+						</tr>
+						<tr>
+							<td>Орган, возбудивший производство</td>
+							<td>Московский районный суд</td>
+						</tr>
+						<tr>
+							<td>Предмет исполнения</td>
+							<td>Штраф ГИБДД</td>
+						</tr>
+						<tr>
+							<td>Сумма задолженности</td>
+							<td>500</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="mid_blue">Оконченные</td>
+						</tr>
+						<tr>
+							<td>Номер исполнительного производства</td>
+							<td>12312312-ИП</td>
+						</tr>
+						<tr>
+							<td>12312312-ИП</td>
+							<td>12.12.2016</td>
+						</tr>
+						<tr>
+							<td>Регион начисления</td>
+							<td>гор. Москва</td>
+						</tr>
+						<tr>
+							<td>Вид документа</td>
+							<td>Исполнительный лист</td>
+						</tr>
+						<tr>
+							<td>Дата документа</td>
+							<td>01.12.2016</td>
+						</tr>
+						<tr>
+							<td>Номер документа</td>
+							<td>123123123123</td>
+						</tr>
+						<tr>
+							<td>Орган, возбудивший производство</td>
+							<td>Московский районный суд</td>
+						</tr>
+						<tr>
+							<td>Предмет исполнения</td>
+							<td>Штраф ГИБДД</td>
+						</tr>
+						<tr>
+							<td>Сумма задолженности</td>
+							<td>500</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="mid">Общее количество действующих исполнительных производств – <strong>2</strong>, на общую сумму <strong>1000 рублей.</strong></td>
+						</tr>
+					</table>
+					<table class="info_table">
+						<tr>
+							<th colspan="2">НАХОЖДЕНИЕ В РОЗЫСКЕ</th>
+						</tr>
+						<tr>
+							<td>Интерпол, красные карточки</td>
+							<td>Отсутствует</td>
+						</tr>
+						<tr>
+							<td>Интерпол, желтые карточки</td>
+							<td>Отсутствует</td>
+						</tr>
+						<tr>
+							<td>Федеральный розыск</td>
+							<td>Отсутствует</td>
+						</tr>
+						<tr>
+							<td>Местный розыск</td>
+							<td>Разыскивается по подозрению в совершении преступления, предусмотренного ч. 1 ст. 159 УК РФ</td>
+						</tr>
+						<tr>
+							<td>Нахождение в списках террористов и экстремистов</td>
+							<td>Отсутствует</td>
+						</tr>
+					</table>
+					<table class="info_table">
+						<tr>
+							<th colspan="2">ИНЫЕ ИСТОЧНИКИ</th>
+						</tr>
+						<tr>
+							<td>Банкротство</td>
+							<td>Не является банкротом</td>
+						</tr>
+						<tr>
+							<td class="word_break">Дисквалифицированные лица</td>
+							<td class="word_break">Не является дисквалифицированным лицом</td>
+						</tr>
+						<tr>
+							<td>Льготы</td>
+							<td>Не имеет</td>
+						</tr>
+					</table>
+					<p>Лорем ипсум долор сит амет, консестетуэр адипискинг элит, сед диам нонумми нибх юисмод тинсидунт ут лаореет долоре магна аликуам ерат волютпат. Ут виси еним ад миним вениам, куис ноструд экзерси татион улламкорпер сусципит лобортис нисл ут аликип экс еа коммодо консекат.</p>
+					<div class="download_block">
+						<div class="wrap">
+							<a href="#reference_section" class="back">Назад</a>
+							<a href="#" download class="red">Скачать</a>
+							<a href="#" download class="blue">Скачать</a>
+							<a href="#" download class="turquoise">Скачать</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- END REFERENCE SECTION -->
+
+		<!-- FOOTER -->
+		<footer class="main_footer">
+			<div class="container">
+				<a href="index.html" class="logo"></a>
+				<ul class="soc_list">
+					<li><a href="#" target="_blank" class="vk_link"></a></li>
+					<li><a href="#" target="_blank" class="facebook_link"></a></li>
+					<li><a href="#" target="_blank" class="twitter_link"></a></li>
+					<li><a href="#" target="_blank" class="od_link"></a></li>
+				</ul>
+				<p class="copyright">© 2018 datame.online</p>
+			</div>
+		</footer>
+		<!-- END FOOTER -->
+
+	</div>
+	<!-- END PAGE WRAPPER -->
+
+
+	<!-- THANKS MODAL -->
+	<div class="modal fade thanks_modal" id="thanks_modal">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button class="close" type="button" data-dismiss="modal"></button>
+					<h3 class="modal_title">Спасибо!</h3>
+					<p>Ваше сообщение отправлено, мы свяжемся с Вами в ближайшее время.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END THANKS MODAL -->
+
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<script src="libs/jquery/jquery-3.2.1.min.js"></script>
+	<script src="libs/bootstrap/bootstrap.min.js"></script>
+	<script src="libs/swiper/swiper.min.js"></script>
+	<script src="libs/scroll2id/pagescroll2id.min.js"></script>
+	<script src="libs/fancybox/jquery.fancybox.min.js"></script>
+	<script src="libs/validator/jquery.validate.min.js"></script>
+	<script src="libs/maskedinput/jquery.maskedinput.min.js"></script>
+	<script src="libs/scrollbar/jquery.mcustomscrollbar.js"></script>
+	<script src="libs/selectstyle/jquery.formstyler.min.js"></script>
+	<script src="js/common.js"></script>
+
+
+
+
+
+	<!-- Yandex.Metrika counter --><!-- /Yandex.Metrika counter -->
+	<!-- Google Analytics counter --><!-- /Google Analytics counter -->
+</body>
+</html>

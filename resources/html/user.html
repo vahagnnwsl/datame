@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>DataMe</title>
+	<meta name="description" content="DataMe">
+	<meta name="keywords" content="DataMe">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="img/favicon.png">
+
+	<link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="libs/swiper/swiper.min.css">
+	<link rel="stylesheet" href="libs/fancybox/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="libs/scrollbar/jquery.mcustomscrollbar.css">
+	<link rel="stylesheet" href="libs/selectstyle/jquery.formstyler.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic" rel="stylesheet">
+	<link rel="stylesheet" href="css/fonts.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/media.css">
+</head>
+<body>
+
+	<!-- PAGE WRAPPER -->
+	<div class="page_wrapper">
+		
+		<!-- HEADER -->
+		<header class="main_header" id="header">
+			<div class="container">
+				<a href="index.html" class="logo"></a>
+				<button type="button" class="toggle_menu">
+					<span class='sandwich'>
+						<span class="sw-topper"></span>
+						<span class="sw-bottom"></span>
+						<span class="sw-footer"></span>
+					</span>
+				</button>
+				<div class="nav_block">
+					<ul class="main_nav">
+						<li><a href="index.html">Главная</a></li>
+						<li><a href="about.html">О компании</a></li>
+						<li><a href="spravka.html">Тарифы</a></li>
+						<li><a href="api.html">API-доступ</a></li>
+						<li><a href="faq.html">FAQ</a></li>
+						<li><a href="spravka.html">Оферта</a></li>
+					</ul>
+				</div>
+				<div class="user_block">
+					<div class="btns hidden">
+						<a href="reg.html" class="reg_btn">Зарегистрироваться</a>
+						<a href="join.html" class="join_btn">Войти</a>
+					</div>
+					<div class="active_user">
+						<div class="inner">
+							<button type="button" class="user_btn">
+								<span class="photo">
+									
+								</span>
+								<span class="name">Имя пользователя</span>
+							</button>
+							<ul class="user_nav">
+								<li><a href="user.html">Моя страница</a></li>
+								<li><a href="messages.html">Сообщения <span>2</span></a></li>
+								<li><a href="#">Настройки</a></li>
+								<li class="exit_link"><a href="#">Выйти</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- END HEADER -->
+
+		<!-- USER SECTION -->
+		<section class="user_section">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-4">
+						<div class="user_header">
+							<div class="user_photo">
+								<img src="img/photo.jpg" alt="img">
+							</div>
+							<p class="user_name">Петрыкин Георгий</p>
+							<div class="header_item">
+								<p>Дата окончания услуг: <span>20.04.2018</span></p>
+							</div>
+							<div class="header_item">
+								<p>Количество проверяемых: <span>24</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-8">
+						<div class="user_content">
+							<h3 class="title">Поиск проверяемого лица</h3>
+							<form action="" class="check_form">
+								<div class="double_inputs first_long">
+									<label>
+										<p>Фамилия, имя, отчество: <i></i></p>
+										<input type="text" name="name" required placeholder="Например: Семенов Семен Семенович">
+									</label>
+									<label>
+										<p>Дата рождения: <i></i></p>
+										<input type="text" name="birthday" required placeholder="00.00.0000">
+									</label>
+								</div>
+								<div class="double_inputs">
+									<label>
+										<p>Серия, номер паспорта: <i></i></p>
+										<input type="text" name="pasport" required placeholder="0000-000000">
+									</label>
+									<label>
+										<p>Дата выдачи: <i></i></p>
+										<input type="text" name="date" required placeholder="00.00.0000">
+									</label>
+								</div>
+								<button type="submit" class="main_btn submit_btn">Начать проверку</button>
+							</form>
+							<div class="user_items">
+								<h3 class="title">Поиск по проверенным лицам</h3>
+								<!-- SEARCH AND QUANTITY -->
+								<div class="items_header">
+									<form action="" class="search_form">
+										<input type="text" name="search" placeholder="Поиск по найденым">
+										<button type="submit" class="submit"></button>
+									</form>
+									<div class="quantity_block">
+										<p>Показать:</p>
+										<ul>
+											<li>10</li>
+											<li class="active">50</li>
+											<li>100</li>
+										</ul>
+									</div>
+								</div>
+								<!-- END SEARCH AND QUANTITY -->
+								<div class="pdf_item">
+									<div class="top_block">
+										<p class="name">Семенов Семен Семенович</p>
+										<p>20.05.1960</p>
+										<p>ИНН: <span>468465164664</span></p>
+										<a href="#" download class="main_btn download">Скачать pdf</a>
+									</div>
+									<div class="bottom_block">
+										<ul>
+											<li>Дата проверки: <span>15:23 / 05.04.2018</span></li>
+											<li>IP-адрес: <span>364.151.0.18</span></li>
+										</ul>
+									</div>
+								</div>
+								<div class="pdf_item">
+									<div class="top_block">
+										<p class="name">Семенов Семен Семенович</p>
+										<p>20.05.1960</p>
+										<p>ИНН: <span>468465164664</span></p>
+										<a href="#" download class="main_btn download">Скачать pdf</a>
+									</div>
+									<div class="bottom_block">
+										<ul>
+											<li>Дата проверки: <span>15:23 / 05.04.2018</span></li>
+											<li>IP-адрес: <span>364.151.0.18</span></li>
+										</ul>
+									</div>
+								</div>
+								<div class="pdf_item">
+									<div class="top_block">
+										<p class="name">Семенов Семен Семенович</p>
+										<p>20.05.1960</p>
+										<p>ИНН: <span>468465164664</span></p>
+										<a href="#" download class="main_btn download">Скачать pdf</a>
+									</div>
+									<div class="bottom_block">
+										<ul>
+											<li>Дата проверки: <span>15:23 / 05.04.2018</span></li>
+											<li>IP-адрес: <span>364.151.0.18</span></li>
+										</ul>
+									</div>
+								</div>
+								<div class="pdf_item">
+									<div class="top_block">
+										<p class="name">Семенов Семен Семенович</p>
+										<p>20.05.1960</p>
+										<p>ИНН: <span>468465164664</span></p>
+										<a href="#" download class="main_btn download">Скачать pdf</a>
+									</div>
+									<div class="bottom_block">
+										<ul>
+											<li>Дата проверки: <span>15:23 / 05.04.2018</span></li>
+											<li>IP-адрес: <span>364.151.0.18</span></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- END USER SECTION -->
+
+		<!-- FOOTER -->
+		<footer class="main_footer">
+			<div class="container">
+				<a href="index.html" class="logo"></a>
+				<ul class="soc_list">
+					<li><a href="#" target="_blank" class="vk_link"></a></li>
+					<li><a href="#" target="_blank" class="facebook_link"></a></li>
+					<li><a href="#" target="_blank" class="twitter_link"></a></li>
+					<li><a href="#" target="_blank" class="od_link"></a></li>
+				</ul>
+				<p class="copyright">© 2018 datame.online</p>
+			</div>
+		</footer>
+		<!-- END FOOTER -->
+
+	</div>
+	<!-- END PAGE WRAPPER -->
+
+
+
+	<!-- THANKS MODAL -->
+	<div class="modal fade thanks_modal" id="thanks_modal">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button class="close" type="button" data-dismiss="modal"></button>
+					<h3 class="modal_title">Спасибо!</h3>
+					<p>Ваше сообщение отправлено, мы свяжемся с Вами в ближайшее время.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END THANKS MODAL -->
+
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<script src="libs/jquery/jquery-3.2.1.min.js"></script>
+	<script src="libs/bootstrap/bootstrap.min.js"></script>
+	<script src="libs/swiper/swiper.min.js"></script>
+	<script src="libs/scroll2id/pagescroll2id.min.js"></script>
+	<script src="libs/fancybox/jquery.fancybox.min.js"></script>
+	<script src="libs/validator/jquery.validate.min.js"></script>
+	<script src="libs/maskedinput/jquery.maskedinput.min.js"></script>
+	<script src="libs/scrollbar/jquery.mcustomscrollbar.js"></script>
+	<script src="libs/selectstyle/jquery.formstyler.min.js"></script>
+	<script src="js/common.js"></script>
+
+
+
+	<!-- Yandex.Metrika counter --><!-- /Yandex.Metrika counter -->
+	<!-- Google Analytics counter --><!-- /Google Analytics counter -->
+</body>
+</html>

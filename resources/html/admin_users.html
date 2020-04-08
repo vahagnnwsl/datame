@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>DataMe</title>
+	<meta name="description" content="DataMe">
+	<meta name="keywords" content="DataMe">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="img/favicon.png">
+
+	<link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="libs/swiper/swiper.min.css">
+	<link rel="stylesheet" href="libs/fancybox/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="libs/scrollbar/jquery.mcustomscrollbar.css">
+	<link rel="stylesheet" href="libs/selectstyle/jquery.formstyler.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic" rel="stylesheet">
+	<link rel="stylesheet" href="css/fonts.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/media.css">
+</head>
+<body>
+
+	<!-- PAGE WRAPPER -->
+	<div class="page_wrapper">
+		
+		<!-- HEADER -->
+		<header class="main_header" id="header">
+			<div class="container">
+				<a href="index.html" class="logo"></a>
+				<button type="button" class="toggle_menu">
+					<span class='sandwich'>
+						<span class="sw-topper"></span>
+						<span class="sw-bottom"></span>
+						<span class="sw-footer"></span>
+					</span>
+				</button>
+				<div class="nav_block">
+					<ul class="main_nav">
+						<li><a href="index.html">Главная</a></li>
+						<li><a href="about.html">О компании</a></li>
+						<li><a href="spravka.html">Тарифы</a></li>
+						<li><a href="api.html">API-доступ</a></li>
+						<li><a href="faq.html">FAQ</a></li>
+						<li><a href="spravka.html">Оферта</a></li>
+					</ul>
+				</div>
+				<div class="user_block">
+					<div class="btns hidden">
+						<a href="reg.html" class="reg_btn">Зарегистрироваться</a>
+						<a href="join.html" class="join_btn">Войти</a>
+					</div>
+					<div class="active_user">
+						<div class="inner">
+							<button type="button" class="user_btn">
+								<span class="photo">
+									<img src="img/photo_small.jpg" alt="img">
+								</span>
+								<span class="name">Петрыкин Георгий <strong>Администратор</strong></span>
+							</button>
+							<ul class="user_nav">
+								<li><a href="user.html">Моя страница</a></li>
+								<li><a href="messages.html">Сообщения <span>2</span></a></li>
+								<li><a href="#">Настройки</a></li>
+								<li class="exit_link"><a href="#">Выйти</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- END HEADER -->
+
+		<!-- USER SECTION -->
+		<section class="user_section">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-4">
+						<div class="user_header">
+							<div class="user_photo">
+								<img src="img/photo.jpg" alt="img">
+							</div>
+							<p class="user_name">Петрыкин Георгий</p>
+							<p class="user_status">Администратор</p> 
+							<div class="header_item">
+								<a href="#" class="sending_messages">Рассылка сообщений</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-8">
+						<div class="user_content">
+							<ul class="users_inner_nav">
+								<li class="active"><a href="admin_users.html">Пользователи</a></li>
+								<li><a href="admin_sought.html">Искомые лица</a></li>
+							</ul>
+							<div class="user_items">
+
+								<!-- SEARCH AND QUANTITY -->
+								<div class="items_header">
+									<form action="" class="search_form search_form_with_select">
+										<select name="type" class="mod_select">
+											<option value="по IP-адресу">по IP-адресу</option>
+											<option value="по дате">по дате</option>
+											<option value="по имени">по имени</option>
+											<option value="по ИНН">по ИНН</option>
+										</select>
+										<input type="text" name="search" placeholder="Поиск">
+										<button type="submit" class="submit"></button>
+									</form>
+									<div class="quantity_block">
+										<p>Показать:</p>
+										<ul>
+											<li>10</li>
+											<li class="active">50</li>
+											<li>100</li>
+										</ul>
+									</div>
+								</div>
+								<!-- END SEARCH AND QUANTITY -->
+
+								<button type="button" class="add_user"><i class="plus"></i>Добавить пользователя</button>
+
+								<div class="message_item">
+									<div class="top_block">
+										<div class="photo">
+											<img src="img/photo.jpg" alt="img">
+										</div>
+										<ul>
+											<li class="name">Семенов Семен Семенович <i class="icon"></i></li>
+											<li>20.05.1960 <i class="icon"></i></li>
+											<li>ИНН: 468465164664 <i class="icon"></i></li>
+											<li>Количество проверяемых: <span>24</span> <i class="icon"></i></li>
+											<li>Дата окончания услуг: <span>20.04.2018</span> <i class="icon"></i></li>
+										</ul>
+										<button type="button" class="main_btn"><i class="icon"></i>Написать сообщение</button>
+									</div>
+									<div class="bottom_block">
+										<ul>
+											<li>Дата проверки: <span>15:23 / 05.04.2018</span></li>
+											<li>IP-адрес: <span>364.151.0.18</span></li>
+										</ul>
+									</div>
+								</div>
+								<div class="message_item">
+									<div class="top_block">
+										<div class="photo">
+											<img src="img/photo.jpg" alt="img">
+										</div>
+										<ul>
+											<li class="name">Семенов Семен Семенович <i class="icon"></i></li>
+											<li>20.05.1960 <i class="icon"></i></li>
+											<li>ИНН: 468465164664 <i class="icon"></i></li>
+											<li>Количество проверяемых: <span>24</span> <i class="icon"></i></li>
+											<li>Дата окончания услуг: <span>20.04.2018</span> <i class="icon"></i></li>
+										</ul>
+										<button type="button" class="main_btn"><i class="icon"></i>Написать сообщение</button>
+									</div>
+									<div class="bottom_block">
+										<ul>
+											<li>Дата проверки: <span>15:23 / 05.04.2018</span></li>
+											<li>IP-адрес: <span>364.151.0.18</span></li>
+										</ul>
+									</div>
+								</div>
+								<div class="message_item">
+									<div class="top_block">
+										<div class="photo">
+											<img src="img/photo.jpg" alt="img">
+										</div>
+										<ul>
+											<li class="name">Семенов Семен Семенович <i class="icon"></i></li>
+											<li>20.05.1960 <i class="icon"></i></li>
+											<li>ИНН: 468465164664 <i class="icon"></i></li>
+											<li>Количество проверяемых: <span>24</span> <i class="icon"></i></li>
+											<li>Дата окончания услуг: <span>20.04.2018</span> <i class="icon"></i></li>
+										</ul>
+										<button type="button" class="main_btn"><i class="icon"></i>Написать сообщение</button>
+									</div>
+									<div class="bottom_block">
+										<ul>
+											<li>Дата проверки: <span>15:23 / 05.04.2018</span></li>
+											<li>IP-адрес: <span>364.151.0.18</span></li>
+										</ul>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						<div class="pagination_block">
+							<ul class="pagination">
+								<li class="disabled">
+									<a href="#">
+										<
+									</a>
+								</li>
+								<li><a href="#">1</a></li>
+								<li class="active"><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">...</a></li>
+								<li><a href="#">222</a></li>
+								<li>
+									<a href="#">
+										>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- END USER SECTION -->
+
+		<!-- FOOTER -->
+		<footer class="main_footer">
+			<div class="container">
+				<a href="index.html" class="logo"></a>
+				<ul class="soc_list">
+					<li><a href="#" target="_blank" class="vk_link"></a></li>
+					<li><a href="#" target="_blank" class="facebook_link"></a></li>
+					<li><a href="#" target="_blank" class="twitter_link"></a></li>
+					<li><a href="#" target="_blank" class="od_link"></a></li>
+				</ul>
+				<p class="copyright">© 2018 datame.online</p>
+			</div>
+		</footer>
+		<!-- END FOOTER -->
+
+	</div>
+	<!-- END PAGE WRAPPER -->
+
+
+	<!-- THANKS MODAL -->
+	<div class="modal fade thanks_modal" id="thanks_modal">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button class="close" type="button" data-dismiss="modal"></button>
+					<h3 class="modal_title">Спасибо!</h3>
+					<p>Ваше сообщение отправлено, мы свяжемся с Вами в ближайшее время.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END THANKS MODAL -->
+
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<script src="libs/jquery/jquery-3.2.1.min.js"></script>
+	<script src="libs/bootstrap/bootstrap.min.js"></script>
+	<script src="libs/swiper/swiper.min.js"></script>
+	<script src="libs/scroll2id/pagescroll2id.min.js"></script>
+	<script src="libs/fancybox/jquery.fancybox.min.js"></script>
+	<script src="libs/validator/jquery.validate.min.js"></script>
+	<script src="libs/maskedinput/jquery.maskedinput.min.js"></script>
+	<script src="libs/scrollbar/jquery.mcustomscrollbar.js"></script>
+	<script src="libs/selectstyle/jquery.formstyler.min.js"></script>
+	<script src="js/common.js"></script>
+
+
+
+	<!-- Yandex.Metrika counter --><!-- /Yandex.Metrika counter -->
+	<!-- Google Analytics counter --><!-- /Google Analytics counter -->
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>DataMe</title>
+	<meta name="description" content="DataMe">
+	<meta name="keywords" content="DataMe">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="img/favicon.png">
+
+	<link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="libs/swiper/swiper.min.css">
+	<link rel="stylesheet" href="libs/fancybox/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="libs/scrollbar/jquery.mcustomscrollbar.css">
+	<link rel="stylesheet" href="libs/selectstyle/jquery.formstyler.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic" rel="stylesheet">
+	<link rel="stylesheet" href="css/fonts.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/media.css">
+	<link rel="stylesheet" href="css/new_style.css">
+</head>
+<body>
+
+	<!-- PAGE WRAPPER -->
+	<div class="page_wrapper">
+		
+		<!-- HEADER --> <!-- класс absolute_header только для главной страницы -->
+		<header class="main_header absolute_header" id="header">
+			<div class="container">
+				<a href="index.html" class="logo"></a>
+				<button type="button" class="toggle_menu">
+					<span class='sandwich'>
+						<span class="sw-topper"></span>
+						<span class="sw-bottom"></span>
+						<span class="sw-footer"></span>
+					</span>
+				</button>
+				<div class="nav_block">
+					<ul class="main_nav">
+						<li class="active"><a href="index.html">Главная</a></li>
+						<li><a href="about.html">О компании</a></li>
+						<li><a href="spravka.html">Тарифы</a></li>
+						<li><a href="api.html">API-доступ</a></li>
+						<li><a href="faq.html">FAQ</a></li>
+						<li><a href="spravka.html">Оферта</a></li>
+					</ul>
+				</div>
+				<div class="user_block">
+					<div class="btns">
+						<a href="reg.html" class="reg_btn">Зарегистрироваться</a>
+						<a href="join.html" class="join_btn">Войти</a>
+					</div>
+					<div class="active_user hidden">
+						<div class="inner">
+							<button type="button" class="user_btn">
+								<span class="photo">
+									<img src="img/photo_small.jpg" alt="img">
+								</span>
+								<span class="name">Петрыкин Георгий</span>
+							</button>
+							<ul class="user_nav">
+								<li><a href="user.html">Моя страница</a></li>
+								<li><a href="messages.html">Сообщения <span>2</span></a></li>
+								<li><a href="#">Настройки</a></li>
+								<li class="exit_link"><a href="#">Выйти</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- END HEADER -->
+
+		<!-- MAIN SECTION -->
+		<section class="main_section">
+			<div class="video_bg" id="video_bg">
+				<video width="100%" height="auto" poster="img/main_bg.jpg" id="videobg" playsinline autoplay muted loop>
+					<source src="video/2.mp4" type="video/mp4">
+				</video>
+			</div>
+			<div class="container">
+				<h1 class="main_title">Лорем ипсум долор сит амет <br>
+				консестетуэр адипискинг</h1>
+				<button type="button" class="main_btn" data-toggle="modal" data-target="#reg_modal">Начать пользоваться</button>
+				<div class="row">
+					<div class="col-xs-12 col-sm-4">
+						<div class="item">
+							<div class="icon">
+								<img src="img/main_icon_1.svg" alt="img">
+							</div>
+							<h5 class="item_title">Время</h5>
+							<p>Проверка благонадежности физического лица занимает от 5 до 30 минут</p>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-4">
+						<div class="item">
+							<div class="icon">
+								<img src="img/main_icon_2.svg" alt="img">
+							</div>
+							<h5 class="item_title">Достоверность</h5>
+							<p>Информация, отображаемая в итоговой справке, предоставляется гос. органами</p>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-4">
+						<div class="item">
+							<div class="icon">
+								<img src="img/main_icon_3.svg" alt="img">
+							</div>
+							<h5 class="item_title">Актуальность </h5>
+							<p>Полученные сведения актуальны на день запроса</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- END MAIN SECTION -->
+
+		<!-- SERVICES DESCRIPTION -->
+		<section class="services_description">
+			<div class="container">
+				<div class="wrapper">
+					<div class="inner">
+						<h3 class="section_title">Описание услуг</h3>
+						<p>Лорем ипсум долор сит амет, консестетуэр адипискинг элит, сед диам нонумми нибх юисмод тинсидунт ут лаореет долоре магна аликуам ерат волютпат.</p>
+						<p>Ут виси еним ад миним вениам, куис ноструд экзерси татион сусципит лобортис нисл ут коммодо консекат. Дуис аутем вел еум ириюре долор ин хендрерит.</p>
+						<a href="#" class="main_btn">Узнать подробнее</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- SERVICES DESCRIPTION -->
+
+		<!-- USED SERVICES -->
+		<section class="used_services">
+			<div class="container">
+				<h3 class="section_title">Используемые сервисы</h3>
+				<div class="slider_wrapper">
+					<div class="swiper-button-prev prev_service"></div>
+					<div class="swiper-button-next next_service"></div>
+					<div class="swiper-container services_slider">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<div class="icon">
+									<img src="img/logo_1.png" alt="img">
+								</div>
+								<p>МВД России</p>
+							</div>
+							<div class="swiper-slide">
+								<div class="icon">
+									<img src="img/logo_2.png" alt="img">
+								</div>
+								<p>Федеральная налоговая служба</p>
+							</div>
+							<div class="swiper-slide">
+								<div class="icon">
+									<img src="img/logo_3.png" alt="img">
+								</div>
+								<p>Федеральная служба судебных приставов</p>
+							</div>
+							<div class="swiper-slide">
+								<div class="icon">
+									<img src="img/logo_4.png" alt="img">
+								</div>
+								<p>Интерпол</p>
+							</div>
+							<div class="swiper-slide">
+								<div class="icon">
+									<img src="img/logo_1.png" alt="img">
+								</div>
+								<p>МВД России</p>
+							</div>
+							<div class="swiper-slide">
+								<div class="icon">
+									<img src="img/logo_2.png" alt="img">
+								</div>
+								<p>Федеральная налоговая служба</p>
+							</div>
+							<div class="swiper-slide">
+								<div class="icon">
+									<img src="img/logo_3.png" alt="img">
+								</div>
+								<p>Федеральная служба судебных приставов</p>
+							</div>
+							<div class="swiper-slide">
+								<div class="icon">
+									<img src="img/logo_4.png" alt="img">
+								</div>
+								<p>Интерпол</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- END USER SERVICES -->
+
+		<!-- WORK STEPS -->
+		<section class="work_steps">
+			<div class="container">
+				<h3 class="section_title white">Как происходит работа</h3>
+				<div class="row">
+					<div class="col-xs-12 col-sm-4">
+						<div class="item">
+							<div class="icon">
+								<img src="img/step_1.svg" alt="img">
+								<p class="number">1</p>
+							</div>
+							<p>Зарегистрироваться в <br>сервисе DataMe</p>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-4">
+						<div class="item">
+							<div class="icon">
+								<img src="img/step_2.svg" alt="img">
+								<p class="number">2</p>
+							</div>
+							<p>Ввод данных проверяемого <br>человека</p>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-4">
+						<div class="item">
+							<div class="icon">
+								<img src="img/step_3.svg" alt="img">
+								<p class="number">3</p>
+							</div>
+							<p>Мгновенное получение <br>результата</p>
+						</div>
+					</div>
+				</div>
+				<button type="button" class="main_btn" data-toggle="modal" data-target="#spravka_modal">Посмотреть образец справки</button>
+			</div>
+		</section>
+		<!-- END WORK STEPS -->
+
+
+		<!-- FOOTER -->
+		<footer class="main_footer">
+			<div class="container">
+				<a href="index.html" class="logo"></a>
+				<ul class="soc_list">
+					<li><a href="#" target="_blank" class="vk_link"></a></li>
+					<li><a href="#" target="_blank" class="facebook_link"></a></li>
+					<li><a href="#" target="_blank" class="twitter_link"></a></li>
+					<li><a href="#" target="_blank" class="od_link"></a></li>
+				</ul>
+				<p class="copyright">© 2018 datame.online</p>
+			</div>
+		</footer>
+		<!-- END FOOTER -->
+
+	</div>
+	<!-- END PAGE WRAPPER -->
+
+
+
+	<!-- SPRAVKA -->
+	<div class="modal fade spravka_modal" id="spravka_modal">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="header_block">
+						<button class="close" type="button" data-dismiss="modal"></button>
+						<h3 class="modal_title">Пример справки</h3>
+					</div>
+					<div class="table_block">
+						<div class="wrap">
+							<table class="info_table">
+								<tr>
+									<th colspan="2">ОБЩИЕ СВЕДЕНИЯ О ПРОВЕРЯЕМОМ ЛИЦЕ</th>
+								</tr>
+								<tr>
+									<td>Фамилия, имя, отчество</td>
+									<td>Иванов Иван Иванович</td>
+								</tr>
+								<tr>
+									<td>Фамилия, имя, отчество на английском</td>
+									<td>Ivanov Ivan Ivanovich</td>
+								</tr>
+								<tr>
+									<td>Дата рождения</td>
+									<td>01.01.1980</td>
+								</tr>
+								<tr>
+									<td>Полный возраст</td>
+									<td>38 лет</td>
+								</tr>
+								<tr>
+									<td>Место рождения</td>
+									<td>г. Москва</td>
+								</tr>
+								<tr>
+									<td>Адрес регистрации</td>
+									<td>г. Москва, ул. 26 Бакинских комиссаров, <br>
+									д. 16, кв. 29</td>
+								</tr>
+								<tr>
+									<td>ИНН</td>
+									<td>771122334455</td>
+								</tr>
+								<tr>
+									<td>СНИЛС</td>
+									<td>123-456-789 00</td>
+								</tr>
+							</table>
+							<table class="info_table">
+								<tr>
+									<th colspan="2">Паспорт</th>
+								</tr>
+								<tr>
+									<td>Серия и номер</td>
+									<td>4500 123456</td>
+								</tr>
+								<tr>
+									<td>Дата выдачи</td>
+									<td>01.01.2002 года</td>
+								</tr>
+								<tr>
+									<td>Кем выдан</td>
+									<td>УФМС России по району Ломоносовский гор. Москвы в САО</td>
+								</tr>
+								<tr>
+									<td>Код подразделения</td>
+									<td>770-123</td>
+								</tr>
+								<tr>
+									<td>Состояние</td>
+									<td class="red">Не действительный</td>
+								</tr>
+								<tr>
+									<td>Срок действия</td>
+									<td>01.01.2015 года</td>
+								</tr>
+								<tr>
+									<td>Кросс-проверка</td>
+									<td>
+										<ul>
+											<li>Серия паспорта соответствует дате выдачи паспорта</li>
+											<li class="no">Серия паспорта соответствует региону выдачи паспорта</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td>Принадлежность подразделения</td>
+									<td>УФМС (в настоящее время ГУВМ)</td>
+								</tr>
+								<tr>
+									<td>Дополнительная информация</td>
+									<td>Паспорт выдан лицу в 22 года (через 2 года после плановой замены паспорта). Необходимо уточнить у проверяемого лица причину внеплановой замены паспорта (утеря, кража, смена фамилии, умышленная порча, иное)</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END SPRAVKA -->
+	
+	<!-- THANKS MODAL -->
+	<div class="modal fade thanks_modal" id="thanks_modal">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button class="close" type="button" data-dismiss="modal"></button>
+					<h3 class="modal_title">Спасибо!</h3>
+					<p>Ваше сообщение отправлено, мы свяжемся с Вами в ближайшее время.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END THANKS MODAL -->
+
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<script src="libs/jquery/jquery-3.2.1.min.js"></script>
+	<script src="libs/bootstrap/bootstrap.min.js"></script>
+	<script src="libs/swiper/swiper.min.js"></script>
+	<script src="libs/scroll2id/pagescroll2id.min.js"></script>
+	<script src="libs/fancybox/jquery.fancybox.min.js"></script>
+	<script src="libs/validator/jquery.validate.min.js"></script>
+	<script src="libs/maskedinput/jquery.maskedinput.min.js"></script>
+	<script src="libs/scrollbar/jquery.mcustomscrollbar.js"></script>
+	<script src="libs/selectstyle/jquery.formstyler.min.js"></script>
+	<script src="js/common.js"></script>
+
+
+
+	<!-- Yandex.Metrika counter --><!-- /Yandex.Metrika counter -->
+	<!-- Google Analytics counter --><!-- /Google Analytics counter -->
+</body>
+</html>
