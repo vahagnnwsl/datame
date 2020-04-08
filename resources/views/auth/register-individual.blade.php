@@ -146,7 +146,12 @@
                         minlength: "Мало символов",
                         equalTo: "Пароль не совпадает"
                     }
-                }
+                },
+                submitHandler: function (form) {
+                $('.main_btn').html('<img src="/img/spiner.gif" style="max-height: 30px">');
+                form.submit();
+                $('.fiz_form').find('input').attr('disabled','disabled');
+            }
 
             });
 

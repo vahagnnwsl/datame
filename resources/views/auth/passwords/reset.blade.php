@@ -38,3 +38,6 @@
 
 
 @endsection
+@push('title')СБРОС ПАРОЛЯ@endpush
+@push('description')сброс пароля@endpush
+@push('keywords')сброс,пароля@endpush

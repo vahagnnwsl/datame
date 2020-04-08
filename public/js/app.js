@@ -69016,7 +69016,7 @@ var render = function() {
           _c(
             "label",
             [
-              _vm._m(2),
+              _c("p", [_vm._v("Отчество:")]),
               _vm._v(" "),
               _c("imask-input", {
                 attrs: { type: "text", mask: _vm.masks.patronymic.mask },
@@ -69037,7 +69037,7 @@ var render = function() {
           _c(
             "label",
             [
-              _vm._m(3),
+              _vm._m(2),
               _vm._v(" "),
               _c("imask-input", {
                 attrs: { type: "text", mask: Date },
@@ -69056,7 +69056,7 @@ var render = function() {
           _c(
             "label",
             [
-              _vm._m(4),
+              _vm._m(3),
               _vm._v(" "),
               _c("imask-input", {
                 attrs: { type: "text", mask: _vm.masks.passport_code.mask },
@@ -69077,7 +69077,7 @@ var render = function() {
           _c(
             "label",
             [
-              _vm._m(5),
+              _vm._m(4),
               _vm._v(" "),
               _c("imask-input", {
                 attrs: { type: "text", mask: Date },
@@ -69134,12 +69134,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", [_vm._v("Имя:"), _c("i")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [_vm._v("Отчество:"), _c("i")])
   },
   function() {
     var _vm = this

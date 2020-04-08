@@ -29,14 +29,15 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade in active">
-                        <form action="{{ route('register') }}" method="post" class="main_form ur_form" id="register_legal">
+                        <form action="{{ route('register') }}" method="post" class="main_form ur_form"
+                              id="register_legal">
                             @csrf
                             <input type="hidden" name="type_user" value="3"/>
 
                             <div class="three_inputs">
                                 <label>
                                     <p>Название организации <i></i></p>
-                                    <input type="text" name="org"  id="org" value="{{ old('org') }}" required>
+                                    <input type="text" name="org" id="org" value="{{ old('org') }}" required>
                                 </label>
                                 <label>
                                     <p>ИНН: <i></i></p>
@@ -50,11 +51,13 @@
                             <div class="double_inputs">
                                 <label>
                                     <p>Гениральный директор: <i></i></p>
-                                    <input type="text" name="director" id="director" value="{{ old('director') }}" required>
+                                    <input type="text" name="director" id="director" value="{{ old('director') }}"
+                                           required>
                                 </label>
                                 <label>
                                     <p>Ответственное лицо: <i></i></p>
-                                    <input type="text" name="manager" id="manager" value="{{ old('manager') }}" required>
+                                    <input type="text" name="manager" id="manager" value="{{ old('manager') }}"
+                                           required>
                                 </label>
                             </div>
                             <div class="double_inputs">
@@ -82,7 +85,11 @@
                                 <i class="icon"></i>
                                 <span>Ознакомлен с <a target="_blank" href="{{ route('oferta') }}" class="oferta_link">договором публиной оферты</a> и порядком оказания услуг</span>
                             </label>
-                            <button type="submit" class="main_btn submit_btn">Зарегистрироваться</button>
+                            <button type="submit" class="main_btn submit_btn">
+
+                                Зарегистрироваться
+                            </button>
+
                         </form>
                     </div>
                 </div>
@@ -96,7 +103,7 @@
 @push('scripts')
     <script type="text/javascript">
 
-        $(function() {
+        $(function () {
 
             new IMask(document.getElementById('phone'), {
                 mask: '+{7} (000) 000-00-00',
@@ -209,6 +216,11 @@
                         required: "Поле не заполнено"
                     }
                 },
+                submitHandler: function (form) {
+                    $('.main_btn').html('<img src="/img/spiner.gif" style="max-height: 30px">');
+                    form.submit();
+                    $('.ur_form').find('input').attr('disabled','disabled');
+                }
             });
 
         });

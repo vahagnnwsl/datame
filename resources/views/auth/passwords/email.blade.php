@@ -4,7 +4,7 @@
     <section class="reg_section">
         <div class="container">
             <h3 class="section_title">Сброс пароля
-                Адрес электронной почты</h3>
+                Адрес Е-МЕЙЛ</h3>
             @if (session('status'))
                 <div class="alert alert-success text-center" role="alert">
                     {{ session('status') }}
@@ -24,7 +24,8 @@
                 @endif
 
                 <label>
-                    <input type="text" name="email" required placeholder="ЭЛЕКТРОННОЙ ПОЧТА *">
+                    <p>Е-мейл: <i></i></p>
+                    <input type="text" id="email" name="email" value="{{old('email')}}">
                 </label>
 
                 <button type="submit" class="main_btn submit_btn">Отправить ссылку для сброса пароля</button>
@@ -33,3 +34,37 @@
     </section>
 
 @endsection
+@push('title')СБРОС ПАРОЛЯ@endpush
+@push('description')сброс пароля@endpush
+@push('keywords')сброс,пароля@endpush
+@push('scripts')
+    <script type="text/javascript">
+        $(function () {
+
+            $(".join_form").validate({
+                rules: {
+
+                    email: {
+                        required: true,
+                        email: true
+                    },
+
+                },
+                messages: {
+
+                    email: {
+                        required: "Поле не заполнено",
+                        email: "Введен некорректный email"
+                    },
+                },
+                submitHandler: function (form) {
+                    $('.main_btn').html('<img src="/img/spiner.gif" style="max-height: 30px">');
+                    form.submit();
+                    $('.join_form').find('input').attr('disabled','disabled');
+                }
+            });
+
+        });
+    </script>
+
+@endpush

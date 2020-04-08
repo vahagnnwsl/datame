@@ -17,7 +17,7 @@
                     <imask-input type='text' v-model="name" :mask="masks.name.mask"></imask-input>
                 </label>
                 <label>
-                    <p>Отчество:<i></i></p>
+                    <p>Отчество:</p>
                     <imask-input type='text' v-model="patronymic" :mask="masks.patronymic.mask"></imask-input>
                 </label>
             </div>
