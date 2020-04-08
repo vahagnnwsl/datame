@@ -73,11 +73,21 @@
                             <div class="double_inputs">
                                 <label>
                                     <p>Пароль: <i></i></p>
-                                    <input type="password" name="password" required id="password">
+                                    <div class="input-group" id="show_hide_password">
+                                        <input class="form-control" type="password" id="password" name="password" required>
+                                        <div class="input-group-addon" style="border: none!important;background-color:#FFFFFF">
+                                            <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
                                 </label>
                                 <label>
                                     <p>Пароль еще раз: <i></i></p>
-                                    <input type="password" name="password_confirmation" required>
+                                    <div class="input-group" id="show_hide_password_confirmation">
+                                        <input class="form-control" type="password" id="password_confirmation" name="password_confirmation" required>
+                                        <div class="input-group-addon" style="border: none!important;background-color:#FFFFFF">
+                                            <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
                                 </label>
                             </div>
                             <label class="checkbox_label">
@@ -99,9 +109,36 @@
     <!-- END REG SECTION -->
 
 @endsection
-
+@push('header')
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+@endpush
 @push('scripts')
     <script type="text/javascript">
+        $("#show_hide_password a").on('click', function(event) {
+            event.preventDefault();
+            if($('#show_hide_password input').attr("type") == "text"){
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass( "fa-eye-slash" );
+                $('#show_hide_password i').removeClass( "fa-eye" );
+            }else if($('#show_hide_password input').attr("type") == "password"){
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass( "fa-eye-slash" );
+                $('#show_hide_password i').addClass( "fa-eye" );
+            }
+        });
+
+        $("#show_hide_password_confirmation a").on('click', function(event) {
+            event.preventDefault();
+            if($('#show_hide_password_confirmation input').attr("type") == "text"){
+                $('#show_hide_password_confirmation input').attr('type', 'password');
+                $('#show_hide_password_confirmation i').addClass( "fa-eye-slash" );
+                $('#show_hide_password_confirmation i').removeClass( "fa-eye" );
+            }else if($('#show_hide_password_confirmation input').attr("type") == "password"){
+                $('#show_hide_password_confirmation input').attr('type', 'text');
+                $('#show_hide_password_confirmation i').removeClass( "fa-eye-slash" );
+                $('#show_hide_password_confirmation i').addClass( "fa-eye" );
+            }
+        });
 
         $(function () {
 
