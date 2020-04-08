@@ -27,9 +27,9 @@
                 <label>
                     <p>Пароль: <i></i></p>
                     <div class="input-group" id="show_hide_password">
-                        <input class="form-control" type="password" name="password" required>
-                        <div class="input-group-addon" style="border: none!important;background-color:#FFFFFF">
-                            <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                        <input class="form-control" type="password" name="password" id="password" required>
+                        <div class="input-group-addon" style="border:none;border-top: 1px solid #EDEDED;background-color:#FFFFFF">
+                            <a href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </label>

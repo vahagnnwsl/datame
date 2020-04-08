@@ -25,7 +25,7 @@
 
                 <label>
                     <p>Е-мейл: <i></i></p>
-                    <input type="text" id="email" name="email" value="{{old('email')}}">
+                    <input type="text" id="email" name="email" value="{{old('email')}}" autocomplete="off">
                 </label>
 
                 <button type="submit" class="main_btn submit_btn">Отправить ссылку для сброса пароля</button>

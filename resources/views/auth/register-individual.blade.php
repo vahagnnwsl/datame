@@ -48,14 +48,14 @@
                             </label>
                             <label>
                                 <p>Почта: <i></i></p>
-                                <input type="text" name="email" value="{{ old('email') }}" required>
+                                <input type="text" name="email" value="{{ old('email') }}" required  autocomplete="off">
                             </label>
                             <div class="double_inputs">
                                 <label>
                                     <p>Пароль: <i></i></p>
                                     <div class="input-group" id="show_hide_password">
                                         <input class="form-control" type="password" id="password" name="password" required>
-                                        <div class="input-group-addon" style="border: none!important;background-color:#FFFFFF">
+                                        <div class="input-group-addon" style="border:none;border-top: 1px solid #EDEDED;background-color:#FFFFFF">
                                             <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
@@ -65,7 +65,7 @@
                                     <p>Пароль еще раз: <i></i></p>
                                     <div class="input-group" id="show_hide_password_confirmation">
                                         <input class="form-control" type="password" id="password_confirmation" name="password_confirmation" required>
-                                        <div class="input-group-addon" style="border: none!important;background-color:#FFFFFF">
+                                        <div class="input-group-addon" style="border:none;border-top: 1px solid #EDEDED;background-color:#FFFFFF">
                                             <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
