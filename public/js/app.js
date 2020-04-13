@@ -5318,8 +5318,8 @@ __webpack_require__.r(__webpack_exports__);
             showHideTransition: 'slide',
             icon: 'success'
           });
+          Event.$emit('click_pagination_number', self.page);
         });
-        Event.$emit('click_pagination_number', self.page);
         return true;
       }
     }
