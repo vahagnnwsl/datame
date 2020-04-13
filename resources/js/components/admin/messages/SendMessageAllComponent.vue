@@ -104,8 +104,7 @@
 
             self.init();
 
-            Event.$on('event_show_edit_message', function () {
-            });
+            Event.$on('event_show_edit_message', function () {});
         },
 
         methods: {
@@ -126,11 +125,6 @@
                     .catch(function (error) {
                         console.error(error);
                     })
-            },
-            getRegisterUserMessages() {
-                axios.get('/api/messages/unregister').then(resp => {
-
-                })
             },
             clear() {
                 this.error = null;
@@ -184,6 +178,7 @@
                             showHideTransition: 'slide',
                             icon: 'success'
                         });
+                        self.init();
                         self.clear();
                     })
                     .catch(function (error) {

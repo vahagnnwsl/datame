@@ -3867,9 +3867,6 @@ __webpack_require__.r(__webpack_exports__);
         console.error(error);
       });
     },
-    getRegisterUserMessages: function getRegisterUserMessages() {
-      axios.get('/api/messages/unregister').then(function (resp) {});
-    },
     clear: function clear() {
       this.error = null;
       this.message = null;
@@ -3916,6 +3913,7 @@ __webpack_require__.r(__webpack_exports__);
           showHideTransition: 'slide',
           icon: 'success'
         });
+        self.init();
         self.clear();
       }).catch(function (error) {
         console.error(error.response.data.message);
