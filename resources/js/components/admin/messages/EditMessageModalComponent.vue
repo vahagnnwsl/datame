@@ -102,7 +102,7 @@
 
                         $("#" + self.modal_id).modal('hide');
                         self.clear();
-                        Event.$emit('click_pagination_number', self.page);
+                        Event.$emit('click_pagination_number',1);
 
                     })
                     .catch(function (error) {

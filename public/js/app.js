@@ -3644,7 +3644,7 @@ __webpack_require__.r(__webpack_exports__);
         });
         $("#" + self.modal_id).modal('hide');
         self.clear();
-        Event.$emit('click_pagination_number', self.page);
+        Event.$emit('click_pagination_number', 1);
       }).catch(function (error) {
         console.error(error.response.data.message);
         self.error = error.response.data.message;
@@ -5318,7 +5318,7 @@ __webpack_require__.r(__webpack_exports__);
             showHideTransition: 'slide',
             icon: 'success'
           });
-          Event.$emit('click_pagination_number', self.page);
+          Event.$emit('click_pagination_number', 1);
         });
         return true;
       }
