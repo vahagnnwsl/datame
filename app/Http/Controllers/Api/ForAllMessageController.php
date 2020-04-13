@@ -83,9 +83,9 @@ class ForAllMessageController extends Controller
         return [
             'id' => $forAllMessage->id,
             'message' => $forAllMessage->message,
-            'start_date' => format_date_time($forAllMessage->start_date),
-            'end_date' => format_date_time($forAllMessage->end_date),
-            'created_at' => format_date_time($forAllMessage->created_at)
+            'start_date' => format_date($forAllMessage->start_date),
+            'end_date' => format_date($forAllMessage->end_date),
+            'created_at' => format_date($forAllMessage->created_at)
         ];
     }
 
