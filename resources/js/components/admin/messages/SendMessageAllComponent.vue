@@ -18,6 +18,7 @@
                     <span>Незарегистрированным пользователям</span>
                 </label>
             </div>
+
             <template>
                 <div class="date_block" v-if="message_for_users === 'noregusers'">
                     <label>
@@ -36,18 +37,43 @@
             <button type="submit" class="main_btn submit_btn">Отправить сообщения</button>
 
         </form>
+        <template>
+            <div class="date_block table-responsive" v-if="message_for_users === 'noregusers'">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th>#:</th>
+                        <th>Созданая дата:</th>
+                        <th>Начальная дата:</th>
+                        <th>Конечная дата:</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <unRegisterUserMessageItem :page="unRegisterUserMessages.page"  v-if="unRegisterUserMessages.messages.length > 0" v-for="(message,key) in unRegisterUserMessages.messages" v-bind:item="message" :key="key" ></unRegisterUserMessageItem>
+                    <editMessageModalComponent :page="unRegisterUserMessages.page"></editMessageModalComponent>
+                    </tbody>
+                </table>
+                <pagination-component v-bind:currentpage="unRegisterUserMessages.page"
+                                      v-bind:quantitypage="unRegisterUserMessages.total"></pagination-component>
 
+            </div>
+
+        </template>
     </div>
 
 </template>
 
 <script>
     import {IMaskComponent} from 'vue-imask';
-
+    import UnRegisterUserMessageItemComponent from '../../messages/UnRegisterUserMessageItemComponent';
+    import EditMessageModalComponent from './EditMessageModalComponent'
     export default {
         name: "SendMessageAllComponent",
         components: {
-            'imask-input': IMaskComponent
+            'imask-input': IMaskComponent,
+            'unRegisterUserMessageItem':UnRegisterUserMessageItemComponent,
+            'editMessageModalComponent':EditMessageModalComponent,
         },
         data() {
             return {
@@ -55,10 +81,51 @@
                 message: null,
                 error: null,
                 start_date: null,
-                end_date: null
+                end_date: null,
+                unRegisterUserMessages: {
+                    messages: [],
+                    page: 1,
+                    total: 1,
+                    limit: 6
+                }
             }
         },
+        mounted() {
+            let self = this;
+            Event.$on('click_pagination_number', function (page) {
+                self.unRegisterUserMessages.page = page;
+                self.init();
+            });
+
+            self.init();
+
+            Event.$on('event_show_edit_message', function() {});
+        },
+
         methods: {
+            init() {
+                let self = this;
+                axios.post('/api/messages/unregister/all/' + self.unRegisterUserMessages.page + "/" + self.unRegisterUserMessages.limit)
+                    .then(function(response) {
+                        self.unRegisterUserMessages.messages = response.data.items;
+                        self.unRegisterUserMessages.page = response.data.page;
+                        self.unRegisterUserMessages.total = response.data.total;
+                        self.unRegisterUserMessages.limit = response.data.limit;
+
+                        Event.$emit('init_pagination', {
+                            currentPage: self.unRegisterUserMessages.page,
+                            quantityPage: self.unRegisterUserMessages.total
+                        })
+                    })
+                    .catch(function(error) {
+                        console.error(error);
+                    })
+            },
+            getRegisterUserMessages() {
+                axios.get('/api/messages/unregister').then(resp => {
+
+                })
+            },
             clear() {
                 this.error = null;
                 this.message = null;
@@ -66,7 +133,7 @@
                 this.end_date = null;
             },
             storeMessage() {
-                if(this.message_for_users === "regusers")
+                if (this.message_for_users === "regusers")
                     this.storeForRegisterUser();
                 else
                     this.storeForUnRegisterUser();
@@ -78,7 +145,7 @@
                     // 1 - для пользователей,
                     message_type: 1
                 })
-                    .then(function(response) {
+                    .then(function (response) {
                         $.toast({
                             heading: 'Успешно',
                             text: "Сообщение успешно отправлено!",
@@ -88,7 +155,7 @@
                         });
                         self.clear();
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.error(error.response.data.message);
                         self.error = error.response.data.message;
                     })
@@ -102,7 +169,7 @@
                     // 2 - для всех кроме пользователей
                     message_type: 2,
                 })
-                    .then(function(response) {
+                    .then(function (response) {
                         self.error = null;
                         $.toast({
                             heading: 'Успешно',
@@ -113,7 +180,7 @@
                         });
                         self.clear();
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.error(error.response.data.message);
                         self.error = error.response.data.message;
                     })

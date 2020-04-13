@@ -29,6 +29,66 @@ class ForAllMessageController extends Controller
         $this->logger = ApiLog::staticInstance();
     }
 
+    public function deleteMessage($id)
+    {
+        ForAllMessage::destroy($id);
+        return response()->json();
+
+    }
+
+
+    public function updateMessage(Request $request, $id)
+    {
+        $message = ForAllMessage::whereId($id)->first();
+
+        if (!$message) {
+            return response()->json(['message' => 'Сообщение не найдено'], 411);
+        }
+
+        $response = (new Error())->setIdentity($this->logger->getIdentity());
+
+        $validator = Validator::make($request->all(), [
+            'message' => ['required', 'string'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date']
+        ]);
+
+        if ($validator->fails()) {
+            $response->setMessage($validator->errors()->first());
+            $this->logger->error("error", $response->toArray());
+            return response()->json($response, 422);
+        }
+        $message->start_date = dt_parse($validator->getData()['start_date']);
+        $message->end_date = dt_parse($validator->getData()['end_date']);
+        $message->message = $validator->getData()['message'];
+        $message->save();
+        return response()->json();
+
+    }
+
+    public function getMessages(Request $request, int $page = 1, int $limit = 10)
+    {
+        $builder = (new ForAllMessage())->orderByDesc('id');
+
+        $total = $builder->count();
+        $messages = $builder->skip(($page - 1) * $limit)->take($limit)->get()->transform(function (ForAllMessage $message) {
+            return $this->messageTransform($message);
+        });
+
+        return response()->json((new PaginationResult($page, $limit, $total))->setItems($messages->toArray()));
+    }
+
+    public function messageTransform(ForAllMessage $forAllMessage)
+    {
+        return [
+            'id' => $forAllMessage->id,
+            'message' => $forAllMessage->message,
+            'start_date' => format_date_time($forAllMessage->start_date),
+            'end_date' => format_date_time($forAllMessage->end_date),
+            'created_at' => format_date_time($forAllMessage->created_at)
+        ];
+    }
+
     /**
      * Создание общих сообщений для зарегистрированных пользователей
      *
@@ -44,7 +104,7 @@ class ForAllMessageController extends Controller
             'message_type' => ['required', Rule::in([Constants::MESSAGE_FOR_USER])]
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $response->setMessage($validator->errors()->first());
             $this->logger->error("error", $response->toArray());
             return response()->json($response, 422);
@@ -53,7 +113,7 @@ class ForAllMessageController extends Controller
         //Если сообщения для зарегистрированных пользователей
         //выбираем всех юзеров и добавляем им сообщения
         $users = User::whereNotIn('type_user', [Constants::USER_ADMIN])->get();
-        foreach($users as $user) {
+        foreach ($users as $user) {
             $message = new UserMessage();
             $message->message = $validator->getData()['message'];
             $message->is_read = false;
@@ -94,7 +154,7 @@ class ForAllMessageController extends Controller
             'message_type' => ['required', Rule::in([Constants::MESSAGE_NOT_FOR_USER])]
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $response->setMessage($validator->errors()->first());
             $this->logger->error("error", $response->toArray());
             return response()->json($response, 422);
@@ -115,9 +175,6 @@ class ForAllMessageController extends Controller
     /**
      *
      */
-    public function getMessageForUnregisterUser() {
-
-    }
 
 
 }

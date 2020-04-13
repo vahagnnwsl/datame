@@ -54,6 +54,9 @@ Route::middleware('auth:api')->group(function() {
     Route::post('messages/store/user', 'Api\UserMessageController@storeMessage')->name('api.messages.user.store');
     Route::any('messages/all/{page?}/{limit?}', 'Api\UserMessageController@getMessages')->name('api.messages.list');
     Route::post('messages/read/{message_id}/', 'Api\UserMessageController@isReadMessage')->name('api.messages.read');
+    Route::post('messages/unregister/all/{page?}/{limit?}', 'Api\ForAllMessageController@getMessages');
+    Route::post('messages/unregister/update/{id}', 'Api\ForAllMessageController@updateMessage');
+    Route::post('messages/unregister/delete/{id}', 'Api\ForAllMessageController@deleteMessage');
 
 });
 

@@ -76,7 +76,12 @@ class AppRepository
                 $app->lastname = mb_strtolower($data['lastname']);
                 $app->status = Constants::CHECKING_APP_NEW;
                 $app->name = mb_strtolower($data['name']);
-                $app->patronymic = mb_strtolower($data['patronymic']);
+
+
+                if (isset($data['patronymic']) && $data['patronymic']) {
+                    $app->patronymic = mb_strtolower($data['patronymic']);
+                }
+
                 $app->birthday = dt_parse($data['birthday']);
                 $app->passport_code = $data['passport_code'];
                 $app->date_of_issue = dt_parse($data['date_of_issue']);
