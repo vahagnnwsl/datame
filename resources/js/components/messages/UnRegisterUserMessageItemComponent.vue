@@ -25,11 +25,13 @@
                 required: true
             }
         },
+
         methods: {
             editMessage() {
                 Event.$emit('event_show_edit_message', this.item)
             },
             deleteMessage() {
+                const self = this;
                 if (confirm("Вы подтверждаете удаление?")) {
                     axios.post('/api/messages/unregister/delete/' + this.item.id)
                         .then(function (response) {
@@ -41,7 +43,7 @@
                                 icon: 'success'
                             });
                         });
-                    Event.$emit('click_pagination_number', this.page);
+                    Event.$emit('click_pagination_number', self.page);
 
                     return true;
                 }

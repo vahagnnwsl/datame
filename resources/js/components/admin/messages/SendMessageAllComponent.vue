@@ -54,7 +54,7 @@
                     <unRegisterUserMessageItem :page="unRegisterUserMessages.page"
                                                v-if="unRegisterUserMessages.messages.length > 0"
                                                v-for="(message,key) in unRegisterUserMessages.messages"
-                                               v-bind:item="message" :key="key"></unRegisterUserMessageItem>
+                                               v-bind:item="message" :key="key" ></unRegisterUserMessageItem>
                     <editMessageModalComponent :page="unRegisterUserMessages.page"></editMessageModalComponent>
                     </tbody>
                 </table>

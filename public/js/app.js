@@ -5307,6 +5307,8 @@ __webpack_require__.r(__webpack_exports__);
       Event.$emit('event_show_edit_message', this.item);
     },
     deleteMessage: function deleteMessage() {
+      var self = this;
+
       if (confirm("Вы подтверждаете удаление?")) {
         axios.post('/api/messages/unregister/delete/' + this.item.id).then(function (response) {
           $.toast({
@@ -5317,7 +5319,7 @@ __webpack_require__.r(__webpack_exports__);
             icon: 'success'
           });
         });
-        Event.$emit('click_pagination_number', this.page);
+        Event.$emit('click_pagination_number', self.page);
         return true;
       }
     }
