@@ -38,7 +38,8 @@
 
         </form>
         <template>
-            <div class="date_block table-responsive" v-if="message_for_users === 'noregusers'">
+            <div class="date_block table-responsive"
+                 v-if="message_for_users === 'noregusers' && unRegisterUserMessages.messages.length>0">
                 <table class="table table-condensed">
                     <thead>
                     <tr>
@@ -50,7 +51,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <unRegisterUserMessageItem :page="unRegisterUserMessages.page"  v-if="unRegisterUserMessages.messages.length > 0" v-for="(message,key) in unRegisterUserMessages.messages" v-bind:item="message" :key="key" ></unRegisterUserMessageItem>
+                    <unRegisterUserMessageItem :page="unRegisterUserMessages.page"
+                                               v-if="unRegisterUserMessages.messages.length > 0"
+                                               v-for="(message,key) in unRegisterUserMessages.messages"
+                                               v-bind:item="message" :key="key"></unRegisterUserMessageItem>
                     <editMessageModalComponent :page="unRegisterUserMessages.page"></editMessageModalComponent>
                     </tbody>
                 </table>
@@ -68,12 +72,13 @@
     import {IMaskComponent} from 'vue-imask';
     import UnRegisterUserMessageItemComponent from '../../messages/UnRegisterUserMessageItemComponent';
     import EditMessageModalComponent from './EditMessageModalComponent'
+
     export default {
         name: "SendMessageAllComponent",
         components: {
             'imask-input': IMaskComponent,
-            'unRegisterUserMessageItem':UnRegisterUserMessageItemComponent,
-            'editMessageModalComponent':EditMessageModalComponent,
+            'unRegisterUserMessageItem': UnRegisterUserMessageItemComponent,
+            'editMessageModalComponent': EditMessageModalComponent,
         },
         data() {
             return {
@@ -99,14 +104,15 @@
 
             self.init();
 
-            Event.$on('event_show_edit_message', function() {});
+            Event.$on('event_show_edit_message', function () {
+            });
         },
 
         methods: {
             init() {
                 let self = this;
                 axios.post('/api/messages/unregister/all/' + self.unRegisterUserMessages.page + "/" + self.unRegisterUserMessages.limit)
-                    .then(function(response) {
+                    .then(function (response) {
                         self.unRegisterUserMessages.messages = response.data.items;
                         self.unRegisterUserMessages.page = response.data.page;
                         self.unRegisterUserMessages.total = response.data.total;
@@ -117,7 +123,7 @@
                             quantityPage: self.unRegisterUserMessages.total
                         })
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.error(error);
                     })
             },

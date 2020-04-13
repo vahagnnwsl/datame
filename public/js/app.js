@@ -3813,6 +3813,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -67745,7 +67749,8 @@ var render = function() {
       ),
       _vm._v(" "),
       [
-        _vm.message_for_users === "noregusers"
+        _vm.message_for_users === "noregusers" &&
+        _vm.unRegisterUserMessages.messages.length > 0
           ? _c(
               "div",
               { staticClass: "date_block table-responsive" },
