@@ -47,11 +47,13 @@ class ForAllMessageController extends Controller
 
         $response = (new Error())->setIdentity($this->logger->getIdentity());
 
+
         $validator = Validator::make($request->all(), [
             'message' => ['required', 'string'],
-            'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date']
+            'start_date' => ['required', 'date','after:yesterday'],
+            'end_date' => ['required', 'date','after:start_date','before_or_equal:01/01/2025']
         ]);
+
 
         if ($validator->fails()) {
             $response->setMessage($validator->errors()->first());
@@ -68,7 +70,7 @@ class ForAllMessageController extends Controller
 
     public function getMessages(Request $request, int $page = 1, int $limit = 10)
     {
-        $builder = (new ForAllMessage())->orderByDesc('id');
+        $builder = (new ForAllMessage())->orderByDesc('id')->where('message_type',2);
 
         $total = $builder->count();
         $messages = $builder->skip(($page - 1) * $limit)->take($limit)->get()->transform(function (ForAllMessage $message) {
@@ -149,8 +151,8 @@ class ForAllMessageController extends Controller
 
         $validator = Validator::make($dt, [
             'message' => ['required', 'string'],
-            'start_date' => 'required|date_format:d.m.Y',
-            'end_date' => 'required|date_format:d.m.Y',
+            'start_date' => 'required|date_format:d.m.Y|after:yesterday',
+            'end_date' => 'required|date_format:d.m.Y|after:start_date|before_or_equal:01/01/2025',
             'message_type' => ['required', Rule::in([Constants::MESSAGE_NOT_FOR_USER])]
         ]);
 
