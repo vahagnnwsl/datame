@@ -50,8 +50,8 @@ class ForAllMessageController extends Controller
 
         $validator = Validator::make($request->all(), [
             'message' => ['required', 'string'],
-            'start_date' => ['required', 'date','after:yesterday'],
-            'end_date' => ['required', 'date','after:start_date','before_or_equal:01/01/2025']
+            'start_date' => ['required', 'date','after_or_equal:today'],
+            'end_date' => ['required', 'date','after_or_equal:start_date','before_or_equal:01/01/2025']
         ]);
 
 
@@ -151,8 +151,8 @@ class ForAllMessageController extends Controller
 
         $validator = Validator::make($dt, [
             'message' => ['required', 'string'],
-            'start_date' => 'required|date_format:d.m.Y|after:yesterday',
-            'end_date' => 'required|date_format:d.m.Y|after:start_date|before_or_equal:01/01/2025',
+            'start_date' => 'required|date_format:d.m.Y|after_or_equal:today',
+            'end_date' => 'required|date_format:d.m.Y|after_or_equal:start_date|before_or_equal:01/01/2025',
             'message_type' => ['required', Rule::in([Constants::MESSAGE_NOT_FOR_USER])]
         ]);
 
