@@ -49,7 +49,6 @@ class ForAllMessageController extends Controller
         $response = (new Error())->setIdentity($this->logger->getIdentity());
 
         $yesterday =  (new Carbon('yesterday'))->format('d.m.Y');
-        $yesterday =  (new Carbon('yesterday'))->format('d.m.Y');
 
         $validator = Validator::make($request->all(), [
             'message' => ['required', 'string'],
@@ -151,7 +150,8 @@ class ForAllMessageController extends Controller
         $dt = $request->all();
         $dt['start_date'] = isset($dt['start_date']) ? str_replace('_', '', $dt['start_date']) : null;
         $dt['end_date'] = isset($dt['end_date']) ? str_replace('_', '', $dt['end_date']) : null;
-        $yesterday =  (new Carbon('yesterday'))->format('d/m/Y');
+
+        $yesterday =  (new Carbon('yesterday'))->format('d.m.Y');
 
         $validator = Validator::make($dt, [
             'message' => ['required', 'string'],
