@@ -37,7 +37,7 @@
                         .then(function (response) {
                             $.toast({
                                 heading: 'Успешно',
-                                text: "Успешно удален!",
+                                text: "Успешно удалено!",
                                 position: 'top-right',
                                 showHideTransition: 'slide',
                                 icon: 'success'

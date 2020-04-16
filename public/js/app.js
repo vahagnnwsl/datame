@@ -5313,7 +5313,7 @@ __webpack_require__.r(__webpack_exports__);
         axios.post('/api/messages/unregister/delete/' + this.item.id).then(function (response) {
           $.toast({
             heading: 'Успешно',
-            text: "Успешно удален!",
+            text: "Успешно удалено!",
             position: 'top-right',
             showHideTransition: 'slide',
             icon: 'success'
