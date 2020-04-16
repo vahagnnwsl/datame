@@ -15,6 +15,7 @@ use App\Packages\Constants;
 use App\Packages\Loggers\ApiLog;
 use App\User;
 use App\UserMessage;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -47,10 +48,12 @@ class ForAllMessageController extends Controller
 
         $response = (new Error())->setIdentity($this->logger->getIdentity());
 
+        $yesterday =  (new Carbon('yesterday'))->format('d.m.Y');
+        $yesterday =  (new Carbon('yesterday'))->format('d.m.Y');
 
         $validator = Validator::make($request->all(), [
             'message' => ['required', 'string'],
-            'start_date' => ['required', 'date','after_or_equal:today'],
+            'start_date' => 'required|date_format:d.m.Y|after_or_equal:'.$yesterday,
             'end_date' => ['required', 'date','after_or_equal:start_date','before_or_equal:01/01/2025']
         ]);
 
@@ -148,10 +151,11 @@ class ForAllMessageController extends Controller
         $dt = $request->all();
         $dt['start_date'] = isset($dt['start_date']) ? str_replace('_', '', $dt['start_date']) : null;
         $dt['end_date'] = isset($dt['end_date']) ? str_replace('_', '', $dt['end_date']) : null;
+        $yesterday =  (new Carbon('yesterday'))->format('d/m/Y');
 
         $validator = Validator::make($dt, [
             'message' => ['required', 'string'],
-            'start_date' => 'required|date_format:d.m.Y|after_or_equal:today',
+            'start_date' => 'required|date_format:d.m.Y|after_or_equal:'.$yesterday,
             'end_date' => 'required|date_format:d.m.Y|after_or_equal:start_date|before_or_equal:01/01/2025',
             'message_type' => ['required', Rule::in([Constants::MESSAGE_NOT_FOR_USER])]
         ]);
