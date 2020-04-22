@@ -52,11 +52,11 @@ class AppController extends Controller
         /** @var User $user */
         $user = $request->user();
 
-        $this->logger->info('date_service: '. is_null($user->date_service) ? 'Дата окончания услуг не установлена': $user->date_service->format('d.m.Y'));
+        $this->logger->info('date_service: ' . is_null($user->date_service) ? 'Дата окончания услуг не установлена' : $user->date_service->format('d.m.Y'));
         $this->logger->info("check_quantity: {$user->check_quantity}");
 
         //проверяем количество проверяемых или дату окончания услуг
-        if(!$this->checkUserAppPermission($user)) {
+        if (!$this->checkUserAppPermission($user)) {
             $response->setMessage("Дата окончания услуг истекла или количество проверяемых заявок равна нулю. Обратитесь к администратору.");
             $this->logger->error("error", $response->toArray());
             return response()->json($response, 422);
@@ -70,7 +70,7 @@ class AppController extends Controller
         $dt['code_department'] = isset($dt['code_department']) ? str_replace('_', '', $dt['code_department']) : null;
         $dt['code_department'] = !empty($dt['code_department']) ? str_replace(" ", "-", $dt['code_department']) : null;
 
-        $rules =  [
+        $rules = [
             'lastname' => ['required', 'regex:/^[a-zA-Zа-яА-Я- ]+$/ui'],
             'name' => ['required', 'regex:/^[a-zA-Zа-яА-Я- ]+$/ui'],
             'birthday' => 'required|date_format:d.m.Y',
@@ -83,24 +83,22 @@ class AppController extends Controller
             $rules['patronymic'] = ['regex:/^[a-zA-Zа-яА-Я-]+$/ui'];
         }
 
-        $validator = Validator::make($dt,$rules );
+        $validator = Validator::make($dt, $rules);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $response->setMessage($validator->errors()->first());
             $this->logger->error("error", $response->toArray());
             return response()->json($response, 422);
         }
 
-         $model = $this->repository->store(array_merge($validator->validated(), ['ip' => $request->ip()]), Auth::id());
+        $model = $this->repository->store(array_merge($validator->validated(), ['ip' => $request->ip()]), Auth::id());
 
-        return response()->json($model, 422);
-
-        if(is_null($model)) {
+        if (is_null($model)) {
             $response->setMessage("Не удалось создать заявку. Обратитесь к администратору");
             return response()->json($response, 400);
         }
 
-        if($user->check_quantity > 0) {
+        if ($user->check_quantity > 0) {
             $user->check_quantity -= 1;
             $user->save();
 
@@ -124,8 +122,8 @@ class AppController extends Controller
     public function checkUserAppPermission(User $user)
     {
 
-        if(!$user->isAdmin()) {
-            if((is_null($user->date_service) || $user->date_service->lessThan(Carbon::now())) && $user->check_quantity == 0) {
+        if (!$user->isAdmin()) {
+            if ((is_null($user->date_service) || $user->date_service->lessThan(Carbon::now())) && $user->check_quantity == 0) {
                 return false;
             }
         } else {
@@ -148,17 +146,17 @@ class AppController extends Controller
 
         $app = $this->repository->getAppById($app_id);
 
-        if(is_null($app))
+        if (is_null($app))
             return $result->setResult(['message' => 'Заявка не существует или доступ запрещен!'])->toArray();
 
         //1 - демо заявка доступ не нужен
-        if($app_id != 1) {
-            if($request->user()->type_user != Constants::USER_ADMIN && $app->user_id != $request->user()->id)
+        if ($app_id != 1) {
+            if ($request->user()->type_user != Constants::USER_ADMIN && $app->user_id != $request->user()->id)
                 return $result->setResult(['message' => 'Заявка не существует или доступ запрещен!'])->toArray();
         }
 
         //все проверки проведены успешно
-        if($app->status == Constants::CHECKING_STATUS_SUCCESS || ($app->status == Constants::CHECKING_STATUS_ERROR && $app->checking_count == 3)) {
+        if ($app->status == Constants::CHECKING_STATUS_SUCCESS || ($app->status == Constants::CHECKING_STATUS_ERROR && $app->checking_count == 3)) {
 
             $result->setResult($this->transformer->setExtend(true)->transform($app));
             $result->setStatusResult(true);
@@ -166,16 +164,15 @@ class AppController extends Controller
             $checking_completed_success = 0;
             $data = [
                 'status' => $app->status,
-                'list' => $app->checkingList()->get()->transform(function(CheckingList $item) use(&$checking_completed_success) {
-                    if($item->status == Constants::CHECKING_STATUS_SUCCESS) {
+                'list' => $app->checkingList()->get()->transform(function (CheckingList $item) use (&$checking_completed_success) {
+                    if ($item->status == Constants::CHECKING_STATUS_SUCCESS) {
                         $checking_completed_success += 1;
                     }
                     return AppTransformer::transformCheckingList($item);
                 })
-            ];
-            ;
+            ];;
 
-            $data['message'] = Constants::getDescAppStatus($app, round($checking_completed_success / $app->checkingList()->count() * 100)."%");
+            $data['message'] = Constants::getDescAppStatus($app, round($checking_completed_success / $app->checkingList()->count() * 100) . "%");
 
             $result->setResult($data);
         }
@@ -183,19 +180,21 @@ class AppController extends Controller
         return $result->toArray();
     }
 
-    public function getAppDemo(Request $request) {
+    public function getAppDemo(Request $request)
+    {
         return $this->getApp($request, 1);
     }
 
-    public function getAppShort(Request $request, $app_id) {
+    public function getAppShort(Request $request, $app_id)
+    {
         $result = new Result();
 
         $app = $this->repository->getAppById($app_id);
 
-        if(is_null($app))
+        if (is_null($app))
             return $result->setResult(['message' => 'Заявка не существует или доступ запрещен!'])->toArray();
 
-        if($request->user()->type_user != Constants::USER_ADMIN && $app->user_id != $request->user()->id)
+        if ($request->user()->type_user != Constants::USER_ADMIN && $app->user_id != $request->user()->id)
             return $result->setResult(['message' => 'Заявка не существует или доступ запрещен!'])->toArray();
 
         return response()->json($this->transformer->setWithUser(true)->transform($app));
@@ -215,7 +214,7 @@ class AppController extends Controller
         $apps = $this->repository->getByUserId($request->user()->id, $page, $limit, $request->get('searching'));
 
         $response = new PaginationResult($page, $apps['limit'], $apps['total']);
-        $response->setItems($apps['items']->transform(function(App $app) {
+        $response->setItems($apps['items']->transform(function (App $app) {
             return $this->transformer->transform($app);
         })->toArray());
 
@@ -236,7 +235,7 @@ class AppController extends Controller
         $apps = $this->repository->getAll($page, $limit, $request->get('searching'));
 
         $response = new PaginationResult($page, $apps['limit'], $apps['total']);
-        $response->setItems($apps['items']->transform(function(App $app) {
+        $response->setItems($apps['items']->transform(function (App $app) {
             return $this->transformer->setWithUser(true)->transform($app);
         })->toArray());
 
