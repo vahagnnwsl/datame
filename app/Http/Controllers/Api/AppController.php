@@ -70,15 +70,20 @@ class AppController extends Controller
         $dt['code_department'] = isset($dt['code_department']) ? str_replace('_', '', $dt['code_department']) : null;
         $dt['code_department'] = !empty($dt['code_department']) ? str_replace(" ", "-", $dt['code_department']) : null;
 
-        $validator = Validator::make($dt, [
+        $rules =  [
             'lastname' => ['required', 'regex:/^[a-zA-Zа-яА-Я- ]+$/ui'],
             'name' => ['required', 'regex:/^[a-zA-Zа-яА-Я- ]+$/ui'],
-//            'patronymic' => ['required', 'regex:/^[a-zA-Zа-яА-Я-]+$/ui'],
             'birthday' => 'required|date_format:d.m.Y',
             'passport_code' => 'required|regex:/^[0-9]{4}\s{1}[0-9]{6}$/',
             'date_of_issue' => 'required|date_format:d.m.Y',
             'code_department' => ['nullable', 'regex:/^[0-9]{3}[-]{1}[0-9]{3}$/']
-        ]);
+        ];
+
+        if ($request->get('patronymic')) {
+            $rules['patronymic'] = ['regex:/^[a-zA-Zа-яА-Я-]+$/ui'];
+        }
+
+        $validator = Validator::make($dt,$rules );
 
         if($validator->fails()) {
             $response->setMessage($validator->errors()->first());
@@ -86,7 +91,9 @@ class AppController extends Controller
             return response()->json($response, 422);
         }
 
-        $model = $this->repository->store(array_merge($validator->validated(), ['ip' => $request->ip()]), Auth::id());
+         $model = $this->repository->store(array_merge($validator->validated(), ['ip' => $request->ip()]), Auth::id());
+
+        return response()->json($model, 422);
 
         if(is_null($model)) {
             $response->setMessage("Не удалось создать заявку. Обратитесь к администратору");
