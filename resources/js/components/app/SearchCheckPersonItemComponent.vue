@@ -68,7 +68,7 @@
                         .catch(function(error) {
                             console.log(error);
                         });
-                }, 20000);
+                }, 3000);
             }
         },
         computed: {

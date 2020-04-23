@@ -5187,7 +5187,7 @@ __webpack_require__.r(__webpack_exports__);
         }).catch(function (error) {
           console.log(error);
         });
-      }, 20000);
+      }, 3000);
     }
   },
   computed: {
