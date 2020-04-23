@@ -2,7 +2,8 @@
     <div class="pdf_item">
         <div class="top_block">
             <p class="name">
-                <a v-bind:href="url" target="_blank">{{ fio }}</a>
+<!--                <a v-bind:href="url" target="_blank">{{ fio }}</a>-->
+                <a  >{{ fio }}</a>
             </p>
             <p>Дата рождения: {{ data.birthday }}</p>
             <p>Серия, номер паспорта: {{ data.passport_code }}</p>
