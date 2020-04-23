@@ -547,7 +547,7 @@
                 services: [],
                 message: null,
                 service_error_message: "Сервис не отвечает",
-                refreshTime: 20000, // 20сек
+                refreshTime: 5000, // 5сек
                 loading: true,
                 timerId: null,
             }
