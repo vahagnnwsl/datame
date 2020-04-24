@@ -4,26 +4,7 @@
         <div class="container">
             <div class="wrapper">
 
-
-                <div class="row" v-if="loading">
-                    <h1 style="text-align: center">Загрузка...</h1>
-                </div>
-
-                <div class="row" v-if="!status">
-                    <h1 style="text-align: center">{{ message }}</h1>
-
-                    <div class="download_block">
-                        <div class="wrap">
-                            <!--<a href="#reference_section" class="back" @click="closeWindow">Назад</a>-->
-                            <!--<a href="#" download class="red">Скачать</a>-->
-                            <!--<a href="#" download class="blue">Скачать</a>-->
-                            <!--<a href="#" download class="turquoise">Скачать</a>-->
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row" v-if="status">
+                <div class="row" v-if="app">
 
                     <div class="coefficient_block">
                         <div class="col">
@@ -35,14 +16,25 @@
                                 <p>Коэффициент доверия</p>
                             </div>
                         </div>
+                        <!--                        -->
                         <div class="col">
                             <ul>
-                                <template v-for="service in app.extend.trust.services">
-                                    <li v-bind:class="{ no: service.status == false }">{{ service.name }}</li>
+                                <template v-for="(service,key) in servicesHeader">
+                                    <li v-if="status" v-bind:class="{ no: service.status == false }">
+                                        {{ service.name }}
+                                    </li>
+                                    <li v-else-if="!status && serviceStatus(service.services)"
+                                        v-bind:class="{ no: service.status == false }">
+                                        {{ service.name }}
+                                    </li>
+                                    <li v-else class="progress-li">
+                                        {{ service.name }}
+                                    </li>
                                 </template>
                                 <template v-if="app.extend.trust.all_amount > 0">
                                     <li class="no">
-                                        Общая задолженность: <span style="font-weight: bold">{{ app.extend.trust.all_amount_formatted }}</span> рублей
+                                        Общая задолженность: <span style="font-weight: bold">{{ app.extend.trust.all_amount_formatted }}</span>
+                                        рублей
                                     </li>
                                 </template>
                             </ul>
@@ -60,7 +52,8 @@
                         </tr>
                         <tr>
                             <td>Фамилия, имя, отчество на английском</td>
-                            <td>{{ app.extend.lastname_en }} {{ app.extend.name_en }} {{ app.extend.patronymic_en }}</td>
+                            <td>{{ app.extend.lastname_en }} {{ app.extend.name_en }} {{ app.extend.patronymic_en }}
+                            </td>
                         </tr>
                         <tr>
                             <td>Дата рождения</td>
@@ -87,9 +80,12 @@
                                     <td v-else>
                                         ИНН не найден. Возможные причины:
                                         <ul>
-                                            <li class="no">человек недавно получил паспорт, но указанная информация еще не поступила в ИФНС
+                                            <li class="no">человек недавно получил паспорт, но указанная информация еще
+                                                не поступила в ИФНС
                                             </li>
-                                            <li class="no">документы в ИФНС на присвоение ИНН поданы, но ИНН еще не получен</li>
+                                            <li class="no">документы в ИФНС на присвоение ИНН поданы, но ИНН еще не
+                                                получен
+                                            </li>
                                         </ul>
                                     </td>
                                 </template>
@@ -132,7 +128,10 @@
                         </tr>
                         <tr>
                             <td>Состояние (по данным МВД РФ)</td>
-                            <td> {{ app.extend.passport.is_valid}}</td>
+                            <td v-if="app.extend.passport.is_valid"> {{ app.extend.passport.is_valid}}</td>
+                            <td v-if="!app.extend.passport.is_valid && !status">
+                                <span class="sp"></span>
+                            </td>
                         </tr>
                         <tr v-if="app.extend.passport.passport_date_replace != null">
                             <td>Срок действия</td>
@@ -147,10 +146,13 @@
                                             <li>Серия паспорта соответствует дате выдачи паспорта</li>
                                         </template>
                                         <template v-else>
-                                            <li class="no">Год выдачи паспорта (по дате выдачи) больше или меньше года серии паспорта на 3 года</li>
+                                            <li class="no">Год выдачи паспорта (по дате выдачи) больше или меньше года
+                                                серии паспорта на 3 года
+                                            </li>
                                         </template>
                                     </template>
-                                    <template v-if="app.extend.passport.passport_serie_region != null && app.code_department != null">
+                                    <template
+                                        v-if="app.extend.passport.passport_serie_region != null && app.code_department != null">
                                         <template v-if="parseInt(app.extend.passport.passport_serie_region) === 1">
                                             <li>Серия паспорта соответствует региону выдачи паспорта</li>
                                         </template>
@@ -164,11 +166,17 @@
                         <tr v-if="app.extend.passport.attachment != null">
                             <td>Принадлежность подразделения</td>
                             <td>{{ app.extend.passport.attachment}}</td>
+                            <td v-if="!app.extend.passport.attachment && !status">
+                                <span class="sp"></span>
+                            </td>
                         </tr>
                         <tr>
                             <td>Дополнительная информация</td>
-                            <td>
+                            <td v-if="app.extend.passport.status">
                                 {{ app.extend.passport.status }}
+                            </td>
+                            <td v-if="!app.extend.passport.status && !status">
+                                <span class="sp"></span>
                             </td>
                         </tr>
                     </table>
@@ -176,7 +184,7 @@
                     <!--руководство и учредительство-->
                     <table class="info_table" v-if="serviceNotRespond(12)">
                         <tr>
-                            <th colspan="2">РУКОВОДСТВО И УЧРЕДИТЕЛЬСТВО</th>
+                            <th colspan="2"> РУКОВОДСТВО И УЧРЕДИТЕЛЬСТВО</th>
                         </tr>
                         <tr>
                             <td colspan="2" class="mid">{{ service_error_message }}</td>
@@ -236,7 +244,9 @@
                                         <td>{{ item.kod_okved }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Наименование вида деятельности по Общероссийскому классификатору видов экономической деятельности</td>
+                                        <td>Наименование вида деятельности по Общероссийскому классификатору видов
+                                            экономической деятельности
+                                        </td>
                                         <td>{{ item.naim_okved }}</td>
                                     </tr>
                                     <tr class="big_border">
@@ -247,7 +257,13 @@
                                 </template>
 
                                 <tr v-if="app.extend.business.ul.length === 0">
-                                    <td colspan="2" class="mid">Не является руководителем или совладельцем коммерческих структур.</td>
+                                    <td colspan="2" class="mid" v-if="status">Не является руководителем или совладельцем
+                                        коммерческих
+                                        структур.
+                                    </td>
+                                    <td colspan="2" class="mid" v-else>
+                                        <span class="sp"></span>
+                                    </td>
                                 </tr>
 
                             </table>
@@ -290,14 +306,21 @@
                                         <td>{{ item.kod_okved }}</td>
                                     </tr>
                                     <tr class="big_border">
-                                        <td>Наименование вида деятельности по Общероссийскому классификатору видов экономической деятельности</td>
+                                        <td>Наименование вида деятельности по Общероссийскому классификатору видов
+                                            экономической деятельности
+                                        </td>
                                         <td>{{ item.naim_okved }}</td>
                                     </tr>
 
                                 </template>
 
                                 <tr v-if="app.extend.business.ip.length === 0">
-                                    <td colspan="2" class="mid">Не является индивидуальным предпринимателем.</td>
+                                    <td colspan="2" class="mid" v-if="status">Не является индивидуальным
+                                        предпринимателем.
+                                    </td>
+                                    <td colspan="2" class="mid" v-else>
+                                        <span class="sp"></span>
+                                    </td>
                                 </tr>
 
                             </table>
@@ -349,11 +372,15 @@
                                 </template>
 
                                 <tr v-if="app.extend.tax.items.length > 0">
-                                    <td colspan="2" class="mid">Общее количество задолженностей – <strong>{{ taxCount }}</strong>, на общую сумму <strong>{{ taxAmount }} рублей</strong></td>
+                                    <td colspan="2" class="mid">Общее количество задолженностей – <strong>{{ taxCount
+                                        }}</strong>, на общую сумму <strong>{{ taxAmount }} рублей</strong></td>
                                 </tr>
 
                                 <tr v-if="app.extend.tax.items.length === 0">
-                                    <td colspan="2" class="mid">Задолженности не найдены</td>
+                                    <td colspan="2" class="mid">
+                                        <!--                                        Задолженности не найдены-->
+                                        <span class="sp"></span>
+                                    </td>
                                 </tr>
 
                             </template>
@@ -419,11 +446,18 @@
                             </template>
 
                             <tr v-if="app.extend.fssp.proceed.length > 0">
-                                <td colspan="2" class="mid">Общее количество задолженностей – <strong>{{ fsspCount }}</strong>, на общую сумму <strong>{{ fsspAmount }} рублей</strong></td>
+                                <td colspan="2" class="mid">Общее количество задолженностей – <strong>{{ fsspCount
+                                    }}</strong>, на общую сумму <strong>{{ fsspAmount }} рублей</strong></td>
                             </tr>
 
                             <tr v-if="app.extend.fssp.proceed.length === 0 && app.extend.fssp.finished.length === 0">
-                                <td colspan="2" class="mid">Задолженности не найдены</td>
+                                <td colspan="2" class="mid" v-if="status">
+                                    Задолженности не найдены
+                                </td>
+
+                                <td colspan="2" class="mid" v-else>
+                                    <span class="sp"></span>
+                                </td>
                             </tr>
                         </template>
 
@@ -437,27 +471,40 @@
                         <tr>
                             <td>Интерпол, красные карточки</td>
                             <td v-if="serviceNotRespond(5)">{{ service_error_message }}</td>
-                            <td v-else>{{ app.extend.wanted.interpol_red }}</td>
+                            <td v-else>{{ app.extend.wanted.interpol_red }}
+                                <span class="sp" v-if="!status && !app.extend.wanted.interpol_red"></span>
+                            </td>
                         </tr>
                         <tr>
                             <td>Интерпол, желтые карточки</td>
                             <td v-if="serviceNotRespond(6)">{{ service_error_message }}</td>
-                            <td v-else>{{ app.extend.wanted.interpol_yellow }}</td>
+                            <td v-else>{{ app.extend.wanted.interpol_yellow }}
+                                <span class="sp" v-if="!status && !app.extend.wanted.interpol_yellow"></span>
+                            </td>
                         </tr>
                         <tr>
                             <td>Федеральный розыск</td>
                             <td v-if="serviceNotRespond(8)">{{ service_error_message }}</td>
-                            <td v-else>{{ app.extend.wanted.mvd_wanted}}</td>
+                            <td v-else>{{ app.extend.wanted.mvd_wanted}}
+                                <span class="sp" v-if="!status && !app.extend.wanted.mvd_wanted"></span>
+
+                            </td>
                         </tr>
                         <tr>
                             <td>Местный розыск</td>
                             <td v-if="serviceNotRespond(9)">{{ service_error_message }}</td>
-                            <td v-else>{{ app.extend.wanted.fssp_wanted}}</td>
+                            <td v-else>{{ app.extend.wanted.fssp_wanted}}
+                                <span class="sp" v-if="!status && !app.extend.wanted.fssp_wanted"></span>
+
+                            </td>
                         </tr>
                         <tr>
                             <td>Нахождение в списках террористов и экстремистов</td>
                             <td v-if="serviceNotRespond(7)">{{ service_error_message }}</td>
-                            <td v-else>{{ app.extend.wanted.fed_fsm }}</td>
+                            <td v-else>{{ app.extend.wanted.fed_fsm }}
+                                <span class="sp" v-if="!status && !app.extend.wanted.fed_fsm"></span>
+
+                            </td>
                         </tr>
                     </table>
 
@@ -483,6 +530,9 @@
                                         <div v-if="item.live_address != null">{{ item.live_address }}</div>
                                         <br>
                                     </div>
+                                    <div v-if="!status  && !app.extend.other.debtor && serviceMessage(11) === null">
+                                        <span class="sp"></span>
+                                    </div>
                                 </template>
                             </td>
                         </tr>
@@ -503,15 +553,19 @@
                                         <div v-if="item.name_org_protocol != null">{{ item.name_org_protocol }}</div>
                                         <br>
                                     </div>
+                                    <div v-if="!status && !app.extend.other.disq && serviceMessage(10)=== null">
+                                        <span class="sp"></span>
+                                    </div>
                                 </template>
                             </td>
                         </tr>
                     </table>
 
 
-                    <p>КОНФИДЕНЦИАЛЬНОСТЬ. Информация, содержащаяся в данном документе, является конфиденциальной и предназначена исключительно для предполагаемого адресата. Любое распространение
+                    <p>КОНФИДЕНЦИАЛЬНОСТЬ. Информация, содержащаяся в данном документе, является конфиденциальной и
+                        предназначена исключительно для предполагаемого адресата. Любое распространение
                         данного документа или раскрытие содержащейся в нем информации ЗАПРЕЩАЕТСЯ!</p>
-                    <div class="download_block">
+                    <div class="download_block" v-if="status">
                         <div class="wrap">
                             <!--<a href="#reference_section" class="back">Назад</a>-->
                             <a target='_blank' v-bind:href="urlPdf" download class="red">Скачать</a>
@@ -539,21 +593,25 @@
         },
         mounted() {
             this.init();
+
         },
         data() {
             return {
+
                 status: false,
                 app: null,
+                servicesHeader: [],
                 services: [],
                 message: null,
                 service_error_message: "Сервис не отвечает",
-                refreshTime: 5000, // 5сек
+                refreshTime: 3000, // 5сек
                 loading: true,
                 timerId: null,
             }
         },
         computed: {
             taxCount() {
+
                 return this.app.extend.tax.items.length;
             },
             taxAmount() {
@@ -567,8 +625,8 @@
             },
             errors() {
                 let errors = [];
-                _.forEach(this.services, function(service) {
-                    if(service.status === 3)
+                _.forEach(this.services, function (service) {
+                    if (service.status === 3)
                         errors.push(service)
                 });
                 return errors;
@@ -582,7 +640,7 @@
                 let self = this;
                 self.load();
 
-                self.timerId = setInterval(function() {
+                self.timerId = setInterval(function () {
                     self.load();
                 }, self.refreshTime);
             },
@@ -590,28 +648,28 @@
                 let self = this;
                 self.loading = true;
                 let url = `/api/apps/${self.app_id}`;
-                if(parseInt(self.app_id) === 1)
+                if (parseInt(self.app_id) === 1)
                     url = `/api/demo`;
 
                 axios.get(url)
-                    .then(function(response) {
-                        console.log(response.data);
-                        self.status = response.data.status;
+                    .then(function (response) {
+                        // self.status = response.data.status;
                         //заявка обрабатывается
-                        if(!self.status) {
-                            self.message = response.data.result.message;
-                            self.services = response.data.result.list;
-                        } else {
-                            //заявка обработана полностью
-                            self.app = response.data.result;
-                            self.services = response.data.result.services.list;
 
-                            if(self.timerId != null)
+                        self.status = response.data.status;
+                        self.app = response.data.result;
+                        self.services = response.data.result.services.list;
+                        self.servicesHeader = self.servicesHeaderAction(self.app.extend.trust.services)
+
+
+                        if (self.status) {
+                            if (self.timerId != null)
                                 clearInterval(self.timerId);
                         }
+
                         self.loading = false;
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.error(error.response);
                     })
             },
@@ -619,22 +677,119 @@
                 window.close();
             },
             serviceMessage(service_id) {
-                let service = _.find(this.services, function(o) {
+                let service = _.find(this.services, function (o) {
                     return parseInt(o.type) === parseInt(service_id);
                 });
                 return service.message != null ? service.message : null;
             },
             serviceNotRespond(service_id) {
-                let service = _.find(this.services, function(o) {
+                let service = _.find(this.services, function (o) {
                     return parseInt(o.type) === parseInt(service_id);
                 });
                 return parseInt(service.status) === 3;
+            },
+            serviceStatus(arr) {
+                if (arr.length === 0) {
+                    return true;
+                }
+                var self = this;
 
+                var array = self.test(arr)
+
+                if (array.length === 1) {
+
+                    if (array[0] !== 4) {
+                        return false;
+                    }
+                    return true
+                } else {
+
+                    return this.test2(array)
+                }
+            },
+            test2(arr) {
+                var status = false;
+
+                for (let i = 0; i < arr.length; i++) {
+                    if (i == 0 && arr[i] === 4) {
+                        status = true;
+                    } else {
+                        if (arr[i - 1] !== arr[i] && !status) {
+                            status = false;
+                        }
+                    }
+                }
+                return status;
+            },
+            test(arr) {
+                var array = []
+                for (var i in arr) {
+                    let service = _.find(this.services, function (o) {
+                        return parseInt(o.type) === parseInt(arr[i]);
+                    });
+                    if (service) {
+                        array.push(service.status)
+                    }
+                }
+                return array;
+            },
+
+            servicesHeaderAction(services) {
+
+                console.log(services)
+                for (let i = 0; i < services.length; i++) {
+                    services[i].services = [];
+
+                    if (services[i].name === 'Паспорт') {
+                        services[i].services = [1];
+                    } else if (services[i].name === 'Иные источники') {
+                        services[i].services = [10, 11];
+
+                    } else if (services[i].name === 'Руководство и учредительство') {
+                        services[i].services = [12];
+
+                    } else if (services[i].name === 'Задолженность перед госорганами') {
+                        services[i].services = [3];
+
+                    } else if (services[i].name === 'Нахождение в розыске') {
+
+                        services[i].services = [5,6,7,8,9];
+                    } else if (services[i].name === 'Исполнительные производства') {
+                        services[i].services = [4];
+                    }
+                }
+
+
+                return services;
             }
+
+
         }
     }
 </script>
 
 <style scoped>
+    .sp {
+        background-image: url("/img/Spin-1s-480px.gif") !important;
+        content: "";
+        display: block;
+        float: right;
+        width: 40px;
+        height: 40px;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        position: absolute;
+        top: 10px;
+        right: 1px;
+        background-repeat: no-repeat;
+        -webkit-background-size: 100% 100%;
+        -o-background-size: 100% 100%;
+        background-size: 100% 100%;
+        background-position: center center;
+    }
+
+    .progress-li::before {
+        background-image: url("/img/Spin-1s-480px.gif") !important;
+    }
 
 </style>

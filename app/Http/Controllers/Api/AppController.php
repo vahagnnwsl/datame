@@ -133,6 +133,7 @@ class AppController extends Controller
         return true;
     }
 
+
     /**
      * Возвращает информацию по заявке
      *
@@ -175,7 +176,12 @@ class AppController extends Controller
             $data['message'] = Constants::getDescAppStatus($app, round($checking_completed_success / $app->checkingList()->count() * 100) . "%");
 
             $result->setResult($data);
+
+
+            $result->setResult($this->transformer->setExtend(true)->transform($app));
+            $result->setStatusResult(false);
         }
+
 
         return $result->toArray();
     }

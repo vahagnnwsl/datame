@@ -4754,6 +4754,60 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AppReportComponent",
   props: {
@@ -4768,10 +4822,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       status: false,
       app: null,
+      servicesHeader: [],
       services: [],
       message: null,
       service_error_message: "Сервис не отвечает",
-      refreshTime: 5000,
+      refreshTime: 3000,
       // 5сек
       loading: true,
       timerId: null
@@ -4817,16 +4872,14 @@ __webpack_require__.r(__webpack_exports__);
       var url = "/api/apps/".concat(self.app_id);
       if (parseInt(self.app_id) === 1) url = "/api/demo";
       axios.get(url).then(function (response) {
-        console.log(response.data);
-        self.status = response.data.status; //заявка обрабатывается
+        // self.status = response.data.status;
+        //заявка обрабатывается
+        self.status = response.data.status;
+        self.app = response.data.result;
+        self.services = response.data.result.services.list;
+        self.servicesHeader = self.servicesHeaderAction(self.app.extend.trust.services);
 
-        if (!self.status) {
-          self.message = response.data.result.message;
-          self.services = response.data.result.list;
-        } else {
-          //заявка обработана полностью
-          self.app = response.data.result;
-          self.services = response.data.result.services.list;
+        if (self.status) {
           if (self.timerId != null) clearInterval(self.timerId);
         }
 
@@ -4851,6 +4904,77 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       return parseInt(service.status) === 3;
+    },
+    serviceStatus: function serviceStatus(arr) {
+      if (arr.length === 0) {
+        return true;
+      }
+
+      var self = this;
+      var array = self.test(arr);
+
+      if (array.length === 1) {
+        if (array[0] !== 4) {
+          return false;
+        }
+
+        return true;
+      } else {
+        return this.test2(array);
+      }
+    },
+    test2: function test2(arr) {
+      var status = false;
+
+      for (var i = 0; i < arr.length; i++) {
+        if (i == 0 && arr[i] === 4) {
+          status = true;
+        } else {
+          if (arr[i - 1] !== arr[i] && !status) {
+            status = false;
+          }
+        }
+      }
+
+      return status;
+    },
+    test: function test(arr) {
+      var array = [];
+
+      for (var i in arr) {
+        var service = _.find(this.services, function (o) {
+          return parseInt(o.type) === parseInt(arr[i]);
+        });
+
+        if (service) {
+          array.push(service.status);
+        }
+      }
+
+      return array;
+    },
+    servicesHeaderAction: function servicesHeaderAction(services) {
+      console.log(services);
+
+      for (var i = 0; i < services.length; i++) {
+        services[i].services = [];
+
+        if (services[i].name === 'Паспорт') {
+          services[i].services = [1];
+        } else if (services[i].name === 'Иные источники') {
+          services[i].services = [10, 11];
+        } else if (services[i].name === 'Руководство и учредительство') {
+          services[i].services = [12];
+        } else if (services[i].name === 'Задолженность перед госорганами') {
+          services[i].services = [3];
+        } else if (services[i].name === 'Нахождение в розыске') {
+          services[i].services = [5, 6, 7, 8, 9];
+        } else if (services[i].name === 'Исполнительные производства') {
+          services[i].services = [4];
+        }
+      }
+
+      return services;
     }
   }
 });
@@ -5157,6 +5281,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SearchCheckPersonItemComponent",
@@ -5179,7 +5304,6 @@ __webpack_require__.r(__webpack_exports__);
       var self = this;
       var timerId = setInterval(function () {
         axios.get("/api/apps/short/" + self.item.id).then(function (result) {
-          console.log(result);
           self.data = result.data; //если получил окончательный статус перестаем обновлять
 
           if (!self.needRefresh) {
@@ -6523,6 +6647,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n.custom-template[data-v-307ad1f7] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    text-align: left;\n    font-size: 13px;\n    margin: 5px 5px 0;\n    align-items: center;\n    justify-content: center;\n    background: #e8f9f0;\n    border: 2px solid #d0f2e1;\n}\n.custom-template[data-v-307ad1f7], .custom-template > div[data-v-307ad1f7] {\n    box-sizing: border-box;\n}\n.custom-template .custom-template-icon[data-v-307ad1f7] {\n    flex: 0 1 auto;\n    color: #15c371;\n    font-size: 32px;\n    padding: 0 10px;\n}\n.custom-template .custom-template-close[data-v-307ad1f7] {\n    flex: 0 1 auto;\n    padding: 0 20px;\n    font-size: 16px;\n    opacity: 0.2;\n    cursor: pointer;\n}\n.custom-template .custom-template-close[data-v-307ad1f7]:hover {\n    opacity: 0.8;\n}\n.custom-template .custom-template-content[data-v-307ad1f7] {\n    padding: 10px;\n    flex: 1 0 auto;\n}\n.custom-template .custom-template-content .custom-template-title[data-v-307ad1f7] {\n    letter-spacing: 1px;\n    text-transform: uppercase;\n    font-size: 10px;\n    font-weight: 600;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/app/AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/app/AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.sp[data-v-560c01a1] {\n    background-image: url(\"/img/Spin-1s-480px.gif\") !important;\n    content: \"\";\n    display: block;\n    float: right;\n    width: 40px;\n    height: 40px;\n    -webkit-border-radius: 50%;\n    border-radius: 50%;\n    position: absolute;\n    top: 10px;\n    right: 1px;\n    background-repeat: no-repeat;\n    -webkit-background-size: 100% 100%;\n    -o-background-size: 100% 100%;\n    background-size: 100% 100%;\n    background-position: center center;\n}\n.progress-li[data-v-560c01a1]::before {\n    background-image: url(\"/img/Spin-1s-480px.gif\") !important;\n}\n\n", ""]);
 
 // exports
 
@@ -63676,6 +63819,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/app/AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/app/AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/app/AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/messages/UserMessageItemComponent.vue?vue&type=style&index=0&id=e3e0e5d4&scoped=true&lang=css&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/messages/UserMessageItemComponent.vue?vue&type=style&index=0&id=e3e0e5d4&scoped=true&lang=css& ***!
@@ -68211,25 +68384,7 @@ var render = function() {
     [
       _c("div", { staticClass: "container" }, [
         _c("div", { staticClass: "wrapper" }, [
-          _vm.loading
-            ? _c("div", { staticClass: "row" }, [
-                _c("h1", { staticStyle: { "text-align": "center" } }, [
-                  _vm._v("Загрузка...")
-                ])
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          !_vm.status
-            ? _c("div", { staticClass: "row" }, [
-                _c("h1", { staticStyle: { "text-align": "center" } }, [
-                  _vm._v(_vm._s(_vm.message))
-                ]),
-                _vm._v(" "),
-                _vm._m(0)
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.status
+          _vm.app
             ? _c(
                 "div",
                 { staticClass: "row" },
@@ -68257,15 +68412,42 @@ var render = function() {
                       _c(
                         "ul",
                         [
-                          _vm._l(_vm.app.extend.trust.services, function(
-                            service
-                          ) {
+                          _vm._l(_vm.servicesHeader, function(service, key) {
                             return [
-                              _c(
-                                "li",
-                                { class: { no: service.status == false } },
-                                [_vm._v(_vm._s(service.name))]
-                              )
+                              _vm.status
+                                ? _c(
+                                    "li",
+                                    { class: { no: service.status == false } },
+                                    [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(service.name) +
+                                          "\n                                "
+                                      )
+                                    ]
+                                  )
+                                : !_vm.status &&
+                                  _vm.serviceStatus(service.services)
+                                  ? _c(
+                                      "li",
+                                      {
+                                        class: { no: service.status == false }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(service.name) +
+                                            "\n                                "
+                                        )
+                                      ]
+                                    )
+                                  : _c("li", { staticClass: "progress-li" }, [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(service.name) +
+                                          "\n                                "
+                                      )
+                                    ])
                             ]
                           }),
                           _vm._v(" "),
@@ -68288,7 +68470,7 @@ var render = function() {
                                     ]
                                   ),
                                   _vm._v(
-                                    " рублей\n                                "
+                                    "\n                                    рублей\n                                "
                                   )
                                 ])
                               ]
@@ -68300,7 +68482,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("table", { staticClass: "info_table" }, [
-                    _vm._m(1),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c("tr", [
                       _c("td", [_vm._v("Фамилия, имя, отчество")]),
@@ -68327,7 +68509,8 @@ var render = function() {
                             " " +
                             _vm._s(_vm.app.extend.name_en) +
                             " " +
-                            _vm._s(_vm.app.extend.patronymic_en)
+                            _vm._s(_vm.app.extend.patronymic_en) +
+                            "\n                        "
                         )
                       ])
                     ]),
@@ -68377,7 +68560,7 @@ var render = function() {
                                           _vm._v(
                                             "\n                                    ИНН не найден. Возможные причины:\n                                    "
                                           ),
-                                          _vm._m(2)
+                                          _vm._m(1)
                                         ])
                                   ]
                             ]
@@ -68387,7 +68570,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("table", { staticClass: "info_table" }, [
-                    _vm._m(3),
+                    _vm._m(2),
                     _vm._v(" "),
                     _c("tr", [
                       _c("td", [_vm._v("Серия и номер")]),
@@ -68451,9 +68634,17 @@ var render = function() {
                     _c("tr", [
                       _c("td", [_vm._v("Состояние (по данным МВД РФ)")]),
                       _vm._v(" "),
-                      _c("td", [
-                        _vm._v(" " + _vm._s(_vm.app.extend.passport.is_valid))
-                      ])
+                      _vm.app.extend.passport.is_valid
+                        ? _c("td", [
+                            _vm._v(
+                              " " + _vm._s(_vm.app.extend.passport.is_valid)
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.app.extend.passport.is_valid && !_vm.status
+                        ? _c("td", [_c("span", { staticClass: "sp" })])
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _vm.app.extend.passport.passport_date_replace != null
@@ -68496,7 +68687,7 @@ var render = function() {
                                         : [
                                             _c("li", { staticClass: "no" }, [
                                               _vm._v(
-                                                "Год выдачи паспорта (по дате выдачи) больше или меньше года серии паспорта на 3 года"
+                                                "Год выдачи паспорта (по дате выдачи) больше или меньше года\n                                            серии паспорта на 3 года\n                                        "
                                               )
                                             ])
                                           ]
@@ -68539,26 +68730,36 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(_vm._s(_vm.app.extend.passport.attachment))
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          !_vm.app.extend.passport.attachment && !_vm.status
+                            ? _c("td", [_c("span", { staticClass: "sp" })])
+                            : _vm._e()
                         ])
                       : _vm._e(),
                     _vm._v(" "),
                     _c("tr", [
                       _c("td", [_vm._v("Дополнительная информация")]),
                       _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(_vm.app.extend.passport.status) +
-                            "\n                        "
-                        )
-                      ])
+                      _vm.app.extend.passport.status
+                        ? _c("td", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.app.extend.passport.status) +
+                                "\n                        "
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.app.extend.passport.status && !_vm.status
+                        ? _c("td", [_c("span", { staticClass: "sp" })])
+                        : _vm._e()
                     ])
                   ]),
                   _vm._v(" "),
                   _vm.serviceNotRespond(12)
                     ? _c("table", { staticClass: "info_table" }, [
-                        _vm._m(4),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c("tr", [
                           _c(
@@ -68571,7 +68772,7 @@ var render = function() {
                     : [
                         _vm.serviceMessage(12) != null
                           ? _c("table", { staticClass: "info_table" }, [
-                              _vm._m(5),
+                              _vm._m(4),
                               _vm._v(" "),
                               _c("tr", [
                                 _c(
@@ -68589,7 +68790,7 @@ var render = function() {
                                 "table",
                                 { staticClass: "info_table" },
                                 [
-                                  _vm._m(6),
+                                  _vm._m(5),
                                   _vm._v(" "),
                                   _vm._l(_vm.app.extend.business.ul, function(
                                     item
@@ -68668,7 +68869,7 @@ var render = function() {
                                       _c("tr", [
                                         _c("td", [
                                           _vm._v(
-                                            "Наименование вида деятельности по Общероссийскому классификатору видов экономической деятельности"
+                                            "Наименование вида деятельности по Общероссийскому классификатору видов\n                                        экономической деятельности\n                                    "
                                           )
                                         ]),
                                         _vm._v(" "),
@@ -68689,18 +68890,31 @@ var render = function() {
                                   _vm._v(" "),
                                   _vm.app.extend.business.ul.length === 0
                                     ? _c("tr", [
-                                        _c(
-                                          "td",
-                                          {
-                                            staticClass: "mid",
-                                            attrs: { colspan: "2" }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Не является руководителем или совладельцем коммерческих структур."
+                                        _vm.status
+                                          ? _c(
+                                              "td",
+                                              {
+                                                staticClass: "mid",
+                                                attrs: { colspan: "2" }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "Не является руководителем или совладельцем\n                                    коммерческих\n                                    структур.\n                                "
+                                                )
+                                              ]
                                             )
-                                          ]
-                                        )
+                                          : _c(
+                                              "td",
+                                              {
+                                                staticClass: "mid",
+                                                attrs: { colspan: "2" }
+                                              },
+                                              [
+                                                _c("span", {
+                                                  staticClass: "sp"
+                                                })
+                                              ]
+                                            )
                                       ])
                                     : _vm._e()
                                 ],
@@ -68711,7 +68925,7 @@ var render = function() {
                                 "table",
                                 { staticClass: "info_table" },
                                 [
-                                  _vm._m(7),
+                                  _vm._m(6),
                                   _vm._v(" "),
                                   _vm._l(_vm.app.extend.business.ip, function(
                                     item
@@ -68786,7 +69000,7 @@ var render = function() {
                                       _c("tr", { staticClass: "big_border" }, [
                                         _c("td", [
                                           _vm._v(
-                                            "Наименование вида деятельности по Общероссийскому классификатору видов экономической деятельности"
+                                            "Наименование вида деятельности по Общероссийскому классификатору видов\n                                        экономической деятельности\n                                    "
                                           )
                                         ]),
                                         _vm._v(" "),
@@ -68799,18 +69013,31 @@ var render = function() {
                                   _vm._v(" "),
                                   _vm.app.extend.business.ip.length === 0
                                     ? _c("tr", [
-                                        _c(
-                                          "td",
-                                          {
-                                            staticClass: "mid",
-                                            attrs: { colspan: "2" }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Не является индивидуальным предпринимателем."
+                                        _vm.status
+                                          ? _c(
+                                              "td",
+                                              {
+                                                staticClass: "mid",
+                                                attrs: { colspan: "2" }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "Не является индивидуальным\n                                    предпринимателем.\n                                "
+                                                )
+                                              ]
                                             )
-                                          ]
-                                        )
+                                          : _c(
+                                              "td",
+                                              {
+                                                staticClass: "mid",
+                                                attrs: { colspan: "2" }
+                                              },
+                                              [
+                                                _c("span", {
+                                                  staticClass: "sp"
+                                                })
+                                              ]
+                                            )
                                       ])
                                     : _vm._e()
                                 ],
@@ -68823,7 +69050,7 @@ var render = function() {
                     "table",
                     { staticClass: "info_table" },
                     [
-                      _vm._m(8),
+                      _vm._m(7),
                       _vm._v(" "),
                       _vm.serviceNotRespond(3)
                         ? [
@@ -68912,16 +69139,7 @@ var render = function() {
                                     : _vm._e(),
                                   _vm._v(" "),
                                   _vm.app.extend.tax.items.length === 0
-                                    ? _c("tr", [
-                                        _c(
-                                          "td",
-                                          {
-                                            staticClass: "mid",
-                                            attrs: { colspan: "2" }
-                                          },
-                                          [_vm._v("Задолженности не найдены")]
-                                        )
-                                      ])
+                                    ? _c("tr", [_vm._m(8)])
                                     : _vm._e()
                                 ]
                           ]
@@ -69061,14 +69279,27 @@ var render = function() {
                             _vm.app.extend.fssp.proceed.length === 0 &&
                             _vm.app.extend.fssp.finished.length === 0
                               ? _c("tr", [
-                                  _c(
-                                    "td",
-                                    {
-                                      staticClass: "mid",
-                                      attrs: { colspan: "2" }
-                                    },
-                                    [_vm._v("Задолженности не найдены")]
-                                  )
+                                  _vm.status
+                                    ? _c(
+                                        "td",
+                                        {
+                                          staticClass: "mid",
+                                          attrs: { colspan: "2" }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                Задолженности не найдены\n                            "
+                                          )
+                                        ]
+                                      )
+                                    : _c(
+                                        "td",
+                                        {
+                                          staticClass: "mid",
+                                          attrs: { colspan: "2" }
+                                        },
+                                        [_c("span", { staticClass: "sp" })]
+                                      )
                                 ])
                               : _vm._e()
                           ]
@@ -69085,7 +69316,13 @@ var render = function() {
                       _vm.serviceNotRespond(5)
                         ? _c("td", [_vm._v(_vm._s(_vm.service_error_message))])
                         : _c("td", [
-                            _vm._v(_vm._s(_vm.app.extend.wanted.interpol_red))
+                            _vm._v(
+                              _vm._s(_vm.app.extend.wanted.interpol_red) +
+                                "\n                            "
+                            ),
+                            !_vm.status && !_vm.app.extend.wanted.interpol_red
+                              ? _c("span", { staticClass: "sp" })
+                              : _vm._e()
                           ])
                     ]),
                     _vm._v(" "),
@@ -69096,8 +69333,13 @@ var render = function() {
                         ? _c("td", [_vm._v(_vm._s(_vm.service_error_message))])
                         : _c("td", [
                             _vm._v(
-                              _vm._s(_vm.app.extend.wanted.interpol_yellow)
-                            )
+                              _vm._s(_vm.app.extend.wanted.interpol_yellow) +
+                                "\n                            "
+                            ),
+                            !_vm.status &&
+                            !_vm.app.extend.wanted.interpol_yellow
+                              ? _c("span", { staticClass: "sp" })
+                              : _vm._e()
                           ])
                     ]),
                     _vm._v(" "),
@@ -69107,7 +69349,13 @@ var render = function() {
                       _vm.serviceNotRespond(8)
                         ? _c("td", [_vm._v(_vm._s(_vm.service_error_message))])
                         : _c("td", [
-                            _vm._v(_vm._s(_vm.app.extend.wanted.mvd_wanted))
+                            _vm._v(
+                              _vm._s(_vm.app.extend.wanted.mvd_wanted) +
+                                "\n                            "
+                            ),
+                            !_vm.status && !_vm.app.extend.wanted.mvd_wanted
+                              ? _c("span", { staticClass: "sp" })
+                              : _vm._e()
                           ])
                     ]),
                     _vm._v(" "),
@@ -69117,7 +69365,13 @@ var render = function() {
                       _vm.serviceNotRespond(9)
                         ? _c("td", [_vm._v(_vm._s(_vm.service_error_message))])
                         : _c("td", [
-                            _vm._v(_vm._s(_vm.app.extend.wanted.fssp_wanted))
+                            _vm._v(
+                              _vm._s(_vm.app.extend.wanted.fssp_wanted) +
+                                "\n                            "
+                            ),
+                            !_vm.status && !_vm.app.extend.wanted.fssp_wanted
+                              ? _c("span", { staticClass: "sp" })
+                              : _vm._e()
                           ])
                     ]),
                     _vm._v(" "),
@@ -69131,7 +69385,13 @@ var render = function() {
                       _vm.serviceNotRespond(7)
                         ? _c("td", [_vm._v(_vm._s(_vm.service_error_message))])
                         : _c("td", [
-                            _vm._v(_vm._s(_vm.app.extend.wanted.fed_fsm))
+                            _vm._v(
+                              _vm._s(_vm.app.extend.wanted.fed_fsm) +
+                                "\n                            "
+                            ),
+                            !_vm.status && !_vm.app.extend.wanted.fed_fsm
+                              ? _c("span", { staticClass: "sp" })
+                              : _vm._e()
                           ])
                     ])
                   ]),
@@ -69159,37 +69419,49 @@ var render = function() {
                                   ]
                                 : _vm._e(),
                               _vm._v(" "),
-                              _vm._l(_vm.app.extend.other.debtor, function(
-                                item
-                              ) {
-                                return _c("div", [
-                                  _c("div", [_vm._v(_vm._s(item.result))]),
-                                  _vm._v(" "),
-                                  item.category != null
-                                    ? _c("div", [_vm._v(_vm._s(item.category))])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  item.ogrnip != null
-                                    ? _c("div", [_vm._v(_vm._s(item.ogrnip))])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  item.snils != null
-                                    ? _c("div", [_vm._v(_vm._s(item.snils))])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  item.region != null
-                                    ? _c("div", [_vm._v(_vm._s(item.region))])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  item.live_address != null
-                                    ? _c("div", [
-                                        _vm._v(_vm._s(item.live_address))
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _c("br")
-                                ])
-                              })
+                              [
+                                _vm._l(_vm.app.extend.other.debtor, function(
+                                  item
+                                ) {
+                                  return _c("div", [
+                                    _c("div", [_vm._v(_vm._s(item.result))]),
+                                    _vm._v(" "),
+                                    item.category != null
+                                      ? _c("div", [
+                                          _vm._v(_vm._s(item.category))
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.ogrnip != null
+                                      ? _c("div", [_vm._v(_vm._s(item.ogrnip))])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.snils != null
+                                      ? _c("div", [_vm._v(_vm._s(item.snils))])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.region != null
+                                      ? _c("div", [_vm._v(_vm._s(item.region))])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.live_address != null
+                                      ? _c("div", [
+                                          _vm._v(_vm._s(item.live_address))
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c("br")
+                                  ])
+                                }),
+                                _vm._v(" "),
+                                !_vm.status &&
+                                !_vm.app.extend.other.debtor &&
+                                _vm.serviceMessage(11) === null
+                                  ? _c("div", [
+                                      _c("span", { staticClass: "sp" })
+                                    ])
+                                  : _vm._e()
+                              ]
                             ],
                             2
                           )
@@ -69215,39 +69487,53 @@ var render = function() {
                                   ]
                                 : _vm._e(),
                               _vm._v(" "),
-                              _vm._l(_vm.app.extend.other.disq, function(item) {
-                                return _c("div", [
-                                  _c("div", [_vm._v(_vm._s(item.result))]),
-                                  _vm._v(" "),
-                                  item.period != null
-                                    ? _c("div", [_vm._v(_vm._s(item.period))])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  item.start_date != null
-                                    ? _c("div", [
-                                        _vm._v(_vm._s(item.start_date))
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  item.end_date != null
-                                    ? _c("div", [_vm._v(_vm._s(item.end_date))])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  item.org_position != null
-                                    ? _c("div", [
-                                        _vm._v(_vm._s(item.org_position))
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  item.name_org_protocol != null
-                                    ? _c("div", [
-                                        _vm._v(_vm._s(item.name_org_protocol))
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _c("br")
-                                ])
-                              })
+                              [
+                                _vm._l(_vm.app.extend.other.disq, function(
+                                  item
+                                ) {
+                                  return _c("div", [
+                                    _c("div", [_vm._v(_vm._s(item.result))]),
+                                    _vm._v(" "),
+                                    item.period != null
+                                      ? _c("div", [_vm._v(_vm._s(item.period))])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.start_date != null
+                                      ? _c("div", [
+                                          _vm._v(_vm._s(item.start_date))
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.end_date != null
+                                      ? _c("div", [
+                                          _vm._v(_vm._s(item.end_date))
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.org_position != null
+                                      ? _c("div", [
+                                          _vm._v(_vm._s(item.org_position))
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.name_org_protocol != null
+                                      ? _c("div", [
+                                          _vm._v(_vm._s(item.name_org_protocol))
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c("br")
+                                  ])
+                                }),
+                                _vm._v(" "),
+                                !_vm.status &&
+                                !_vm.app.extend.other.disq &&
+                                _vm.serviceMessage(10) === null
+                                  ? _c("div", [
+                                      _c("span", { staticClass: "sp" })
+                                    ])
+                                  : _vm._e()
+                              ]
                             ],
                             2
                           )
@@ -69256,26 +69542,28 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", [
                     _vm._v(
-                      "КОНФИДЕНЦИАЛЬНОСТЬ. Информация, содержащаяся в данном документе, является конфиденциальной и предназначена исключительно для предполагаемого адресата. Любое распространение\n                    данного документа или раскрытие содержащейся в нем информации ЗАПРЕЩАЕТСЯ!"
+                      "КОНФИДЕНЦИАЛЬНОСТЬ. Информация, содержащаяся в данном документе, является конфиденциальной и\n                    предназначена исключительно для предполагаемого адресата. Любое распространение\n                    данного документа или раскрытие содержащейся в нем информации ЗАПРЕЩАЕТСЯ!"
                     )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "download_block" }, [
-                    _c("div", { staticClass: "wrap" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "red",
-                          attrs: {
-                            target: "_blank",
-                            href: _vm.urlPdf,
-                            download: ""
-                          }
-                        },
-                        [_vm._v("Скачать")]
-                      )
-                    ])
-                  ])
+                  _vm.status
+                    ? _c("div", { staticClass: "download_block" }, [
+                        _c("div", { staticClass: "wrap" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "red",
+                              attrs: {
+                                target: "_blank",
+                                href: _vm.urlPdf,
+                                download: ""
+                              }
+                            },
+                            [_vm._v("Скачать")]
+                          )
+                        ])
+                      ])
+                    : _vm._e()
                 ],
                 2
               )
@@ -69286,14 +69574,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "download_block" }, [
-      _c("div", { staticClass: "wrap" })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -69311,13 +69591,13 @@ var staticRenderFns = [
     return _c("ul", [
       _c("li", { staticClass: "no" }, [
         _vm._v(
-          "человек недавно получил паспорт, но указанная информация еще не поступила в ИФНС\n                                        "
+          "человек недавно получил паспорт, но указанная информация еще\n                                            не поступила в ИФНС\n                                        "
         )
       ]),
       _vm._v(" "),
       _c("li", { staticClass: "no" }, [
         _vm._v(
-          "документы в ИФНС на присвоение ИНН поданы, но ИНН еще не получен"
+          "документы в ИФНС на присвоение ИНН поданы, но ИНН еще не\n                                            получен\n                                        "
         )
       ])
     ])
@@ -69336,7 +69616,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("th", { attrs: { colspan: "2" } }, [
-        _vm._v("РУКОВОДСТВО И УЧРЕДИТЕЛЬСТВО")
+        _vm._v(" РУКОВОДСТВО И УЧРЕДИТЕЛЬСТВО")
       ])
     ])
   },
@@ -69376,6 +69656,14 @@ var staticRenderFns = [
       _c("th", { attrs: { colspan: "2" } }, [
         _vm._v("ЗАДОЛЖЕННОСТЬ ПЕРЕД ГОСУДАРСТВЕННЫМИ ОРГАНАМИ")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "mid", attrs: { colspan: "2" } }, [
+      _c("span", { staticClass: "sp" })
     ])
   },
   function() {
@@ -69774,7 +70062,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "pdf_item" }, [
     _c("div", { staticClass: "top_block" }, [
-      _c("p", { staticClass: "name" }, [_c("a", [_vm._v(_vm._s(_vm.fio))])]),
+      _c("p", { staticClass: "name" }, [
+        _c("a", [_vm._v(_vm._s(_vm.fio) + " ")])
+      ]),
       _vm._v(" "),
       _c("p", [_vm._v("Дата рождения: " + _vm._s(_vm.data.birthday))]),
       _vm._v(" "),
@@ -69785,16 +70075,16 @@ var render = function() {
       _c("p", [_vm._v("Дата выдачи: " + _vm._s(_vm.data.date_of_issue))]),
       _vm._v(" "),
       parseInt(_vm.data.status) === 1
-        ? _c("div", { staticClass: "main_btn" }, [_vm._v("Ожидает проверки")])
+        ? _c("div", { staticClass: "main_btn" }, [_vm._v("В ожидании")])
         : _vm._e(),
       _vm._v(" "),
       parseInt(_vm.data.status) === 2
         ? _c("div", { staticClass: "main_btn" }, [_vm._v("Проверяется")])
         : _vm._e(),
       _vm._v(" "),
-      parseInt(_vm.data.status) === 4 || parseInt(_vm.data.status) === 3
-        ? _c("div", [
-            _c(
+      _c("div", { staticClass: "mt-2" }, [
+        parseInt(_vm.data.status) === 4 || parseInt(_vm.data.status) === 3
+          ? _c(
               "a",
               {
                 staticClass: "main_btn download",
@@ -69802,9 +70092,11 @@ var render = function() {
                 attrs: { href: _vm.urlPdf, target: "_blank" }
               },
               [_vm._v("Скачать pdf")]
-            ),
-            _vm._v(" "),
-            _c(
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        parseInt(_vm.data.status) !== 1
+          ? _c(
               "a",
               {
                 staticClass: "main_btn look_online",
@@ -69813,8 +70105,8 @@ var render = function() {
               },
               [_vm._v("Посмотреть онлайн")]
             )
-          ])
-        : _vm._e()
+          : _vm._e()
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "bottom_block" }, [
@@ -87215,7 +87507,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AppReportComponent_vue_vue_type_template_id_560c01a1_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AppReportComponent.vue?vue&type=template&id=560c01a1&scoped=true& */ "./resources/js/components/app/AppReportComponent.vue?vue&type=template&id=560c01a1&scoped=true&");
 /* harmony import */ var _AppReportComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AppReportComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/app/AppReportComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _AppReportComponent_vue_vue_type_style_index_0_id_560c01a1_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css& */ "./resources/js/components/app/AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -87223,7 +87517,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _AppReportComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _AppReportComponent_vue_vue_type_template_id_560c01a1_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _AppReportComponent_vue_vue_type_template_id_560c01a1_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -87252,6 +87546,22 @@ component.options.__file = "resources/js/components/app/AppReportComponent.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AppReportComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AppReportComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/app/AppReportComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AppReportComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/app/AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css&":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/components/app/AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AppReportComponent_vue_vue_type_style_index_0_id_560c01a1_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/app/AppReportComponent.vue?vue&type=style&index=0&id=560c01a1&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AppReportComponent_vue_vue_type_style_index_0_id_560c01a1_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AppReportComponent_vue_vue_type_style_index_0_id_560c01a1_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AppReportComponent_vue_vue_type_style_index_0_id_560c01a1_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AppReportComponent_vue_vue_type_style_index_0_id_560c01a1_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AppReportComponent_vue_vue_type_style_index_0_id_560c01a1_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

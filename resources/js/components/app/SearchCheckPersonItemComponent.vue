@@ -3,17 +3,18 @@
         <div class="top_block">
             <p class="name">
 <!--                <a v-bind:href="url" target="_blank">{{ fio }}</a>-->
-                <a  >{{ fio }}</a>
+                <a  >{{ fio }} </a>
             </p>
             <p>Дата рождения: {{ data.birthday }}</p>
             <p>Серия, номер паспорта: {{ data.passport_code }}</p>
             <p>Дата выдачи: {{ data.date_of_issue }}</p>
             <!--<p>ИНН: <span>468465164664</span></p>-->
-            <div class="main_btn" v-if="parseInt(data.status) === 1">Ожидает проверки</div>
+            <div class="main_btn" v-if="parseInt(data.status) === 1">В ожидании</div>
             <div class="main_btn" v-if="parseInt(data.status) === 2">Проверяется</div>
-            <div v-if="parseInt(data.status) === 4 || parseInt(data.status) === 3">
-                <a v-bind:href="urlPdf" target="_blank" class="main_btn download" style="color: white;">Скачать pdf</a>
-                <a v-bind:href="urlOnline" target="_blank" class="main_btn look_online" style="color: white;">Посмотреть онлайн</a>
+
+            <div class="mt-2">
+                <a v-if="parseInt(data.status) === 4 || parseInt(data.status) === 3 " v-bind:href="urlPdf" target="_blank" class="main_btn download" style="color: white;">Скачать pdf</a>
+                <a v-bind:href="urlOnline" v-if="parseInt(data.status) !== 1" target="_blank" class="main_btn look_online" style="color: white;">Посмотреть онлайн</a>
             </div>
 
         </div>
@@ -59,7 +60,7 @@
                 let timerId = setInterval(function() {
                     axios.get(`/api/apps/short/` + self.item.id)
                         .then(function(result) {
-                            console.log(result);
+
                             self.data = result.data;
                             //если получил окончательный статус перестаем обновлять
                             if(!self.needRefresh) {
