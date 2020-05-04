@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\App;
 use App\CheckingList;
 use App\Events\AppEvent;
+use App\Notifications\SendAppPdfToUserNotification;
 use App\Packages\Constants;
 use App\Packages\Exceptions\AppNotExistException;
 use App\Packages\Loggers\ApiLog;
@@ -113,6 +114,14 @@ class AppSchedulerCheckingCommand extends Command
                 //заявка успешно обработана
                 $app->status = Constants::CHECKING_APP_SUCCESS;
                 $app->save();
+
+                try {
+                    $app->user->notify(new SendAppPdfToUserNotification($app));
+                }catch (\Exception $exception){
+                    $this->logger->info("ERROR " .$exception->getMessage() );
+
+                }
+
                 continue;
             }
 
