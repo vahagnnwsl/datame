@@ -87,7 +87,12 @@
                         </p>
                         <p class="stats"
                            style="top: 7px; line-heigh: 1.2; text-align: left; position: relative; font-family: 'Roboto Condensed' ,sans-serif; text-align: right; font-weight: 400; line-height: 24px; color: #1a2244;">
-                            проверка от {{ $app['created_at'] }}</p>
+                            проверка от {{ $app['created_at'] }}
+                            @if($app['status'] < 3)
+                                <strong>(не окончена)</strong>
+                            @endif
+
+                        </p>
                     </div>
 
                 </div>
