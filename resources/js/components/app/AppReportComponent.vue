@@ -565,7 +565,7 @@
                     <p>КОНФИДЕНЦИАЛЬНОСТЬ. Информация, содержащаяся в данном документе, является конфиденциальной и
                         предназначена исключительно для предполагаемого адресата. Любое распространение
                         данного документа или раскрытие содержащейся в нем информации ЗАПРЕЩАЕТСЯ!</p>
-                    <div class="download_block" v-if="status">
+                    <div class="download_block">
                         <div class="wrap">
                             <!--<a href="#reference_section" class="back">Назад</a>-->
                             <a target='_blank' v-bind:href="urlPdf" download class="red">Скачать</a>
@@ -694,7 +694,7 @@
                 }
                 var self = this;
 
-                var array = self.test(arr)
+                var array = self.sortServiceLists(arr)
 
                 if (array.length === 1) {
 
@@ -704,14 +704,14 @@
                     return true
                 } else {
 
-                    return this.test2(array)
+                    return this.isFinished(array)
                 }
             },
-            test2(arr) {
+            isFinished(arr) {
                 var status = false;
 
                 for (let i = 0; i < arr.length; i++) {
-                    if (i == 0 && arr[i] === 4) {
+                    if (i === 0 && arr[i] === 4) {
                         status = true;
                     } else {
                         if (arr[i - 1] !== arr[i] && !status) {
@@ -721,7 +721,7 @@
                 }
                 return status;
             },
-            test(arr) {
+            sortServiceLists(arr) {
                 var array = []
                 for (var i in arr) {
                     let service = _.find(this.services, function (o) {
@@ -736,30 +736,31 @@
 
             servicesHeaderAction(services) {
 
-                console.log(services)
+
                 for (let i = 0; i < services.length; i++) {
                     services[i].services = [];
 
-                    if (services[i].name === 'Паспорт') {
-                        services[i].services = [1];
-                    } else if (services[i].name === 'Иные источники') {
-                        services[i].services = [10, 11];
-
-                    } else if (services[i].name === 'Руководство и учредительство') {
-                        services[i].services = [12];
-
-                    } else if (services[i].name === 'Задолженность перед госорганами') {
-                        services[i].services = [3];
-
-                    } else if (services[i].name === 'Нахождение в розыске') {
-
-                        services[i].services = [5,6,7,8,9];
-                    } else if (services[i].name === 'Исполнительные производства') {
-                        services[i].services = [4];
+                    switch (services[i].name) {
+                        case 'Паспорт':
+                            services[i].services = [1];
+                            break;
+                        case 'Иные источники':
+                            services[i].services = [10, 11];
+                            break;
+                        case 'Руководство и учредительство':
+                            services[i].services = [12];
+                            break;
+                        case 'Задолженность перед госорганами':
+                            services[i].services = [3];
+                            break;
+                        case 'Нахождение в розыске':
+                            services[i].services = [5, 6, 7, 8, 9];
+                            break;
+                        case 'Исполнительные производства':
+                            services[i].services = [4];
+                            break;
                     }
                 }
-
-
                 return services;
             }
 

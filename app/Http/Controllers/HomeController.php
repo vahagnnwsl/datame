@@ -179,8 +179,10 @@ class HomeController extends Controller
                 return response('Заявка не существует или доступ запрещен', 403);
         }
 
+
         //все проверки проведены успешно
-        if($app->status == Constants::CHECKING_STATUS_SUCCESS || ($app->status == Constants::CHECKING_STATUS_ERROR && $app->checking_count == 3)) {
+//        if($app->status == Constants::CHECKING_STATUS_SUCCESS || ($app->status == Constants::CHECKING_STATUS_ERROR && $app->checking_count == 3)) {
+        if($app->status !== Constants::CHECKING_STATUS_NEW) {
 
             $name = $app->created_at->format("Y.m.d")."-".mb_ucfirst($app->lastname)."_".mb_ucfirst($app->name)."_".mb_ucfirst($app->patronymic).".pdf";
 
@@ -196,6 +198,7 @@ class HomeController extends Controller
 
     public function pdf(string $name, string $identity, $font_td = 21, $font_name = 28, $font_stat = 18, $font_type = 'px')
     {
+
         return PDF::loadFile(route('app-report.template.pdf', [
             'identity' => $identity,
             'font_td' => $font_td,
@@ -212,6 +215,7 @@ class HomeController extends Controller
     public function appTemplateForPdf($identity, $font_td = 21, $font_name = 28, $font_stat = 18, $font_type = 'px')
     {
         $app = (new AppRepository(ApiLog::newInstance()))->getAppByIdentity($identity);
+
 
         if(!is_null($app)) {
             $appTransform = (new AppTransformer())->setExtend(true)->transform($app);
@@ -231,10 +235,15 @@ class HomeController extends Controller
                 'font_type' => $font_type,
             ];
 
+
+
+
             return view('app-template-pdf', $data);
         } else {
             return response('Заявка не существует или доступ запрещен', 403);
         }
     }
+
+
 
 }

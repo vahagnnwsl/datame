@@ -4911,7 +4911,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var self = this;
-      var array = self.test(arr);
+      var array = self.sortServiceLists(arr);
 
       if (array.length === 1) {
         if (array[0] !== 4) {
@@ -4920,14 +4920,14 @@ __webpack_require__.r(__webpack_exports__);
 
         return true;
       } else {
-        return this.test2(array);
+        return this.isFinished(array);
       }
     },
-    test2: function test2(arr) {
+    isFinished: function isFinished(arr) {
       var status = false;
 
       for (var i = 0; i < arr.length; i++) {
-        if (i == 0 && arr[i] === 4) {
+        if (i === 0 && arr[i] === 4) {
           status = true;
         } else {
           if (arr[i - 1] !== arr[i] && !status) {
@@ -4938,7 +4938,7 @@ __webpack_require__.r(__webpack_exports__);
 
       return status;
     },
-    test: function test(arr) {
+    sortServiceLists: function sortServiceLists(arr) {
       var array = [];
 
       for (var i in arr) {
@@ -4954,23 +4954,33 @@ __webpack_require__.r(__webpack_exports__);
       return array;
     },
     servicesHeaderAction: function servicesHeaderAction(services) {
-      console.log(services);
-
       for (var i = 0; i < services.length; i++) {
         services[i].services = [];
 
-        if (services[i].name === 'Паспорт') {
-          services[i].services = [1];
-        } else if (services[i].name === 'Иные источники') {
-          services[i].services = [10, 11];
-        } else if (services[i].name === 'Руководство и учредительство') {
-          services[i].services = [12];
-        } else if (services[i].name === 'Задолженность перед госорганами') {
-          services[i].services = [3];
-        } else if (services[i].name === 'Нахождение в розыске') {
-          services[i].services = [5, 6, 7, 8, 9];
-        } else if (services[i].name === 'Исполнительные производства') {
-          services[i].services = [4];
+        switch (services[i].name) {
+          case 'Паспорт':
+            services[i].services = [1];
+            break;
+
+          case 'Иные источники':
+            services[i].services = [10, 11];
+            break;
+
+          case 'Руководство и учредительство':
+            services[i].services = [12];
+            break;
+
+          case 'Задолженность перед госорганами':
+            services[i].services = [3];
+            break;
+
+          case 'Нахождение в розыске':
+            services[i].services = [5, 6, 7, 8, 9];
+            break;
+
+          case 'Исполнительные производства':
+            services[i].services = [4];
+            break;
         }
       }
 
@@ -69546,24 +69556,22 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm.status
-                    ? _c("div", { staticClass: "download_block" }, [
-                        _c("div", { staticClass: "wrap" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "red",
-                              attrs: {
-                                target: "_blank",
-                                href: _vm.urlPdf,
-                                download: ""
-                              }
-                            },
-                            [_vm._v("Скачать")]
-                          )
-                        ])
-                      ])
-                    : _vm._e()
+                  _c("div", { staticClass: "download_block" }, [
+                    _c("div", { staticClass: "wrap" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "red",
+                          attrs: {
+                            target: "_blank",
+                            href: _vm.urlPdf,
+                            download: ""
+                          }
+                        },
+                        [_vm._v("Скачать")]
+                      )
+                    ])
+                  ])
                 ],
                 2
               )
@@ -70079,7 +70087,14 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       parseInt(_vm.data.status) === 2
-        ? _c("div", { staticClass: "main_btn" }, [_vm._v("Проверяется")])
+        ? _c(
+            "div",
+            {
+              staticClass: "main_btn",
+              staticStyle: { "margin-bottom": "20px" }
+            },
+            [_vm._v("Проверяется")]
+          )
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "mt-2" }, [

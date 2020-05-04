@@ -51,19 +51,19 @@ class InnInformation implements IProvider
     {
         $retData = new Result();
 
-        for($k = 0; $k < 4; $k++) {
+        for ($k = 0; $k < 4; $k++) {
             $this->logger->info("find_inn_k: {$k}");
 
             //делаем запрос в налоговую для поиска инн
             //получаем данные капчи
             $captcha = $this->getCaptcha();
 
-            if(!is_null($captcha)) {
+            if (!is_null($captcha)) {
 
                 $this->logger->info("file " . $captcha['file']);
                 $codeCaptcha = $this->ruCaptchaService->recognize($captcha['file'])->getCode();
 
-                if(!is_null($codeCaptcha)) {
+                if (!is_null($codeCaptcha)) {
 
                     //инициализируем данные капчи
                     $send['captcha'] = $codeCaptcha;
@@ -76,7 +76,6 @@ class InnInformation implements IProvider
                         'c' => 'innMy',
                         'fam' => $this->app->lastname,
                         'nam' => $this->app->name,
-                        'otch' => $this->app->patronymic,
                         'bdate' => $this->app->birthday->format('d.m.Y'),
                         'doctype' => 21,
                         'docno' => substr($this->app->passport_code, 0, 2) . " " . substr($this->app->passport_code, 2, 2) . " " . substr($this->app->passport_code, 5, 6),
@@ -84,6 +83,13 @@ class InnInformation implements IProvider
                         'captcha' => $send['captcha'],
                         'captchaToken' => $send['captchanum'],
                     ];
+
+                    if ($this->app->patronymic) {
+                        $params['otch'] = $this->app->patronymic;
+                    } else {
+                        $params['opt_otch'] = 1;
+
+                    }
 
                     $req = [
                         'url' => $this->host . $this->path,
@@ -106,6 +112,8 @@ class InnInformation implements IProvider
 
                         $client = new HttpClient;
                         $resp = $client->post($req);
+
+
                         $this->logger->info("resp search inn: " . $resp->content());
 
                         //обратываем ответ
@@ -115,36 +123,36 @@ class InnInformation implements IProvider
 
                         $json = json_decode($response);
 
-                        if(!is_null($json) && isset($json->inn)) {
+                        if (!is_null($json) && isset($json->inn)) {
                             $retData->setResult($json->inn)->setStatusResult(true);
                             break;
-                        } else if(isset($json->code) && ($json->code == 0 || $json->code == 100)) {
+                        } else if (isset($json->code) && ($json->code == 0 || $json->code == 100)) {
                             $retData->setResult("Не нашли. Возможно введены ошибочные данные или не зарегистрированы в ФНС");
                             break;
-                        } else if(isset($json->code) && $json->code == 3) {
+                        } else if (isset($json->code) && $json->code == 3) {
                             $retData->setResult("Указанные Вами сведения не прошли однозначной идентификации по Единому государственному реестру налогоплательщиков (ЕГРН)");
                             break;
-                        } else if(isset($json->STATUS) && $json->STATUS == "400") {
+                        } else if (isset($json->STATUS) && $json->STATUS == "400") {
 
                             $i = 1;
                             $captchaError = false;
-                            foreach($json->ERRORS as $error) {
+                            foreach ($json->ERRORS as $error) {
                                 $errorMessage = $error[0];
 
-                                if($errorMessage == "Цифры с картинки введены неверно" && isset($json->ERRORS->captcha) && count($json->ERRORS->captcha) == 2) {
+                                if ($errorMessage == "Цифры с картинки введены неверно" && isset($json->ERRORS->captcha) && count($json->ERRORS->captcha) == 2) {
                                     //{"ERROR":"-","ERRORS":{"
                                     //":["Цифры с картинки введены неверно"],"captchaToken":["Необходимо обновить картинку с цифрами"]},"STATUS":400}
                                     $captchaError = true;
                                     $this->logger->info("Капча распознана не верно. Ошибок: {$i}");
                                 } else {
                                     //если есть другие ошибки, отдаем их пользователю
-                                    if($errorMessage == "Цифры с картинки введены неверно") {
+                                    if ($errorMessage == "Цифры с картинки введены неверно") {
                                         $this->ruCaptchaService->nonTrue();
                                         $this->logger->info("Капча распознана не верно");
                                         $captchaError = true;
                                         continue;
                                     }
-                                    if($errorMessage == "Необходимо обновить картинку с цифрами") {
+                                    if ($errorMessage == "Необходимо обновить картинку с цифрами") {
                                         $captchaError = true;
                                         continue;
                                     }
@@ -154,7 +162,7 @@ class InnInformation implements IProvider
                                     $i++;
                                 }
                             }
-                            if($captchaError) {
+                            if ($captchaError) {
                                 $this->ruCaptchaService->nonTrue();
                                 $this->logger->info("возврат средств за капчу, номер: {$k}");
                                 continue;
@@ -166,12 +174,12 @@ class InnInformation implements IProvider
                             $retData->setResult("prepare to convert json: {$response}");
                             break;
                         }
-                    } catch(\RuntimeException $e) {
+                    } catch (\RuntimeException $e) {
                         $retData->setResult($e->getMessage());
                         break;
-                    } catch(\Exception $e) {
+                    } catch (\Exception $e) {
 
-                        if(stripos($e->getMessage(), "timed out after") != false) {
+                        if (stripos($e->getMessage(), "timed out after") != false) {
                             $retData->setResult("timeout");
                         }
                         $this->logger->error($e->getMessage() . "\r\n" . $e->getTraceAsString());
@@ -222,9 +230,9 @@ class InnInformation implements IProvider
             ]);
             $response = $client->request('GET', 'static/captcha-dialog.html');
 
-            foreach($client->getConfig('cookies') as $value) {
-                if($value instanceof SetCookie) {
-                    if($value->getName() == 'JSESSIONID') {
+            foreach ($client->getConfig('cookies') as $value) {
+                if ($value instanceof SetCookie) {
+                    if ($value->getName() == 'JSESSIONID') {
                         $data['data'] = $value->toArray();
                         break;
                     }
@@ -234,13 +242,13 @@ class InnInformation implements IProvider
 
             $st = preg_match('/<input type="hidden" name="captchaToken" value="(\w+)"/', $contents, $searches);
 
-            if($st > 0) {
+            if ($st > 0) {
                 //был найден токет для капчи
                 $container['token'] = $searches[1];
             }
             $st = preg_match('/<img src="(\/static\/captcha.bin\?a=\w+)/', $contents, $searches);
 
-            if($st > 0) {
+            if ($st > 0) {
                 $uriCaptcha = $uri . $searches[1];
 
                 //получили ссылку на фото капчи
@@ -264,7 +272,7 @@ class InnInformation implements IProvider
 
             }
 
-        } catch(GuzzleException $e) {
+        } catch (GuzzleException $e) {
             $this->logger->error("{$e->getMessage()}:\r\n{$e->getTraceAsString()}");
             return null;
         }
