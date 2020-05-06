@@ -40,6 +40,11 @@ class HonestBusinessCheckingService
     {
         /** @var CheckingList $checkingItem */
         $checkingItem = $this->getCheckingList($this->inn->app, CheckingList::ITEM_FIND_HONEST_BUSINESS);
+
+        if ($checkingItem->status === Constants::CHECKING_STATUS_SUCCESS) {
+            return true;
+        }
+
         $this->setIsCheckedCheckingList($checkingItem, Constants::CHECKING_STATUS_PROCESSING);
 
         try {

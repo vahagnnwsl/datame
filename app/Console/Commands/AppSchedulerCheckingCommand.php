@@ -64,7 +64,7 @@ class AppSchedulerCheckingCommand extends Command
                 $app->checking_count = 1;
                 $app->checking_date_last = Carbon::now();
                 $app->checking_date_next = Carbon::now()->addMinutes(10);
-                $app->checkingList()->update([
+                $app->checkingList()->where('status','!=',Constants::CHECKING_STATUS_SUCCESS)->update([
                     'message' => null,
                     'status' => Constants::CHECKING_STATUS_NEW
                 ]);
@@ -85,7 +85,7 @@ class AppSchedulerCheckingCommand extends Command
                             $app->checking_date_next = Carbon::now()->addMinutes(30);
                             break;
                     }
-                    $app->checkingList()->update([
+                    $app->checkingList()->where('status','!=',Constants::CHECKING_STATUS_SUCCESS)->update([
                         'message' => null,
                         'status' => Constants::CHECKING_STATUS_NEW
                     ]);

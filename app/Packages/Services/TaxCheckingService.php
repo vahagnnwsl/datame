@@ -35,6 +35,12 @@ class TaxCheckingService
     {
         /** @var CheckingList $checkingItem */
         $checkingItem = $this->getCheckingList($this->findInn->app, CheckingList::ITEM_FIND_TAX);
+
+
+        if ($checkingItem->status === Constants::CHECKING_STATUS_SUCCESS) {
+            return true;
+        }
+
         $this->setIsCheckedCheckingList($checkingItem, Constants::CHECKING_STATUS_PROCESSING);
 
         try {

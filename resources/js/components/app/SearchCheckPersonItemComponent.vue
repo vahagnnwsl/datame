@@ -10,7 +10,7 @@
             <p>Дата выдачи: {{ data.date_of_issue }}</p>
             <!--<p>ИНН: <span>468465164664</span></p>-->
             <div class="main_btn" v-if="parseInt(data.status) === 1">В ожидании</div>
-            <div class="main_btn" v-if="parseInt(data.status) === 2" style="margin-bottom: 20px">Проверяется</div>
+            <div class="main_btn" v-if="parseInt(data.status) === 2 || parseInt(data.status) === 3" style="margin-bottom: 20px">Проверяется</div>
 
             <div class="mt-2">
                 <a v-if="parseInt(data.status) === 4 || parseInt(data.status) === 3 " v-bind:href="urlPdf" target="_blank" class="main_btn download" style="color: white;">Скачать pdf</a>

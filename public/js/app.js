@@ -70086,7 +70086,7 @@ var render = function() {
         ? _c("div", { staticClass: "main_btn" }, [_vm._v("В ожидании")])
         : _vm._e(),
       _vm._v(" "),
-      parseInt(_vm.data.status) === 2
+      parseInt(_vm.data.status) === 2 || parseInt(_vm.data.status) === 3
         ? _c(
             "div",
             {

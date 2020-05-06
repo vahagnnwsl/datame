@@ -38,7 +38,13 @@ class DebtorCheckingService
     {
         /** @var CheckingList $checkingItem */
         $checkingItem = $this->getCheckingList($this->inn->app, CheckingList::ITEM_FIND_DEBTOR);
+
+        if ($checkingItem->status === Constants::CHECKING_STATUS_SUCCESS) {
+            return true;
+        }
+
         $this->setIsCheckedCheckingList($checkingItem, Constants::CHECKING_STATUS_PROCESSING);
+
 
         try {
 
@@ -47,10 +53,10 @@ class DebtorCheckingService
             Debtor::where('find_inn_id', $this->inn->id)->delete();
 
             $information = (new DebtorInformation($this->inn, $this->logger))->check();
-            if($information->getStatusResult()) {
-                if(is_array($information->getResult())) {
+            if ($information->getStatusResult()) {
+                if (is_array($information->getResult())) {
                     //проверка успешно проведена, сохраняем начисления
-                    foreach($information->getResult() as $item) {
+                    foreach ($information->getResult() as $item) {
                         $findItem = new Debtor();
                         $findItem->find_inn_id = $this->inn->id;
                         $findItem->result = "Является банкротом";
@@ -75,14 +81,14 @@ class DebtorCheckingService
                 $this->setError($checkingItem, $information->getResult());
             }
 
-            if(is_array($information->getResult()))
+            if (is_array($information->getResult()))
                 $this->logger->info("Завершен поиск проверки банкротства", $information->getResult());
             else
                 $this->logger->info("Завершен поиск проверки банкротства: {$information->getResult()}");
 
             return true;
 
-        } catch(Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error("error: {$e->getMessage()}, {$e->getTraceAsString()}");
             $this->setError($checkingItem, $e->getMessage());
         }
