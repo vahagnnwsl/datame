@@ -4808,6 +4808,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AppReportComponent",
   props: {
@@ -68565,7 +68573,27 @@ var render = function() {
                                   ])
                                 : [
                                     _vm.app.inn != null
-                                      ? _c("td", [_vm._v(_vm._s(_vm.app.inn))])
+                                      ? _c("td", [
+                                          _vm._v(
+                                            _vm._s(_vm.app.inn) +
+                                              "\n                                    "
+                                          ),
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass: "red",
+                                              attrs: {
+                                                target: "_blank",
+                                                href:
+                                                  "/storage/pdf/" +
+                                                  _vm.app.inn +
+                                                  ".pdf",
+                                                download: ""
+                                              }
+                                            },
+                                            [_vm._v("Скачать")]
+                                          )
+                                        ])
                                       : _c("td", [
                                           _vm._v(
                                             "\n                                    ИНН не найден. Возможные причины:\n                                    "
@@ -69149,7 +69177,33 @@ var render = function() {
                                     : _vm._e(),
                                   _vm._v(" "),
                                   _vm.app.extend.tax.items.length === 0
-                                    ? _c("tr", [_vm._m(8)])
+                                    ? _c("tr", [
+                                        _vm.status
+                                          ? _c(
+                                              "td",
+                                              {
+                                                staticClass: "mid",
+                                                attrs: { colspan: "2" }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                    Задолженности не найдены\n                                "
+                                                )
+                                              ]
+                                            )
+                                          : _c(
+                                              "td",
+                                              {
+                                                staticClass: "mid",
+                                                attrs: { colspan: "2" }
+                                              },
+                                              [
+                                                _c("span", {
+                                                  staticClass: "sp"
+                                                })
+                                              ]
+                                            )
+                                      ])
                                     : _vm._e()
                                 ]
                           ]
@@ -69161,7 +69215,7 @@ var render = function() {
                     "table",
                     { staticClass: "info_table" },
                     [
-                      _vm._m(9),
+                      _vm._m(8),
                       _vm._v(" "),
                       _vm.serviceNotRespond(4)
                         ? [
@@ -69318,7 +69372,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("table", { staticClass: "info_table" }, [
-                    _vm._m(10),
+                    _vm._m(9),
                     _vm._v(" "),
                     _c("tr", [
                       _c("td", [_vm._v("Интерпол, красные карточки")]),
@@ -69407,7 +69461,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("table", { staticClass: "info_table" }, [
-                    _vm._m(11),
+                    _vm._m(10),
                     _vm._v(" "),
                     _c("tr", [
                       _c("td", { staticClass: "word_break" }, [
@@ -69664,14 +69718,6 @@ var staticRenderFns = [
       _c("th", { attrs: { colspan: "2" } }, [
         _vm._v("ЗАДОЛЖЕННОСТЬ ПЕРЕД ГОСУДАРСТВЕННЫМИ ОРГАНАМИ")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "mid", attrs: { colspan: "2" } }, [
-      _c("span", { staticClass: "sp" })
     ])
   },
   function() {

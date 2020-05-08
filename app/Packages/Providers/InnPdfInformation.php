@@ -16,9 +16,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\SetCookie;
 use GuzzleHttp\Exception\GuzzleException;
 use jumper423\decaptcha\services\RuCaptcha;
-use Storage;
-use Vinelab\Http\Client as HttpClient;
+use GuzzleHttp\Promise;
 
+use Storage;
 
 class InnPdfInformation implements IProvider
 {
@@ -35,95 +35,212 @@ class InnPdfInformation implements IProvider
      */
     private $ruCaptchaService;
     protected $inn;
+    protected $sessionId;
+
 
     public function __construct($inn)
     {
         $this->inn = $inn;
-        //$this->ruCaptchaService = new RuCaptchaProvider([RuCaptcha::ACTION_FIELD_LANGUAGE => 'rn']);
+        $this->ruCaptchaService = new RuCaptchaProvider([RuCaptcha::ACTION_FIELD_LANGUAGE => 'rn']);
 
 
     }
+
 
     /**
      * @return Result|null
      */
+
+
     public function check()
     {
 
+        $token = $this->getToken();
+        $res = $this->search($token);
 
-        $req = [
-            'url' => $this->host,
-            'params' => [
-                'query' => $this->inn
-            ],
-            'headers' => [
-                "Accept: application/json, text/javascript, */*; q=0.01",
-                "content-type: application/x-www-form-urlencoded",
-            ],
+        if (count($res->rows) > 0) {
+            $t = $res->rows[0];
+            if ($req = $this->req($t->t)) {
+                $status = $this->status($req->t);
+                if ($status->status === 'ready') {
+                    return $this->download($req->t);
+                }
+            }
+        }
 
+        return null;
+    }
+
+    public function search($token)
+    {
+        $client = new Client([
+            'defaults' => [
+                'headers' => ['Cookie' => 'JSESSIONID=' . $this->sessionId],
+            ]
+        ]);
+
+        $time = microtime(true);
+        $time = explode('.', $time);
+        $time = $time[0] . $time[1];
+        $response = $client->request('GET', $this->host . 'search-result/' . $token . '?r=' . $time . '&_=' . $time);
+
+        return json_decode($response->getBody());
+
+    }
+
+    public function req($token)
+    {
+        $client = new Client([
+            'defaults' => [
+                'headers' => ['Cookie' => 'JSESSIONID=' . $this->sessionId],
+            ]
+        ]);
+
+        $time = microtime(true);
+        $time = explode('.', $time);
+        $time = $time[0] . $time[1];
+        $response = $client->request('GET', $this->host . 'vyp-request/' . $token . '?r=&_=' . $time);
+
+        return json_decode($response->getBody());
+
+    }
+
+    public function getToken()
+    {
+
+        $captcha = $this->getCaptcha();
+        $this->sessionId = $captcha['session'];
+
+        $client = new Client([
+            'defaults' => [
+                'headers' => ['Cookie' => 'JSESSIONID=' . $this->sessionId],
+            ]
+        ]);
+        $response = $client->request('POST', $this->host, [
+            'form_params' => [
+                'query' => $this->inn,
+            ]
+        ]);
+
+        return json_decode($response->getBody())->t;
+    }
+
+    public function status($token)
+    {
+        $time = microtime(true);
+        $time = explode('.', $time);
+        $time = $time[0] . $time[1];
+        $client = new Client([
+            'defaults' => [
+                'headers' => ['Cookie' => 'JSESSIONID=' . $this->sessionId],
+            ]
+        ]);
+
+
+        $response = $client->request('GET', $this->host . 'vyp-status/' . $token . '?r=' . $time . '&_=' . $time);
+
+
+        return json_decode($response->getBody());
+
+
+    }
+
+
+    public function download($token)
+    {
+        $client = new Client([
+            'defaults' => [
+                'headers' => ['Cookie' => 'JSESSIONID=' . $this->sessionId],
+            ]
+        ]);
+
+        $response = $client->request('GET', $this->host . 'vyp-download/' . $token);
+        $path = "pdf/" . $this->inn . ".pdf";
+
+
+        Storage::disk('public')->put($path, $response->getBody()->getContents());
+
+        return Storage::disk('public')->path($path);
+
+    }
+
+    public function getCaptcha()
+    {
+        $container = [
+            'status' => false,
+            'src' => '',
+            'token' => '',
+            'session' => '',
+            'value' => '',
+            'type' => 'image',
+            'file' => null
         ];
 
+        try {
 
-        $client = new HttpClient;
-        $resp = $client->post($req);
+            $data = ['token' => 0, 'src' => '', 'base64', 'status' => false];
+            $uri = 'https://egrul.nalog.ru';
 
-        dd($resp);
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => $uri,
+                // You can set any number of default request options.
+                'timeout' => 30,
+                'cookies' => true,
+                'verify' => false
+            ]);
 
-        $curl = curl_init();
+            $response = $client->request('GET', 'static/captcha-dialog.html');
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://egrul.nalog.ru/",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "query=" . $this->inn,
-            CURLOPT_HTTPHEADER => array(
-                "cache-control: no-cache",
-                "content-type: application/x-www-form-urlencoded",
-            ),
-        ));
 
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
+            foreach ($client->getConfig('cookies') as $value) {
+                if ($value instanceof SetCookie) {
+                    if ($value->getName() == 'JSESSIONID') {
+                        $data['data'] = $value->toArray();
+                        break;
+                    }
+                }
+            }
+            $contents = $response->getBody()->getContents();
 
-        curl_close($curl);
+            $st = preg_match('/<input type="hidden" name="captchaToken" value="(\w+)"/', $contents, $searches);
 
-        $resp = json_decode($response);
-        return $resp->t;
+            if ($st > 0) {
+                //был найден токет для капчи
+                $container['token'] = $searches[1];
+            }
+            $st = preg_match('/<img src="(\/static\/captcha.bin\?a=\w+)/', $contents, $searches);
 
-    }
+            if ($st > 0) {
+                $uriCaptcha = $uri . $searches[1];
 
-    public function download($t)
-    {
-        $curl = curl_init();
+                //получили ссылку на фото капчи
+                $container['status'] = true;
+                $response = $client->request('GET', $uriCaptcha);
+                $container['src'] = base64_encode($response->getBody()->getContents());
+                $container['session'] = $data['data']['Value'];
+                $container['uri'] = $uriCaptcha;
+                $container['file'] = null;
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://egrul.nalog.ru/vyp-download/" . $t,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
-                "cache-control: no-cache",
-            ),
-        ));
+                $session = date('YmdHis') . rand(100000, 999999);
+                $path = "files/{$session}_inn_captcha.jpg";
 
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
+                $r = $client->get($uriCaptcha);
+                //сохраняем капчу локально
+                Storage::disk('public')->put($path, $r->getBody()->getContents());
+                //получаем урл на файлы капчи
+                $container['file'] = Storage::disk('public')->path($path);
 
-        curl_close($curl);
+//$this->logger->info("Запрос капчи: $uriCaptcha");
 
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
+            }
+
+        } catch (GuzzleException $e) {
+            $this->logger->error("{$e->getMessage()}:\r\n{$e->getTraceAsString()}");
+            return null;
         }
-    }
 
+        return $container;
+    }
 
 }

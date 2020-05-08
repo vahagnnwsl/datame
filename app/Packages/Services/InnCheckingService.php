@@ -13,6 +13,7 @@ use App\FindInn;
 use App\Packages\Constants;
 use App\Packages\Loggers\CustomLogger;
 use App\Packages\Providers\InnInformation;
+use App\Packages\Providers\InnPdfInformation;
 use Throwable;
 
 /**
@@ -61,6 +62,13 @@ class InnCheckingService
             $findInn->type_inn = FindInn::INDIVIDUAL_INN;
             if($innInformation->getStatusResult()) {
                 $findInn->inn = $innInformation->getResult();
+
+                try {
+                    (new InnPdfInformation($findInn->inn))->check();
+                }catch (\Exception $exception){
+                    $this->logger->error("error22226: ".$exception->getMessage());
+                }
+
             } else {
                 $findInn->error_message = $innInformation->getResult();
                 $this->setMessage($checkingItem, $findInn->error_message);

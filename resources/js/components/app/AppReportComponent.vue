@@ -76,7 +76,10 @@
                             <template v-else>
                                 <td v-if="serviceMessage(2) != null">{{ serviceMessage(2) }}</td>
                                 <template v-else>
-                                    <td v-if="app.inn != null">{{ app.inn}}</td>
+                                    <td v-if="app.inn != null">{{ app.inn}}
+                                        <a target='_blank' v-bind:href="'/storage/pdf/'+app.inn+'.pdf'"  download class="red">Скачать</a>
+
+                                    </td>
                                     <td v-else>
                                         ИНН не найден. Возможные причины:
                                         <ul>
@@ -377,10 +380,15 @@
                                 </tr>
 
                                 <tr v-if="app.extend.tax.items.length === 0">
-                                    <td colspan="2" class="mid">
-                                        <!--                                        Задолженности не найдены-->
+                                    <td colspan="2" class="mid" v-if="status">
+                                        Задолженности не найдены
+                                    </td>
+
+                                    <td colspan="2" class="mid" v-else>
                                         <span class="sp"></span>
                                     </td>
+
+
                                 </tr>
 
                             </template>
@@ -593,7 +601,6 @@
         },
         mounted() {
             this.init();
-
         },
         data() {
             return {

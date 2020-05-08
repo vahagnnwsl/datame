@@ -17,6 +17,7 @@
     "doctrine/dbal": "^2.9",
     "fideloper/proxy": "^4.0",
     "guzzlehttp/guzzle": "^6.2",
+    "guzzlehttp/guzzle-services": "^1.1",
     "jumper423/decaptcha": "*",
     "laravel/framework": "5.7.*",
     "laravel/passport": "^7.1",
