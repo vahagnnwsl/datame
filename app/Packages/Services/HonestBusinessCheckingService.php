@@ -10,6 +10,7 @@ use App\HonestBusinessUl;
 use App\Packages\Constants;
 use App\Packages\Loggers\CustomLogger;
 use App\Packages\Providers\HonestBusinessInformation;
+use App\Packages\Providers\InnPdfInformation;
 use GuzzleHttp\Exception\GuzzleException;
 use Throwable;
 
@@ -73,6 +74,8 @@ class HonestBusinessCheckingService
                     $model->naim_okved = $item['НаимОКВЭД'];
                     $model->rukovoditel = implode(", ", $item['Руководитель']);
                     $model->save();
+                    $inn = $model->inn;
+
                 } else if($item['ТипДокумента'] == 'ip') {
                     $model = new HonestBusinessIp();
                     $model->find_inn_id = $this->inn->id;
@@ -89,9 +92,17 @@ class HonestBusinessCheckingService
                     $model->kod_okved = $item['КодОКВЭД'];
                     $model->naim_okved = $item['НаимОКВЭД'];
                     $model->save();
+                    $inn = $model->innfl;
                 }
             }
 
+            if ($inn && !is_null($inn)) {
+                try {
+                    (new InnPdfInformation($inn))->check();
+                }catch (\Exception $exception){
+                    $this->logger->error("error22226: ".$exception->getMessage());
+                }
+            }
             //отмечаем что проверка проведена
             $this->setIsCheckedCheckingList($checkingItem, Constants::CHECKING_STATUS_SUCCESS);
 
