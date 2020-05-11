@@ -19,7 +19,7 @@
                         <!--                        -->
                         <div class="col">
                             <ul>
-                                <template v-for="(service,key) in servicesHeader">
+                                <template v-for="(service,key) in servicesHeader" v-if="service.name !== 'INN'">
                                     <li v-if="status" v-bind:class="{ no: service.status == false }">
                                         {{ service.name }}
                                     </li>
@@ -78,10 +78,11 @@
                                 <template v-else>
                                     <td v-if="app.inn != null">{{ app.inn}}
                                         <a target='_blank' v-bind:href="'/storage/pdf/'+app.inn+'.pdf'"  download class="red">Скачать</a>
-
                                     </td>
                                     <td v-else>
-                                        ИНН не найден. Возможные причины:
+
+                                       <span v-if="serviceStatus([2])">
+                                           ИНН не найден. Возможные причины:
                                         <ul>
                                             <li class="no">человек недавно получил паспорт, но указанная информация еще
                                                 не поступила в ИФНС
@@ -90,6 +91,11 @@
                                                 получен
                                             </li>
                                         </ul>
+                                       </span>
+                                        <span v-else>
+                                              <span class="sp"></span>
+                                        </span>
+
                                     </td>
                                 </template>
                             </template>
@@ -228,7 +234,9 @@
                                     </tr>
                                     <tr>
                                         <td>ИНН</td>
-                                        <td>{{ item.inn }}</td>
+                                        <td>{{ item.inn }}
+                                            <a  target='_blank' v-bind:href="'/storage/pdf/'+item.inn+'.pdf'"  download class="red">Скачать</a>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>КПП</td>
@@ -768,6 +776,12 @@
                             break;
                     }
                 }
+
+                services.push({
+                    name: 'INN',
+                    services: [2],
+                });
+                console.log(services)
                 return services;
             }
 

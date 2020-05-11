@@ -4816,6 +4816,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AppReportComponent",
   props: {
@@ -4992,6 +5000,11 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
+      services.push({
+        name: 'INN',
+        services: [2]
+      });
+      console.log(services);
       return services;
     }
   }
@@ -68431,42 +68444,52 @@ var render = function() {
                         "ul",
                         [
                           _vm._l(_vm.servicesHeader, function(service, key) {
-                            return [
-                              _vm.status
-                                ? _c(
-                                    "li",
-                                    { class: { no: service.status == false } },
-                                    [
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(service.name) +
-                                          "\n                                "
+                            return service.name !== "INN"
+                              ? [
+                                  _vm.status
+                                    ? _c(
+                                        "li",
+                                        {
+                                          class: { no: service.status == false }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                    " +
+                                              _vm._s(service.name) +
+                                              "\n                                "
+                                          )
+                                        ]
                                       )
-                                    ]
-                                  )
-                                : !_vm.status &&
-                                  _vm.serviceStatus(service.services)
-                                  ? _c(
-                                      "li",
-                                      {
-                                        class: { no: service.status == false }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                    " +
-                                            _vm._s(service.name) +
-                                            "\n                                "
+                                    : !_vm.status &&
+                                      _vm.serviceStatus(service.services)
+                                      ? _c(
+                                          "li",
+                                          {
+                                            class: {
+                                              no: service.status == false
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                    " +
+                                                _vm._s(service.name) +
+                                                "\n                                "
+                                            )
+                                          ]
                                         )
-                                      ]
-                                    )
-                                  : _c("li", { staticClass: "progress-li" }, [
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(service.name) +
-                                          "\n                                "
-                                      )
-                                    ])
-                            ]
+                                      : _c(
+                                          "li",
+                                          { staticClass: "progress-li" },
+                                          [
+                                            _vm._v(
+                                              "\n                                    " +
+                                                _vm._s(service.name) +
+                                                "\n                                "
+                                            )
+                                          ]
+                                        )
+                                ]
+                              : _vm._e()
                           }),
                           _vm._v(" "),
                           _vm.app.extend.trust.all_amount > 0
@@ -68595,10 +68618,18 @@ var render = function() {
                                           )
                                         ])
                                       : _c("td", [
-                                          _vm._v(
-                                            "\n                                    ИНН не найден. Возможные причины:\n                                    "
-                                          ),
-                                          _vm._m(1)
+                                          _vm.serviceStatus([2])
+                                            ? _c("span", [
+                                                _vm._v(
+                                                  "\n                                       ИНН не найден. Возможные причины:\n                                    "
+                                                ),
+                                                _vm._m(1)
+                                              ])
+                                            : _c("span", [
+                                                _c("span", {
+                                                  staticClass: "sp"
+                                                })
+                                              ])
                                         ])
                                   ]
                             ]
@@ -68869,7 +68900,27 @@ var render = function() {
                                       _c("tr", [
                                         _c("td", [_vm._v("ИНН")]),
                                         _vm._v(" "),
-                                        _c("td", [_vm._v(_vm._s(item.inn))])
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(item.inn) +
+                                              "\n                                        "
+                                          ),
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass: "red",
+                                              attrs: {
+                                                target: "_blank",
+                                                href:
+                                                  "/storage/pdf/" +
+                                                  item.inn +
+                                                  ".pdf",
+                                                download: ""
+                                              }
+                                            },
+                                            [_vm._v("Скачать")]
+                                          )
+                                        ])
                                       ]),
                                       _vm._v(" "),
                                       _c("tr", [
