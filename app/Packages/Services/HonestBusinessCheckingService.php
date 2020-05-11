@@ -94,15 +94,16 @@ class HonestBusinessCheckingService
                     $model->save();
                     $inn = $model->innfl;
                 }
-            }
-
-            if ($inn && !is_null($inn)) {
-                try {
-                    (new InnPdfInformation($inn))->check();
-                }catch (\Exception $exception){
-                    $this->logger->error("error22226: ".$exception->getMessage());
+                if ($inn && !is_null($inn)) {
+                    try {
+                        (new InnPdfInformation($inn))->check();
+                    }catch (\Exception $exception){
+                        $this->logger->error("error22226: ".$exception->getMessage());
+                    }
                 }
             }
+
+
             //отмечаем что проверка проведена
             $this->setIsCheckedCheckingList($checkingItem, Constants::CHECKING_STATUS_SUCCESS);
 
