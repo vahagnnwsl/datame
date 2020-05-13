@@ -19,12 +19,11 @@
                         <!--                        -->
                         <div class="col">
                             <ul>
-                                <template v-for="(service,key) in servicesHeader" v-if="service.name !== 'INN'">
+                                <template v-for="(service,key) in servicesHeader" v-if="!['INN','Задолженности отсутствуют'].includes(service.name)">
                                     <li v-if="status" v-bind:class="{ no: service.status == false }">
                                         {{ service.name }}
                                     </li>
-                                    <li v-else-if="!status && serviceStatus(service.services)"
-                                        v-bind:class="{ no: service.status == false }">
+                                    <li v-else-if="!status && serviceStatus(service.services)" v-bind:class="{ no: service.status == false }">
                                         {{ service.name }}
                                     </li>
                                     <li v-else class="progress-li">
@@ -35,6 +34,14 @@
                                     <li class="no">
                                         Общая задолженность: <span style="font-weight: bold">{{ app.extend.trust.all_amount_formatted }}</span>
                                         рублей
+                                    </li>
+                                </template>
+                                <template v-else>
+                                    <li v-if="status" >
+                                        Задолженности отсутствуют
+                                    </li>
+                                    <li v-else class="progress-li">
+                                        Задолженности отсутствуют
                                     </li>
                                 </template>
                             </ul>
@@ -77,7 +84,8 @@
                                 <td v-if="serviceMessage(2) != null">{{ serviceMessage(2) }}</td>
                                 <template v-else>
                                     <td v-if="app.inn != null">{{ app.inn}}
-                                        <a target='_blank' v-bind:href="'/storage/pdf/'+app.inn+'.pdf'"  download class="red">Скачать</a>
+                                        <a target='_blank' v-bind:href="'/storage/pdf/'+app.inn+'.pdf'" download
+                                           class="red">Скачать</a>
                                     </td>
                                     <td v-else>
 
@@ -235,7 +243,8 @@
                                     <tr>
                                         <td>ИНН</td>
                                         <td>{{ item.inn }}
-                                            <a  target='_blank' v-bind:href="'/storage/pdf/'+item.inn+'.pdf'"  download class="red">Скачать</a>
+                                            <a target='_blank' v-bind:href="'/storage/pdf/'+item.inn+'.pdf'" download
+                                               class="red">Скачать</a>
                                         </td>
                                     </tr>
                                     <tr>

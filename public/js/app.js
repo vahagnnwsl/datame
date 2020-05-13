@@ -4166,6 +4166,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SearchingPersonItemComponent",
   props: ['item'],
@@ -4223,6 +4224,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -68307,11 +68317,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "pdf_item" }, [
     _c("div", { staticClass: "top_block" }, [
-      _c("p", { staticClass: "name" }, [
-        _c("a", { attrs: { href: _vm.url, target: "_blank" } }, [
-          _vm._v(_vm._s(_vm.fio))
-        ])
-      ]),
+      _c("p", { staticClass: "name" }, [_c("a", [_vm._v(_vm._s(_vm.fio))])]),
       _vm._v(" "),
       _c("p", [_vm._v(_vm._s(_vm.data.birthday))]),
       _vm._v(" "),
@@ -68444,7 +68450,10 @@ var render = function() {
                         "ul",
                         [
                           _vm._l(_vm.servicesHeader, function(service, key) {
-                            return service.name !== "INN"
+                            return ![
+                              "INN",
+                              "Задолженности отсутствуют"
+                            ].includes(service.name)
                               ? [
                                   _vm.status
                                     ? _c(
@@ -68515,7 +68524,19 @@ var render = function() {
                                   )
                                 ])
                               ]
-                            : _vm._e()
+                            : [
+                                _vm.status
+                                  ? _c("li", [
+                                      _vm._v(
+                                        "\n                                    Задолженности отсутствуют\n                                "
+                                      )
+                                    ])
+                                  : _c("li", { staticClass: "progress-li" }, [
+                                      _vm._v(
+                                        "\n                                    Задолженности отсутствуют\n                                "
+                                      )
+                                    ])
+                              ]
                         ],
                         2
                       )
