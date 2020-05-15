@@ -352,7 +352,8 @@ print_r(json_decode((string) $body));
 <!-- END_0d5aa3d741708cb5a00931f6f8682c2b -->
 
 <!-- START_a83411c32f769661cfbb969eedb3e732 -->
-## api/apps/short/{app_id}
+## Возвращает short информацию getAppShort
+
 > Example request:
 
 ```php
@@ -383,7 +384,7 @@ print_r(json_decode((string) $body));
 <!-- END_a83411c32f769661cfbb969eedb3e732 -->
 
 <!-- START_a5d86f4cc79e75df39d8fe9574d1d9b3 -->
-## Возвращает список заявок пользователя
+## Возвращает список заявок пользователя getApps
 
 > Example request:
 
@@ -408,7 +409,7 @@ print_r(json_decode((string) $body));
 <!-- END_a5d86f4cc79e75df39d8fe9574d1d9b3 -->
 
 <!-- START_7470ac70812ff53ed511a45d05c966df -->
-## Возвращает список всех заявок от пользователей
+## Возвращает список всех заявок от пользователей getAppsAll
 
 > Example request:
 
@@ -433,7 +434,7 @@ print_r(json_decode((string) $body));
 <!-- END_7470ac70812ff53ed511a45d05c966df -->
 
 <!-- START_a769132040e7eb051141abba61516aee -->
-## Создать заявку
+## Создать заявку store
 
 > Example request:
 
@@ -445,12 +446,12 @@ $response = $client->post("http://datame.loc/api/apps/store", [
             "Authorization" => "Bearer {token}",
         ],
     'query' => [
-            "passport_code" => "mollitia",
-            "date_of_issue" => "ut",
-            "birthday" => "nostrum",
-            "lastname" => "enim",
-            "name" => "non",
-            "patronymic" => "autem",
+            "passport_code" => "ullam",
+            "date_of_issue" => "doloremque",
+            "birthday" => "in",
+            "lastname" => "qui",
+            "name" => "odit",
+            "patronymic" => "ullam",
         ],
 ]);
 $body = $response->getBody();

@@ -368,7 +368,7 @@ print_r(json_decode((string) $body));</code></pre>
 <p><code>GET api/apps/{app_id}</code></p>
 <!-- END_0d5aa3d741708cb5a00931f6f8682c2b -->
 <!-- START_a83411c32f769661cfbb969eedb3e732 -->
-<h2>api/apps/short/{app_id}</h2>
+<h2>Возвращает short информацию getAppShort</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
@@ -391,7 +391,7 @@ print_r(json_decode((string) $body));</code></pre>
 <p><code>GET api/apps/short/{app_id}</code></p>
 <!-- END_a83411c32f769661cfbb969eedb3e732 -->
 <!-- START_a5d86f4cc79e75df39d8fe9574d1d9b3 -->
-<h2>Возвращает список заявок пользователя</h2>
+<h2>Возвращает список заявок пользователя getApps</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
@@ -408,7 +408,7 @@ print_r(json_decode((string) $body));</code></pre>
 <p><code>POST api/apps/filter/{page?}/{limit?}</code></p>
 <!-- END_a5d86f4cc79e75df39d8fe9574d1d9b3 -->
 <!-- START_7470ac70812ff53ed511a45d05c966df -->
-<h2>Возвращает список всех заявок от пользователей</h2>
+<h2>Возвращает список всех заявок от пользователей getAppsAll</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
@@ -425,7 +425,7 @@ print_r(json_decode((string) $body));</code></pre>
 <p><code>POST api/apps/filter/all/{page?}/{limit?}</code></p>
 <!-- END_7470ac70812ff53ed511a45d05c966df -->
 <!-- START_a769132040e7eb051141abba61516aee -->
-<h2>Создать заявку</h2>
+<h2>Создать заявку store</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
@@ -436,12 +436,12 @@ $response = $client-&gt;post("http://datame.loc/api/apps/store", [
             "Authorization" =&gt; "Bearer {token}",
         ],
     'query' =&gt; [
-            "passport_code" =&gt; "mollitia",
-            "date_of_issue" =&gt; "ut",
-            "birthday" =&gt; "nostrum",
-            "lastname" =&gt; "enim",
-            "name" =&gt; "non",
-            "patronymic" =&gt; "autem",
+            "passport_code" =&gt; "ullam",
+            "date_of_issue" =&gt; "doloremque",
+            "birthday" =&gt; "in",
+            "lastname" =&gt; "qui",
+            "name" =&gt; "odit",
+            "patronymic" =&gt; "ullam",
         ],
 ]);
 $body = $response-&gt;getBody();

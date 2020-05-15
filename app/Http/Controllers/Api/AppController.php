@@ -38,7 +38,7 @@ class AppController extends Controller
     }
 
     /**
-     * Создать заявку
+     * Создать заявку store
      * @queryParam passport_code required  ex. 4513 426808
      * @queryParam date_of_issue optional ex. format 01.01.2001
      * @queryParam birthday   required ex. format 01.01.2001
@@ -220,7 +220,7 @@ class AppController extends Controller
     }
 
     /**
-     * Проверка даты окончания услуг или количества заявок пользователя
+     * Проверка даты окончания услуг или количества заявок пользователя checkUserAppPermission
      *
      * @param User $user
      * @return bool
@@ -586,7 +586,9 @@ class AppController extends Controller
     {
         return $this->getApp($request, 1);
     }
-
+    /**
+     * Возвращает short информацию getAppShort
+     */
     public function getAppShort(Request $request, $app_id)
     {
         $result = new Result();
@@ -603,7 +605,7 @@ class AppController extends Controller
     }
 
     /**
-     * Возвращает список заявок пользователя
+     * Возвращает список заявок пользователя getApps
      *
      * @param Request $request
      * @param int $page
@@ -624,7 +626,7 @@ class AppController extends Controller
     }
 
     /**
-     * Возвращает список всех заявок от пользователей
+     * Возвращает список всех заявок от пользователей getAppsAll
      * @param Request $request
      * @param int $page
      * @param int $limit

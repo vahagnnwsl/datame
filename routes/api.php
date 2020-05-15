@@ -19,8 +19,8 @@ Route::middleware('auth:api')->group(function() {
 
         Route::get('{app_id}', 'Api\AppController@getApp')->name('api.apps.info');
         Route::get('short/{app_id}', 'Api\AppController@getAppShort')->name('api.apps.info.short');
-        Route::post('/filter/{page?}/{limit?}', 'Api\AppController@getApps')->name('api.apps.filter');
-        Route::post('/filter/all/{page?}/{limit?}', 'Api\AppController@getAppsAll')->name('api.apps.filter-all');
+        Route::post('filter/{page?}/{limit?}', 'Api\AppController@getApps')->name('api.apps.filter');
+        Route::post('filter/all/{page?}/{limit?}', 'Api\AppController@getAppsAll')->name('api.apps.filter-all');
         Route::post('store', 'Api\AppController@store')->name('api.apps.store');
     });
 
