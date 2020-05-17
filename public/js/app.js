@@ -70233,7 +70233,7 @@ var render = function() {
               "a",
               {
                 staticClass: "main_btn look_online",
-                staticStyle: { color: "white" },
+                staticStyle: { color: "white", "margin-top": "10px" },
                 attrs: { href: _vm.urlOnline, target: "_blank" }
               },
               [_vm._v("Посмотреть онлайн")]
@@ -88692,7 +88692,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\datameweb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\openserver\OSPanel\domains\datame\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

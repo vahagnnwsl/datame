@@ -14,7 +14,7 @@
 
             <div class="mt-2">
                 <a v-if="parseInt(data.status) === 4 || parseInt(data.status) === 3 " v-bind:href="urlPdf" target="_blank" class="main_btn download" style="color: white;">Скачать pdf</a>
-                <a v-bind:href="urlOnline" v-if="parseInt(data.status) !== 1" target="_blank" class="main_btn look_online" style="color: white;">Посмотреть онлайн</a>
+                <a v-bind:href="urlOnline" v-if="parseInt(data.status) !== 1" target="_blank" class="main_btn look_online" style="color: white;margin-top:10px">Посмотреть онлайн</a>
             </div>
 
         </div>
@@ -45,6 +45,7 @@
             Spinner
         },
         mounted() {
+
             if(this.needRefresh) {
                 this.refreshApp();
             }

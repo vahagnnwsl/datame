@@ -203,7 +203,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\datameweb\resources\assets\js\common.js */"./resources/assets/js/common.js");
+module.exports = __webpack_require__(/*! D:\openserver\OSPanel\domains\datame\resources\assets\js\common.js */"./resources/assets/js/common.js");
 
 
 /***/ })
