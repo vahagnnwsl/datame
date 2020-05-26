@@ -7,6 +7,7 @@ use App\Events\AppEvent;
 use App\Events\DisqCheckingEvent;
 use App\Events\FedFsmCheckingEvent;
 use App\Events\FindDepartmentCheckingEvent;
+use App\Events\FsinChekingEvent;
 use App\Events\FsspCheckingEvent;
 use App\Events\FsspWantedCheckingEvent;
 use App\Events\InterpolRedCheckingEvent;
@@ -62,6 +63,9 @@ class AppListener implements ShouldQueue
 
         //запускаем проверку фссп
         event(new FsspCheckingEvent($event->app, $this->logger->setIdentity(identity($event->app->identity, CheckingList::ITEM_FIND_FSSP))));
+
+        //запускаем проверку фсин
+        event(new FsinChekingEvent($event->app, $this->logger->setIdentity(identity($event->app->identity, CheckingList::ITEM_FIND_FSIN))));
 
         //запускаем поиск в списках террористов и экстремистов
         event(new FedFsmCheckingEvent($event->app, $this->logger->setIdentity(identity($event->app->identity, CheckingList::ITEM_FIND_TERRORIST))));

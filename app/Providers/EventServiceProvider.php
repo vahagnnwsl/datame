@@ -8,6 +8,9 @@ use App\Events\DisqCheckingEvent;
 use App\Events\FedFsmCheckingEvent;
 use App\Events\FindDepartmentCheckingEvent;
 use App\Events\FsspCheckingEvent;
+
+use App\Events\FsinChekingEvent;
+
 use App\Events\FsspWantedCheckingEvent;
 use App\Events\HonestBusinessCheckingEvent;
 use App\Events\InnCheckingEvent;
@@ -22,6 +25,10 @@ use App\Listeners\AppListener;
 use App\Listeners\DebtorListener;
 use App\Listeners\DisqListener;
 use App\Listeners\FedFsmListener;
+
+use App\Listeners\FsinListner;
+
+
 use App\Listeners\FindDepartmentListener;
 use App\Listeners\FsspListener;
 use App\Listeners\FsspWantedListener;
@@ -54,6 +61,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         InnFoundEvent::class => [
             InnFoundListener::class
+        ],
+        FsinChekingEvent::class => [
+            FsinListner::class
         ],
         InnNotFoundEvent::class => [
             InnNotFoundListener::class

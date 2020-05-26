@@ -100,11 +100,11 @@ class AppTransformer
             'services' => [
                 'completed' => 0,
                 'completed_success' => 0,
-                'list' => $app->checkingList()->get()->transform(function(CheckingList $item) use (&$checking_completed, &$checking_completed_success) {
-                    if($item->status == Constants::CHECKING_STATUS_ERROR || $item->status == Constants::CHECKING_STATUS_SUCCESS) {
+                'list' => $app->checkingList()->get()->transform(function (CheckingList $item) use (&$checking_completed, &$checking_completed_success) {
+                    if ($item->status == Constants::CHECKING_STATUS_ERROR || $item->status == Constants::CHECKING_STATUS_SUCCESS) {
                         $checking_completed += 1;
                     }
-                    if($item->status == Constants::CHECKING_STATUS_SUCCESS) {
+                    if ($item->status == Constants::CHECKING_STATUS_SUCCESS) {
                         $checking_completed_success += 1;
                     }
                     return self::transformCheckingList($item);
@@ -118,20 +118,20 @@ class AppTransformer
 
         /** @var FindInn $individualInn */
         $individualInn = $app->inn()->where('type_inn', FindInn::INDIVIDUAL_INN)->whereNotNull('inn')->first();
-        if(!is_null($individualInn)) {
+        if (!is_null($individualInn)) {
             $data['inn'] = $individualInn->inn;
         }
 
-        if($this->isWithUser()) {
+        if ($this->isWithUser()) {
             /** @var User $user */
             $user = $app->user()->first();
-            if(!is_null($user)) {
+            if (!is_null($user)) {
 
                 $data['user']['id'] = $user->id;
                 $data['user']['name'] = $user->name;
                 $data['user']['email'] = $user->email;
 
-                switch($user->type_user) {
+                switch ($user->type_user) {
                     case Constants::USER_INDIVIDUAL:
                         $data['user']['name'] = "{$user->lastname} {$user->name}";
                         break;
@@ -144,7 +144,7 @@ class AppTransformer
             }
         }
 
-        if($this->isExtend()) {
+        if ($this->isExtend()) {
 
             $data['extend'] = [
                 'name_en' => mb_ucfirst(rus2translit($app->name)),
@@ -168,6 +168,11 @@ class AppTransformer
                     'amount' => 0,
                     'proceed' => [],
                     'finished' => []
+                ],
+                'fsin' => [
+                    'result' => '',
+                    'territorial_authorities' => '',
+                    'federal_authorities' => ''
                 ],
                 'wanted' => [
                     'interpol_red' => null, //интерпол красные карточки
@@ -194,9 +199,9 @@ class AppTransformer
 
             /** @var Passport $passport */
             $passport = $app->passport()->first();
-            if(!is_null($passport)) {
+            if (!is_null($passport)) {
                 //Паспорт валидный
-                if($passport->is_valid) {
+                if ($passport->is_valid) {
                     //состояние
                     $data['extend']['passport']['is_valid'] = 'Паспорт действительный';
                     //Дополнительная информация
@@ -215,8 +220,8 @@ class AppTransformer
 
             /** @var FindDepartment $department */
             $department = $app->department()->with('branches')->first();
-            if(!is_null($department)) {
-                switch($department->type) {
+            if (!is_null($department)) {
+                switch ($department->type) {
                     case Constants::CODE_DEPARTMENT_GUVM:
                         $data['extend']['passport']['attachment'] = "УФМС (в настоящее время ГУВМ)";
                         break;
@@ -232,10 +237,10 @@ class AppTransformer
                     default:
                         $data['extend']['passport']['attachment'] = "Код подразделения введен неверно";
                 }
-                $department->branches()->each(function(FindDepartmentList $list) use (&$data) {
+                $department->branches()->each(function (FindDepartmentList $list) use (&$data) {
                     /** @var Department $dep */
                     $dep = $list->department()->first();
-                    if(!is_null($dep)) {
+                    if (!is_null($dep)) {
                         $data['extend']['passport']['who_issue'][] = [
                             'id' => $dep->id,
                             'name' => $dep->name,
@@ -246,8 +251,8 @@ class AppTransformer
 
             }
 
-            if(!is_null($individualInn)) {
-                $data['extend']['tax']['items'] = $individualInn->tax()->get()->transform(function(FindTax $item) use (&$data) {
+            if (!is_null($individualInn)) {
+                $data['extend']['tax']['items'] = $individualInn->tax()->get()->transform(function (FindTax $item) use (&$data) {
                     $data['extend']['tax']['amount'] += $item->amount;
                     return [
                         'id' => $item->id,
@@ -263,8 +268,8 @@ class AppTransformer
                 $data['extend']['tax']['amount'] = formatNumberDecimal($data['extend']['tax']['amount']);
 
                 //Банкротство
-                $data['extend']['other']['debtor'] = $individualInn->debtor()->get()->transform(function(Debtor $item) use (&$data) {
-                    if(!is_null($item->error_message)) {
+                $data['extend']['other']['debtor'] = $individualInn->debtor()->get()->transform(function (Debtor $item) use (&$data) {
+                    if (!is_null($item->error_message)) {
                         $dt = [
                             'result' => $item->error_message,
                             'category' => null,
@@ -274,7 +279,7 @@ class AppTransformer
                             'live_address' => null,
                         ];
                     } else {
-                        if($item->result == "Является банкротом") {
+                        if ($item->result == "Является банкротом") {
                             $dt = [
                                 'result' => $item->result,
                                 'category' => "Категория: {$item->category}",
@@ -300,7 +305,7 @@ class AppTransformer
 
                 //бизнес
                 //руководство
-                $data['extend']['business']['ul'] = $individualInn->honestBusinessUl()->get()->transform(function(HonestBusinessUl $item) use (&$data) {
+                $data['extend']['business']['ul'] = $individualInn->honestBusinessUl()->get()->transform(function (HonestBusinessUl $item) use (&$data) {
                     return [
                         'naim_ul_sokr' => $item->naim_ul_sokr,
                         'naim_ul_poln' => $item->naim_ul_poln,
@@ -316,7 +321,7 @@ class AppTransformer
                 })->toArray();
 
                 //Учредительство
-                $data['extend']['business']['ip'] = $individualInn->honestBusinessIp()->get()->transform(function(HonestBusinessIp $item) use (&$data) {
+                $data['extend']['business']['ip'] = $individualInn->honestBusinessIp()->get()->transform(function (HonestBusinessIp $item) use (&$data) {
                     return [
                         'naim_vid_ip' => $item->naim_vid_ip,
                         'familia' => $item->familia,
@@ -335,12 +340,12 @@ class AppTransformer
             //фссп задолженности
             $fssp = $app->fssp()->get();
 
-            if($fssp->isNotEmpty()) {
+            if ($fssp->isNotEmpty()) {
                 $data['extend']['fssp']['amount'] = formatNumberDecimal($fssp->sum("amount"));
 
                 /** @var FindFssp $item */
-                foreach($fssp->all() as $item) {
-                    if($item->amount > 0)
+                foreach ($fssp->all() as $item) {
+                    if ($item->amount > 0)
                         $data['extend']['fssp']['proceed'][] = $this->transformFssp($item);
                     else
                         $data['extend']['fssp']['finished'][] = $this->transformFssp($item);
@@ -351,45 +356,45 @@ class AppTransformer
             //поиск по карточкам интерпола
             /** @var InterpolRed $interpolRed */
             $interpolRed = $app->interpolRed()->first();
-            if(!is_null($interpolRed)) {
+            if (!is_null($interpolRed)) {
                 $data['extend']['wanted']['interpol_red'] = $interpolRed->result;
             }
 
             /** @var InterpolYellow $interpolYellow */
             $interpolYellow = $app->interpolYellow()->first();
-            if(!is_null($interpolYellow)) {
+            if (!is_null($interpolYellow)) {
                 $data['extend']['wanted']['interpol_yellow'] = $interpolYellow->result;
             }
 
             /** @var MvdWanted $mvdWanted */
             $mvdWanted = $app->mvdWanted()->first();
-            if(!is_null($mvdWanted)) {
+            if (!is_null($mvdWanted)) {
                 $data['extend']['wanted']['mvd_wanted'] = $mvdWanted->result;
             }
 
             /** @var FsspWanted $fsspWanted */
             $fsspWanted = $app->fsspWanted()->first();
-            if(!is_null($fsspWanted)) {
+            if (!is_null($fsspWanted)) {
                 $data['extend']['wanted']['fssp_wanted'] = $fsspWanted->result;
             }
 
             //в списках террористов и экстремистов
             /** @var FedFsm $fedFsm */
             $fedFsm = $app->fedFsm()->first();
-            if(!is_null($fedFsm)) {
+            if (!is_null($fedFsm)) {
                 $data['extend']['wanted']['fed_fsm'] = $fedFsm->status;
 
                 //устанавливаем год рождения
-                if(!is_null($fedFsm->city_birth)) {
+                if (!is_null($fedFsm->city_birth)) {
                     $data['city_birth'] = $fedFsm->city_birth;
                 }
             }
 
             $disq = $app->disq()->get();
-            if($disq->isNotEmpty()) {
-                $disq->each(function(Disq $findItem) use (&$data) {
+            if ($disq->isNotEmpty()) {
+                $disq->each(function (Disq $findItem) use (&$data) {
                     $data['city_birth'] = $findItem->mesto_rogd;
-                    if(!is_null($findItem->error_message)) {
+                    if (!is_null($findItem->error_message)) {
                         $data['extend']['other']['disq'][] = [
                             'result' => $findItem->error_message,
                             'period' => null,
@@ -399,7 +404,7 @@ class AppTransformer
                             'name_org_protocol' => null,
                         ];
                     } else {
-                        if($findItem->result == "Является дисквалифицированным лицом") {
+                        if ($findItem->result == "Является дисквалифицированным лицом") {
                             $data['extend']['other']['disq'][] = [
                                 'result' => $findItem->result,
                                 'period' => "Срок: {$findItem->discv_srok}",
@@ -423,6 +428,19 @@ class AppTransformer
 
                 });
             }
+            $fsin = $app->fsin()->first();
+
+            if (!is_null($fsin)) {
+                if (!$fsin->error_message) {
+                    $data['extend']['fsin']['result'] = $fsin->result;
+                    if ($fsin->result !== 'Отсутствует') {
+                        $data['extend']['fsin']['territorial_authorities'] = $fsin->territorial_authorities;
+                        $data['extend']['fsin']['federal_authorities'] = $fsin->federal_authorities;
+                    }
+                }
+            }
+
+
 
             //расчет коэфициента
             $calculation = (new AppRatingCalculation($data))->calc();
@@ -459,7 +477,7 @@ class AppTransformer
             'message' => $item->message,
         ];
 
-        switch($item->type) {
+        switch ($item->type) {
             case CheckingList::ITEM_PASSPORT:
                 $dt['name'] = 'Проверка паспорта';
                 break;
@@ -498,6 +516,9 @@ class AppTransformer
                 break;
             case CheckingList::ITEM_FIND_CODE_DEPARTMENT:
                 $dt['name'] = 'Проверка кода подразделения';
+                break;
+            case CheckingList::ITEM_FIND_FSIN:
+                $dt['name'] = 'Федеральная служба исполнения наказаний';
                 break;
         }
 

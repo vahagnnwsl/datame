@@ -149,6 +149,11 @@ class App extends Model
         return $this->hasOne('App\FsspWanted', 'app_id', 'id');
     }
 
+
+    public function fsin() {
+        return $this->hasOne('App\FindFsin', 'app_id', 'id');
+    }
+
     /**
      * Террористы и экстремисты
      *

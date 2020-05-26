@@ -533,6 +533,47 @@
                         </tr>
                     </table>
 
+                    <table class="info_table">
+                        <tr>
+                            <th colspan="2">ФЕДЕРАЛЬНАЯ СЛУЖБА ИСПОЛНЕНИЯ НАКАЗАНИЙ</th>
+                        </tr>
+
+
+                        <template v-if="!app.extend.fsin.result">
+
+                            <tr>
+                                <td colspan="2" class="mid" >
+                                    <span class="sp"></span>
+                                </td>
+                            </tr>
+
+                        </template>
+
+                        <template v-else>
+
+                            <tr v-if="app.extend.fsin.result === 'Отсутствует'">
+                                <td colspan="2" class="mid">{{app.extend.fsin.result}}</td>
+                            </tr>
+
+                            <tr v-else>
+                                <td class="word_break">Отчет</td>
+                                <td v-html="app.extend.fsin.result"></td>
+                            </tr>
+
+                            <tr v-if="app.extend.fsin.territorial_authorities">
+                                <td class="word_break">Территориальные органы</td>
+                                <td >{{app.extend.fsin.territorial_authorities}}</td>
+                            </tr>
+
+                            <tr v-if="app.extend.fsin.federal_authorities">
+                                <td class="word_break">Федеральные органы</td>
+                                <td >{{app.extend.fsin.federal_authorities}}</td>
+                            </tr>
+
+                        </template>
+
+                    </table>
+
                     <!--Иные источники-->
                     <table class="info_table">
                         <tr>
@@ -682,9 +723,10 @@
 
                         self.status = response.data.status;
                         self.app = response.data.result;
+
                         self.services = response.data.result.services.list;
                         self.servicesHeader = self.servicesHeaderAction(self.app.extend.trust.services)
-
+                        console.log(self.app.extend.fsin)
 
                         if (self.status) {
                             if (self.timerId != null)
@@ -783,6 +825,9 @@
                         case 'Исполнительные производства':
                             services[i].services = [4];
                             break;
+                        case 'Федеральная служба исполнения наказаний':
+                            services[i].services = [14];
+                            break;
                     }
                 }
 
@@ -790,7 +835,6 @@
                     name: 'INN',
                     services: [2],
                 });
-                console.log(services)
                 return services;
             }
 
