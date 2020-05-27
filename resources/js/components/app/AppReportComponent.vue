@@ -533,46 +533,46 @@
                         </tr>
                     </table>
 
-                    <table class="info_table">
-                        <tr>
-                            <th colspan="2">ФЕДЕРАЛЬНАЯ СЛУЖБА ИСПОЛНЕНИЯ НАКАЗАНИЙ</th>
-                        </tr>
+<!--                    <table class="info_table">-->
+<!--                        <tr>-->
+<!--                            <th colspan="2">ФЕДЕРАЛЬНАЯ СЛУЖБА ИСПОЛНЕНИЯ НАКАЗАНИЙ</th>-->
+<!--                        </tr>-->
 
 
-                        <template v-if="!app.extend.fsin.result">
+<!--                        <template v-if="!app.extend.fsin.result">-->
 
-                            <tr>
-                                <td colspan="2" class="mid" >
-                                    <span class="sp"></span>
-                                </td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <td colspan="2" class="mid" >-->
+<!--                                    <span class="sp"></span>-->
+<!--                                </td>-->
+<!--                            </tr>-->
 
-                        </template>
+<!--                        </template>-->
 
-                        <template v-else>
+<!--                        <template v-else>-->
 
-                            <tr v-if="app.extend.fsin.result === 'Отсутствует'">
-                                <td colspan="2" class="mid">{{app.extend.fsin.result}}</td>
-                            </tr>
+<!--                            <tr v-if="app.extend.fsin.result === 'Отсутствует'">-->
+<!--                                <td colspan="2" class="mid">{{app.extend.fsin.result}}</td>-->
+<!--                            </tr>-->
 
-                            <tr v-else>
-                                <td class="word_break">Отчет</td>
-                                <td v-html="app.extend.fsin.result"></td>
-                            </tr>
+<!--                            <tr v-else>-->
+<!--                                <td class="word_break">Отчет</td>-->
+<!--                                <td v-html="app.extend.fsin.result"></td>-->
+<!--                            </tr>-->
 
-                            <tr v-if="app.extend.fsin.territorial_authorities">
-                                <td class="word_break">Территориальные органы</td>
-                                <td >{{app.extend.fsin.territorial_authorities}}</td>
-                            </tr>
+<!--                            <tr v-if="app.extend.fsin.territorial_authorities">-->
+<!--                                <td class="word_break">Территориальные органы</td>-->
+<!--                                <td >{{app.extend.fsin.territorial_authorities}}</td>-->
+<!--                            </tr>-->
 
-                            <tr v-if="app.extend.fsin.federal_authorities">
-                                <td class="word_break">Федеральные органы</td>
-                                <td >{{app.extend.fsin.federal_authorities}}</td>
-                            </tr>
+<!--                            <tr v-if="app.extend.fsin.federal_authorities">-->
+<!--                                <td class="word_break">Федеральные органы</td>-->
+<!--                                <td >{{app.extend.fsin.federal_authorities}}</td>-->
+<!--                            </tr>-->
 
-                        </template>
+<!--                        </template>-->
 
-                    </table>
+<!--                    </table>-->
 
                     <!--Иные источники-->
                     <table class="info_table">
