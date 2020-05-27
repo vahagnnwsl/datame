@@ -20,8 +20,6 @@ use Throwable;
 use GuzzleHttp\Client;
 use simple_html_dom;
 
-//arrFilterAdd_pf%5Bterritory2%5D=&arrFilterAdd_pf%5Bfio%5D=%D2%E5%ED%FC%EA%EE%E2%F1%EA%E8%E9+%C4%EC%E8%F2%F0%E8%E9+%C2%E8%EA%F2%EE%F0%EE%E2%E8%F7&set_filter=&set_filter=Y
-//&arrFilterAdd_pf[fio]=%D0%A2%D0%B5%D0%BD%D1%8C%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9%20%20%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9%20%20%D0%92%D0%B8%D0%BA%D1%82%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87&set_filter=Y
 class FsinInformation
 {
     /**
@@ -81,7 +79,7 @@ class FsinInformation
                 $fullname = $div->children[1]->children[1];
                 $federalAuthorities = $div->children[1]->children[4]->children[1]->plaintext;
                 $territorialAuthorities = $div->children[1]->children[3]->children[1]->plaintext;
-                $result = $div->children[1]->children[2]->plaintext;
+                $result = $div->children[1]->children[2]->outertext;
 
                 $retData->setResult([
                     'app_id' => $this->app->id,
