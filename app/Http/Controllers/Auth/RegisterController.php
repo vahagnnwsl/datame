@@ -124,7 +124,9 @@ class RegisterController extends Controller
                 'phone' => $data['phone'],
                 'type_user' => Constants::USER_INDIVIDUAL,
                 'password' => $password,
-                'oferta_confirmed' => true
+                'oferta_confirmed' => true,
+                'check_quantity' => 1000
+
             ]);
         } else {
             //регается юр. лицо
@@ -138,7 +140,8 @@ class RegisterController extends Controller
                 'phone' => $data['phone'],
                 'type_user' => Constants::USER_LEGAL,
                 'password' => $password,
-                'oferta_confirmed' => true
+                'oferta_confirmed' => true,
+                'check_quantity' => 1000
             ]);
         }
     }
