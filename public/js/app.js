@@ -4875,6 +4875,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AppReportComponent",
   props: {
@@ -4944,17 +4967,13 @@ __webpack_require__.r(__webpack_exports__);
         self.status = response.data.status;
         self.app = response.data.result;
         self.services = response.data.result.services.list;
-        self.servicesHeader = self.servicesHeaderAction(self.app.extend.trust.services);
-        console.log(self.app.extend.fsin);
 
         if (self.status) {
           if (self.timerId != null) clearInterval(self.timerId);
         }
 
         self.loading = false;
-      }).catch(function (error) {
-        console.error(error.response);
-      });
+      }).catch(function (error) {});
     },
     closeWindow: function closeWindow() {
       window.close();
@@ -4973,23 +4992,10 @@ __webpack_require__.r(__webpack_exports__);
 
       return parseInt(service.status) === 3;
     },
-    serviceStatus: function serviceStatus(arr) {
-      if (arr.length === 0) {
-        return true;
-      }
-
-      var self = this;
-      var array = self.sortServiceLists(arr);
-
-      if (array.length === 1) {
-        if (array[0] !== 4) {
-          return false;
-        }
-
-        return true;
-      } else {
-        return this.isFinished(array);
-      }
+    serviceStatus: function serviceStatus(type) {
+      return this.services.filter(function (service) {
+        return service.type === type;
+      })[0];
     },
     isFinished: function isFinished(arr) {
       var status = false;
@@ -68494,54 +68500,59 @@ var render = function() {
                       _c(
                         "ul",
                         [
-                          _vm._l(_vm.servicesHeader, function(service, key) {
-                            return ![
-                              "INN",
-                              "Задолженности отсутствуют"
-                            ].includes(service.name)
+                          _vm._l(_vm.app.extend.trust.services, function(
+                            service,
+                            key
+                          ) {
+                            return service.name !== "Задолженности отсутствуют"
                               ? [
                                   _vm.status
-                                    ? _c(
-                                        "li",
-                                        {
-                                          class: { no: service.status == false }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                        " +
-                                              _vm._s(service.name) +
-                                              "\n                                    "
-                                          )
-                                        ]
-                                      )
-                                    : !_vm.status &&
-                                      _vm.serviceStatus(service.services)
-                                      ? _c(
+                                    ? [
+                                        _c(
                                           "li",
                                           {
                                             class: {
-                                              no: service.status == false
+                                              no: service.status === false
                                             }
                                           },
                                           [
                                             _vm._v(
-                                              "\n                                        " +
+                                              "\n                                            " +
                                                 _vm._s(service.name) +
-                                                "\n                                    "
+                                                "\n                                        "
                                             )
                                           ]
                                         )
-                                      : _c(
-                                          "li",
-                                          { staticClass: "progress-li" },
-                                          [
-                                            _vm._v(
-                                              "\n                                        " +
-                                                _vm._s(service.name) +
-                                                "\n                                    "
+                                      ]
+                                    : [
+                                        service.is_finished
+                                          ? _c(
+                                              "li",
+                                              {
+                                                class: {
+                                                  no: service.status === false
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                            " +
+                                                    _vm._s(service.name) +
+                                                    "\n                                        "
+                                                )
+                                              ]
                                             )
-                                          ]
-                                        )
+                                          : _c(
+                                              "li",
+                                              { staticClass: "progress-li" },
+                                              [
+                                                _vm._v(
+                                                  "\n                                            " +
+                                                    _vm._s(service.name) +
+                                                    "\n                                        "
+                                                )
+                                              ]
+                                            )
+                                      ]
                                 ]
                               : _vm._e()
                           }),
@@ -68657,9 +68668,11 @@ var render = function() {
                             ]
                           : [
                               _vm.serviceMessage(2) != null
-                                ? _c("td", [
-                                    _vm._v(_vm._s(_vm.serviceMessage(2)))
-                                  ])
+                                ? [
+                                    _c("td", [
+                                      _vm._v(_vm._s(_vm.serviceMessage(2)))
+                                    ])
+                                  ]
                                 : [
                                     _vm.app.inn != null
                                       ? _c("td", [
@@ -68684,7 +68697,7 @@ var render = function() {
                                           )
                                         ])
                                       : _c("td", [
-                                          _vm.serviceStatus([2])
+                                          _vm.serviceStatus(2).status === 4
                                             ? _c("span", [
                                                 _vm._v(
                                                   "\n                                           ИНН не найден. Возможные причины:\n                                        "
@@ -69459,29 +69472,54 @@ var render = function() {
                             _vm._v(" "),
                             _vm.app.extend.fssp.proceed.length === 0 &&
                             _vm.app.extend.fssp.finished.length === 0
-                              ? _c("tr", [
-                                  _vm.status
-                                    ? _c(
-                                        "td",
-                                        {
-                                          staticClass: "mid",
-                                          attrs: { colspan: "2" }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                    Задолженности не найдены\n                                "
+                              ? _c(
+                                  "tr",
+                                  [
+                                    _vm.status
+                                      ? [
+                                          _c(
+                                            "td",
+                                            {
+                                              staticClass: "mid",
+                                              attrs: { colspan: "2" }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                        Задолженности не найдены\n                                    "
+                                              )
+                                            ]
                                           )
                                         ]
-                                      )
-                                    : _c(
-                                        "td",
-                                        {
-                                          staticClass: "mid",
-                                          attrs: { colspan: "2" }
-                                        },
-                                        [_c("span", { staticClass: "sp" })]
-                                      )
-                                ])
+                                      : [
+                                          _vm.serviceStatus(4).status === 4
+                                            ? _c(
+                                                "td",
+                                                {
+                                                  staticClass: "mid",
+                                                  attrs: { colspan: "2" }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                        Задолженности не найдены\n                                    "
+                                                  )
+                                                ]
+                                              )
+                                            : _c(
+                                                "td",
+                                                {
+                                                  staticClass: "mid",
+                                                  attrs: { colspan: "2" }
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass: "sp"
+                                                  })
+                                                ]
+                                              )
+                                        ]
+                                  ],
+                                  2
+                                )
                               : _vm._e()
                           ]
                     ],
@@ -69707,9 +69745,7 @@ var render = function() {
                                   ])
                                 }),
                                 _vm._v(" "),
-                                !_vm.status &&
-                                !_vm.app.extend.other.disq &&
-                                _vm.serviceMessage(10) === null
+                                !_vm.status && _vm.serviceMessage(10) === null
                                   ? _c("div", [
                                       _c("span", { staticClass: "sp" })
                                     ])

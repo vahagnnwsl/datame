@@ -19,16 +19,23 @@
                         <!--                        -->
                         <div class="col">
                             <ul>
-                                <template v-for="(service,key) in servicesHeader" v-if="!['INN','Задолженности отсутствуют'].includes(service.name)">
-                                    <li v-if="status" v-bind:class="{ no: service.status == false }">
-                                        {{ service.name }}
-                                    </li>
-                                    <li v-else-if="!status && serviceStatus(service.services)" v-bind:class="{ no: service.status == false }">
-                                        {{ service.name }}
-                                    </li>
-                                    <li v-else class="progress-li">
-                                        {{ service.name }}
-                                    </li>
+                                <template v-for="(service,key) in app.extend.trust.services"  v-if="service.name !== 'Задолженности отсутствуют'">
+                                    <template v-if="status">
+                                        <li  v-bind:class="{ no: service.status === false }">
+                                            {{ service.name }}
+                                        </li>
+                                    </template>
+                                    <template v-else>
+                                        <li  v-if="service.is_finished" v-bind:class="{ no: service.status === false }">
+                                            {{ service.name }}
+                                        </li>
+                                        <li  v-else class="progress-li">
+                                            {{ service.name }}
+                                        </li>
+
+                                    </template>
+
+
                                 </template>
                                 <template v-if="app.extend.trust.all_amount > 0">
                                     <li class="no">
@@ -81,7 +88,11 @@
                                 <td>{{ service_error_message }}</td>
                             </template>
                             <template v-else>
-                                <td v-if="serviceMessage(2) != null">{{ serviceMessage(2) }}</td>
+
+                                <template v-if="serviceMessage(2) != null">
+                                    <td >{{ serviceMessage(2) }}</td>
+                                </template>
+
                                 <template v-else>
                                     <td v-if="app.inn != null">{{ app.inn}}
                                         <a target='_blank' v-bind:href="'/storage/pdf/'+app.inn+'.pdf'" download
@@ -89,7 +100,7 @@
                                     </td>
                                     <td v-else>
 
-                                       <span v-if="serviceStatus([2])">
+                                       <span v-if="serviceStatus(2).status === 4">
                                            ИНН не найден. Возможные причины:
                                         <ul>
                                             <li class="no">человек недавно получил паспорт, но указанная информация еще
@@ -476,13 +487,25 @@
                             </tr>
 
                             <tr v-if="app.extend.fssp.proceed.length === 0 && app.extend.fssp.finished.length === 0">
-                                <td colspan="2" class="mid" v-if="status">
-                                    Задолженности не найдены
-                                </td>
 
-                                <td colspan="2" class="mid" v-else>
-                                    <span class="sp"></span>
-                                </td>
+                                <template v-if="status">
+                                    <td colspan="2" class="mid" >
+                                        Задолженности не найдены
+                                    </td>
+                                </template>
+                                <template v-else>
+
+                                    <td colspan="2" class="mid" v-if="serviceStatus(4).status === 4">
+                                        Задолженности не найдены
+                                    </td>
+                                    <td colspan="2" class="mid" v-else>
+                                        <span class="sp"></span>
+                                    </td>
+
+                                </template>
+
+
+
                             </tr>
                         </template>
 
@@ -619,7 +642,7 @@
                                         <div v-if="item.name_org_protocol != null">{{ item.name_org_protocol }}</div>
                                         <br>
                                     </div>
-                                    <div v-if="!status && !app.extend.other.disq && serviceMessage(10)=== null">
+                                    <div v-if="!status &&   serviceMessage(10)=== null">
                                         <span class="sp"></span>
                                     </div>
                                 </template>
@@ -716,17 +739,15 @@
                 if (parseInt(self.app_id) === 1)
                     url = `/api/demo`;
 
+
                 axios.get(url)
                     .then(function (response) {
                         // self.status = response.data.status;
                         //заявка обрабатывается
-
                         self.status = response.data.status;
                         self.app = response.data.result;
 
                         self.services = response.data.result.services.list;
-                        self.servicesHeader = self.servicesHeaderAction(self.app.extend.trust.services)
-                        console.log(self.app.extend.fsin)
 
                         if (self.status) {
                             if (self.timerId != null)
@@ -736,7 +757,6 @@
                         self.loading = false;
                     })
                     .catch(function (error) {
-                        console.error(error.response);
                     })
             },
             closeWindow() {
@@ -754,24 +774,8 @@
                 });
                 return parseInt(service.status) === 3;
             },
-            serviceStatus(arr) {
-                if (arr.length === 0) {
-                    return true;
-                }
-                var self = this;
-
-                var array = self.sortServiceLists(arr)
-
-                if (array.length === 1) {
-
-                    if (array[0] !== 4) {
-                        return false;
-                    }
-                    return true
-                } else {
-
-                    return this.isFinished(array)
-                }
+            serviceStatus(type) {
+                return  this.services.filter(service => service.type === type)[0];
             },
             isFinished(arr) {
                 var status = false;
