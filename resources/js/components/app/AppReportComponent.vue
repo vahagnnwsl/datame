@@ -19,17 +19,18 @@
                         <!--                        -->
                         <div class="col">
                             <ul>
-                                <template v-for="(service,key) in app.extend.trust.services"  v-if="service.name !== 'Задолженности отсутствуют'">
+                                <template v-for="(service,key) in app.extend.trust.services"
+                                          v-if="service.name !== 'Задолженности отсутствуют'">
                                     <template v-if="status">
-                                        <li  v-bind:class="{ no: service.status === false }">
+                                        <li v-bind:class="{ no: service.status === false }">
                                             {{ service.name }}
                                         </li>
                                     </template>
                                     <template v-else>
-                                        <li  v-if="service.is_finished" v-bind:class="{ no: service.status === false }">
+                                        <li v-if="service.is_finished" v-bind:class="{ no: service.status === false }">
                                             {{ service.name }}
                                         </li>
-                                        <li  v-else class="progress-li">
+                                        <li v-else class="progress-li">
                                             {{ service.name }}
                                         </li>
 
@@ -44,7 +45,7 @@
                                     </li>
                                 </template>
                                 <template v-else>
-                                    <li v-if="status" >
+                                    <li v-if="status">
                                         Задолженности отсутствуют
                                     </li>
                                     <li v-else class="progress-li">
@@ -90,7 +91,7 @@
                             <template v-else>
 
                                 <template v-if="serviceMessage(2) != null">
-                                    <td >{{ serviceMessage(2) }}</td>
+                                    <td>{{ serviceMessage(2) }}</td>
                                 </template>
 
                                 <template v-else>
@@ -200,12 +201,20 @@
                         </tr>
                         <tr>
                             <td>Дополнительная информация</td>
-                            <td v-if="app.extend.passport.status">
-                                {{ app.extend.passport.status }}
-                            </td>
-                            <td v-if="!app.extend.passport.status && !status">
-                                <span class="sp"></span>
-                            </td>
+
+                            <template v-if="status">
+                                <td>
+                                    {{ app.extend.passport.status }}
+                                </td>
+                            </template>
+                            <template v-else>
+                                <td v-if="serviceStatus(1).status === 4">
+                                    {{ app.extend.passport.status }}
+                                </td>
+                                <td v-else>
+                                    <span class="sp"></span>
+                                </td>
+                            </template>
                         </tr>
                     </table>
 
@@ -489,7 +498,7 @@
                             <tr v-if="app.extend.fssp.proceed.length === 0 && app.extend.fssp.finished.length === 0">
 
                                 <template v-if="status">
-                                    <td colspan="2" class="mid" >
+                                    <td colspan="2" class="mid">
                                         Задолженности не найдены
                                     </td>
                                 </template>
@@ -503,7 +512,6 @@
                                     </td>
 
                                 </template>
-
 
 
                             </tr>
@@ -556,46 +564,46 @@
                         </tr>
                     </table>
 
-<!--                    <table class="info_table">-->
-<!--                        <tr>-->
-<!--                            <th colspan="2">ФЕДЕРАЛЬНАЯ СЛУЖБА ИСПОЛНЕНИЯ НАКАЗАНИЙ</th>-->
-<!--                        </tr>-->
+                    <!--                    <table class="info_table">-->
+                    <!--                        <tr>-->
+                    <!--                            <th colspan="2">ФЕДЕРАЛЬНАЯ СЛУЖБА ИСПОЛНЕНИЯ НАКАЗАНИЙ</th>-->
+                    <!--                        </tr>-->
 
 
-<!--                        <template v-if="!app.extend.fsin.result">-->
+                    <!--                        <template v-if="!app.extend.fsin.result">-->
 
-<!--                            <tr>-->
-<!--                                <td colspan="2" class="mid" >-->
-<!--                                    <span class="sp"></span>-->
-<!--                                </td>-->
-<!--                            </tr>-->
+                    <!--                            <tr>-->
+                    <!--                                <td colspan="2" class="mid" >-->
+                    <!--                                    <span class="sp"></span>-->
+                    <!--                                </td>-->
+                    <!--                            </tr>-->
 
-<!--                        </template>-->
+                    <!--                        </template>-->
 
-<!--                        <template v-else>-->
+                    <!--                        <template v-else>-->
 
-<!--                            <tr v-if="app.extend.fsin.result === 'Отсутствует'">-->
-<!--                                <td colspan="2" class="mid">{{app.extend.fsin.result}}</td>-->
-<!--                            </tr>-->
+                    <!--                            <tr v-if="app.extend.fsin.result === 'Отсутствует'">-->
+                    <!--                                <td colspan="2" class="mid">{{app.extend.fsin.result}}</td>-->
+                    <!--                            </tr>-->
 
-<!--                            <tr v-else>-->
-<!--                                <td class="word_break">Отчет</td>-->
-<!--                                <td v-html="app.extend.fsin.result"></td>-->
-<!--                            </tr>-->
+                    <!--                            <tr v-else>-->
+                    <!--                                <td class="word_break">Отчет</td>-->
+                    <!--                                <td v-html="app.extend.fsin.result"></td>-->
+                    <!--                            </tr>-->
 
-<!--                            <tr v-if="app.extend.fsin.territorial_authorities">-->
-<!--                                <td class="word_break">Территориальные органы</td>-->
-<!--                                <td >{{app.extend.fsin.territorial_authorities}}</td>-->
-<!--                            </tr>-->
+                    <!--                            <tr v-if="app.extend.fsin.territorial_authorities">-->
+                    <!--                                <td class="word_break">Территориальные органы</td>-->
+                    <!--                                <td >{{app.extend.fsin.territorial_authorities}}</td>-->
+                    <!--                            </tr>-->
 
-<!--                            <tr v-if="app.extend.fsin.federal_authorities">-->
-<!--                                <td class="word_break">Федеральные органы</td>-->
-<!--                                <td >{{app.extend.fsin.federal_authorities}}</td>-->
-<!--                            </tr>-->
+                    <!--                            <tr v-if="app.extend.fsin.federal_authorities">-->
+                    <!--                                <td class="word_break">Федеральные органы</td>-->
+                    <!--                                <td >{{app.extend.fsin.federal_authorities}}</td>-->
+                    <!--                            </tr>-->
 
-<!--                        </template>-->
+                    <!--                        </template>-->
 
-<!--                    </table>-->
+                    <!--                    </table>-->
 
                     <!--Иные источники-->
                     <table class="info_table">
@@ -775,7 +783,7 @@
                 return parseInt(service.status) === 3;
             },
             serviceStatus(type) {
-                return  this.services.filter(service => service.type === type)[0];
+                return this.services.filter(service => service.type === type)[0];
             },
             isFinished(arr) {
                 var status = false;
@@ -803,44 +811,6 @@
                 }
                 return array;
             },
-
-            servicesHeaderAction(services) {
-
-
-                for (let i = 0; i < services.length; i++) {
-                    services[i].services = [];
-
-                    switch (services[i].name) {
-                        case 'Паспорт':
-                            services[i].services = [1];
-                            break;
-                        case 'Иные источники':
-                            services[i].services = [10, 11];
-                            break;
-                        case 'Руководство и учредительство':
-                            services[i].services = [12];
-                            break;
-                        case 'Задолженность перед госорганами':
-                            services[i].services = [3];
-                            break;
-                        case 'Нахождение в розыске':
-                            services[i].services = [5, 6, 7, 8, 9];
-                            break;
-                        case 'Исполнительные производства':
-                            services[i].services = [4];
-                            break;
-                        case 'Федеральная служба исполнения наказаний':
-                            services[i].services = [14];
-                            break;
-                    }
-                }
-
-                services.push({
-                    name: 'INN',
-                    services: [2],
-                });
-                return services;
-            }
 
 
         }

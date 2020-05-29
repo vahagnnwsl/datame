@@ -4898,6 +4898,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AppReportComponent",
   props: {
@@ -5026,47 +5034,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return array;
-    },
-    servicesHeaderAction: function servicesHeaderAction(services) {
-      for (var i = 0; i < services.length; i++) {
-        services[i].services = [];
-
-        switch (services[i].name) {
-          case 'Паспорт':
-            services[i].services = [1];
-            break;
-
-          case 'Иные источники':
-            services[i].services = [10, 11];
-            break;
-
-          case 'Руководство и учредительство':
-            services[i].services = [12];
-            break;
-
-          case 'Задолженность перед госорганами':
-            services[i].services = [3];
-            break;
-
-          case 'Нахождение в розыске':
-            services[i].services = [5, 6, 7, 8, 9];
-            break;
-
-          case 'Исполнительные производства':
-            services[i].services = [4];
-            break;
-
-          case 'Федеральная служба исполнения наказаний':
-            services[i].services = [14];
-            break;
-        }
-      }
-
-      services.push({
-        name: 'INN',
-        services: [2]
-      });
-      return services;
     }
   }
 });
@@ -68517,9 +68484,9 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                                            " +
+                                              "\n                                        " +
                                                 _vm._s(service.name) +
-                                                "\n                                        "
+                                                "\n                                    "
                                             )
                                           ]
                                         )
@@ -68535,9 +68502,9 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\n                                            " +
+                                                  "\n                                        " +
                                                     _vm._s(service.name) +
-                                                    "\n                                        "
+                                                    "\n                                    "
                                                 )
                                               ]
                                             )
@@ -68546,9 +68513,9 @@ var render = function() {
                                               { staticClass: "progress-li" },
                                               [
                                                 _vm._v(
-                                                  "\n                                            " +
+                                                  "\n                                        " +
                                                     _vm._s(service.name) +
-                                                    "\n                                        "
+                                                    "\n                                    "
                                                 )
                                               ]
                                             )
@@ -68561,7 +68528,7 @@ var render = function() {
                             ? [
                                 _c("li", { staticClass: "no" }, [
                                   _vm._v(
-                                    "\n                                        Общая задолженность: "
+                                    "\n                                    Общая задолженность: "
                                   ),
                                   _c(
                                     "span",
@@ -68576,7 +68543,7 @@ var render = function() {
                                     ]
                                   ),
                                   _vm._v(
-                                    "\n                                        рублей\n                                    "
+                                    "\n                                    рублей\n                                "
                                   )
                                 ])
                               ]
@@ -68584,12 +68551,12 @@ var render = function() {
                                 _vm.status
                                   ? _c("li", [
                                       _vm._v(
-                                        "\n                                        Задолженности отсутствуют\n                                    "
+                                        "\n                                    Задолженности отсутствуют\n                                "
                                       )
                                     ])
                                   : _c("li", { staticClass: "progress-li" }, [
                                       _vm._v(
-                                        "\n                                        Задолженности отсутствуют\n                                    "
+                                        "\n                                    Задолженности отсутствуют\n                                "
                                       )
                                     ])
                               ]
@@ -68628,7 +68595,7 @@ var render = function() {
                             _vm._s(_vm.app.extend.name_en) +
                             " " +
                             _vm._s(_vm.app.extend.patronymic_en) +
-                            "\n                            "
+                            "\n                        "
                         )
                       ])
                     ]),
@@ -68678,7 +68645,7 @@ var render = function() {
                                       ? _c("td", [
                                           _vm._v(
                                             _vm._s(_vm.app.inn) +
-                                              "\n                                        "
+                                              "\n                                    "
                                           ),
                                           _c(
                                             "a",
@@ -68700,7 +68667,7 @@ var render = function() {
                                           _vm.serviceStatus(2).status === 4
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                                           ИНН не найден. Возможные причины:\n                                        "
+                                                  "\n                                       ИНН не найден. Возможные причины:\n                                    "
                                                 ),
                                                 _vm._m(1)
                                               ])
@@ -68765,7 +68732,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(
-                              "\n                                Указанный код подразделения в базе отсутствует\n                            "
+                              "\n                            Указанный код подразделения в базе отсутствует\n                        "
                             )
                           ])
                         ])
@@ -68835,7 +68802,7 @@ var render = function() {
                                         : [
                                             _c("li", { staticClass: "no" }, [
                                               _vm._v(
-                                                "Год выдачи паспорта (по дате выдачи) больше или меньше года\n                                                серии паспорта на 3 года\n                                            "
+                                                "Год выдачи паспорта (по дате выдачи) больше или меньше года\n                                            серии паспорта на 3 года\n                                        "
                                               )
                                             ])
                                           ]
@@ -68886,23 +68853,35 @@ var render = function() {
                         ])
                       : _vm._e(),
                     _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("Дополнительная информация")]),
-                      _vm._v(" "),
-                      _vm.app.extend.passport.status
-                        ? _c("td", [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(_vm.app.extend.passport.status) +
-                                "\n                            "
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      !_vm.app.extend.passport.status && !_vm.status
-                        ? _c("td", [_c("span", { staticClass: "sp" })])
-                        : _vm._e()
-                    ])
+                    _c(
+                      "tr",
+                      [
+                        _c("td", [_vm._v("Дополнительная информация")]),
+                        _vm._v(" "),
+                        _vm.status
+                          ? [
+                              _c("td", [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(_vm.app.extend.passport.status) +
+                                    "\n                            "
+                                )
+                              ])
+                            ]
+                          : [
+                              _vm.serviceStatus(1).status === 4
+                                ? _c("td", [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(_vm.app.extend.passport.status) +
+                                        "\n                            "
+                                    )
+                                  ])
+                                : _c("td", [_c("span", { staticClass: "sp" })])
+                            ]
+                      ],
+                      2
+                    )
                   ]),
                   _vm._v(" "),
                   _vm.serviceNotRespond(12)
@@ -68982,7 +68961,7 @@ var render = function() {
                                         _c("td", [
                                           _vm._v(
                                             _vm._s(item.inn) +
-                                              "\n                                            "
+                                              "\n                                        "
                                           ),
                                           _c(
                                             "a",
@@ -69037,7 +69016,7 @@ var render = function() {
                                       _c("tr", [
                                         _c("td", [
                                           _vm._v(
-                                            "Наименование вида деятельности по Общероссийскому классификатору видов\n                                            экономической деятельности\n                                        "
+                                            "Наименование вида деятельности по Общероссийскому классификатору видов\n                                        экономической деятельности\n                                    "
                                           )
                                         ]),
                                         _vm._v(" "),
@@ -69067,7 +69046,7 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "Не является руководителем или совладельцем\n                                        коммерческих\n                                        структур.\n                                    "
+                                                  "Не является руководителем или совладельцем\n                                    коммерческих\n                                    структур.\n                                "
                                                 )
                                               ]
                                             )
@@ -69168,7 +69147,7 @@ var render = function() {
                                       _c("tr", { staticClass: "big_border" }, [
                                         _c("td", [
                                           _vm._v(
-                                            "Наименование вида деятельности по Общероссийскому классификатору видов\n                                            экономической деятельности\n                                        "
+                                            "Наименование вида деятельности по Общероссийскому классификатору видов\n                                        экономической деятельности\n                                    "
                                           )
                                         ]),
                                         _vm._v(" "),
@@ -69190,7 +69169,7 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "Не является индивидуальным\n                                        предпринимателем.\n                                    "
+                                                  "Не является индивидуальным\n                                    предпринимателем.\n                                "
                                                 )
                                               ]
                                             )
@@ -69317,7 +69296,7 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\n                                        Задолженности не найдены\n                                    "
+                                                  "\n                                    Задолженности не найдены\n                                "
                                                 )
                                               ]
                                             )
@@ -69485,7 +69464,7 @@ var render = function() {
                                             },
                                             [
                                               _vm._v(
-                                                "\n                                        Задолженности не найдены\n                                    "
+                                                "\n                                    Задолженности не найдены\n                                "
                                               )
                                             ]
                                           )
@@ -69500,7 +69479,7 @@ var render = function() {
                                                 },
                                                 [
                                                   _vm._v(
-                                                    "\n                                        Задолженности не найдены\n                                    "
+                                                    "\n                                    Задолженности не найдены\n                                "
                                                   )
                                                 ]
                                               )
@@ -69537,7 +69516,7 @@ var render = function() {
                         : _c("td", [
                             _vm._v(
                               _vm._s(_vm.app.extend.wanted.interpol_red) +
-                                "\n                                "
+                                "\n                            "
                             ),
                             !_vm.status && !_vm.app.extend.wanted.interpol_red
                               ? _c("span", { staticClass: "sp" })
@@ -69553,7 +69532,7 @@ var render = function() {
                         : _c("td", [
                             _vm._v(
                               _vm._s(_vm.app.extend.wanted.interpol_yellow) +
-                                "\n                                "
+                                "\n                            "
                             ),
                             !_vm.status &&
                             !_vm.app.extend.wanted.interpol_yellow
@@ -69570,7 +69549,7 @@ var render = function() {
                         : _c("td", [
                             _vm._v(
                               _vm._s(_vm.app.extend.wanted.mvd_wanted) +
-                                "\n                                "
+                                "\n                            "
                             ),
                             !_vm.status && !_vm.app.extend.wanted.mvd_wanted
                               ? _c("span", { staticClass: "sp" })
@@ -69586,7 +69565,7 @@ var render = function() {
                         : _c("td", [
                             _vm._v(
                               _vm._s(_vm.app.extend.wanted.fssp_wanted) +
-                                "\n                                "
+                                "\n                            "
                             ),
                             !_vm.status && !_vm.app.extend.wanted.fssp_wanted
                               ? _c("span", { staticClass: "sp" })
@@ -69606,7 +69585,7 @@ var render = function() {
                         : _c("td", [
                             _vm._v(
                               _vm._s(_vm.app.extend.wanted.fed_fsm) +
-                                "\n                                "
+                                "\n                            "
                             ),
                             !_vm.status && !_vm.app.extend.wanted.fed_fsm
                               ? _c("span", { staticClass: "sp" })
@@ -69631,9 +69610,9 @@ var render = function() {
                               _vm.serviceMessage(11) != null
                                 ? [
                                     _vm._v(
-                                      "\n                                    " +
+                                      "\n                                " +
                                         _vm._s(_vm.serviceMessage(11)) +
-                                        "\n                                "
+                                        "\n                            "
                                     )
                                   ]
                                 : _vm._e(),
@@ -69699,9 +69678,9 @@ var render = function() {
                               _vm.serviceMessage(10) != null
                                 ? [
                                     _vm._v(
-                                      "\n                                    " +
+                                      "\n                                " +
                                         _vm._s(_vm.serviceMessage(10)) +
-                                        "\n                                "
+                                        "\n                            "
                                     )
                                   ]
                                 : _vm._e(),
@@ -69759,7 +69738,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", [
                     _vm._v(
-                      "КОНФИДЕНЦИАЛЬНОСТЬ. Информация, содержащаяся в данном документе, является конфиденциальной и\n                        предназначена исключительно для предполагаемого адресата. Любое распространение\n                        данного документа или раскрытие содержащейся в нем информации ЗАПРЕЩАЕТСЯ!"
+                      "КОНФИДЕНЦИАЛЬНОСТЬ. Информация, содержащаяся в данном документе, является конфиденциальной и\n                    предназначена исключительно для предполагаемого адресата. Любое распространение\n                    данного документа или раскрытие содержащейся в нем информации ЗАПРЕЩАЕТСЯ!"
                     )
                   ]),
                   _vm._v(" "),
@@ -69806,13 +69785,13 @@ var staticRenderFns = [
     return _c("ul", [
       _c("li", { staticClass: "no" }, [
         _vm._v(
-          "человек недавно получил паспорт, но указанная информация еще\n                                                не поступила в ИФНС\n                                            "
+          "человек недавно получил паспорт, но указанная информация еще\n                                            не поступила в ИФНС\n                                        "
         )
       ]),
       _vm._v(" "),
       _c("li", { staticClass: "no" }, [
         _vm._v(
-          "документы в ИФНС на присвоение ИНН поданы, но ИНН еще не\n                                                получен\n                                            "
+          "документы в ИФНС на присвоение ИНН поданы, но ИНН еще не\n                                            получен\n                                        "
         )
       ])
     ])
