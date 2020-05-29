@@ -180,6 +180,7 @@ class AppTransformer
                     'fed_fsm' => null, // террористы
                     'mvd_wanted' => null, // федеральный розыск
                     'fssp_wanted' => null, //местный розыск
+                    'fed_fsin' => null,
                 ],
                 'other' => [
                     'disq' => null,
@@ -378,6 +379,13 @@ class AppTransformer
                 $data['extend']['wanted']['fssp_wanted'] = $fsspWanted->result;
             }
 
+            /** @var FsinWanted $fsinWanted */
+            $fsinWanted = $app->fsin()->first();
+            if (!is_null($fsinWanted)) {
+                $data['extend']['wanted']['fed_fsin'] = $fsinWanted->result;
+            }
+
+
             //в списках террористов и экстремистов
             /** @var FedFsm $fedFsm */
             $fedFsm = $app->fedFsm()->first();
@@ -389,6 +397,7 @@ class AppTransformer
                     $data['city_birth'] = $fedFsm->city_birth;
                 }
             }
+
 
             $disq = $app->disq()->get();
             if ($disq->isNotEmpty()) {
@@ -428,17 +437,8 @@ class AppTransformer
 
                 });
             }
-            $fsin = $app->fsin()->first();
 
-            if (!is_null($fsin)) {
-                if (!$fsin->error_message) {
-                    $data['extend']['fsin']['result'] = $fsin->result;
-                    if ($fsin->result !== 'Отсутствует') {
-                        $data['extend']['fsin']['territorial_authorities'] = $fsin->territorial_authorities;
-                        $data['extend']['fsin']['federal_authorities'] = $fsin->federal_authorities;
-                    }
-                }
-            }
+
 
 
 

@@ -43,7 +43,7 @@ class AppRatingCalculation
                     'name' => 'Нахождение в розыске',
                     'status' => true,
                     'is_finished' => false,
-                    'services' => [5, 6, 7, 8, 9]
+                    'services' => [5, 6, 7, 8, 9, 14]
 
                 ],
                 4 => [
@@ -203,6 +203,10 @@ class AppRatingCalculation
             $this->addRating('Террористы', -10);
             $this->result['services'][2]['status'] = false;
         }
+        if ($this->app['extend']['wanted']['fed_fsin'] != "В розыске отсутствует") {
+            $this->addRating('Федеральной службе исполнения наказаний', -10);
+            $this->result['services'][2]['status'] = false;
+        }
 
         //дисквалифицированные лица
         if (!is_null($this->app['extend']['other']['disq'])) {
@@ -255,7 +259,6 @@ class AppRatingCalculation
         });
 
 
-
         return $this->result;
     }
 
@@ -299,6 +302,9 @@ class AppRatingCalculation
                         break;
                     case CheckingList::ITEM_FIND_FSSP:
                         $this->result['services'][5]['status'] = false;
+                        break;
+                    case CheckingList::ITEM_FIND_FSIN:
+                        $this->result['services'][2]['status'] = false;
                         break;
                     case CheckingList::ITEM_FIND_INTERPOL_RED:
                         $this->result['services'][2]['status'] = false;

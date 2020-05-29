@@ -4906,6 +4906,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AppReportComponent",
   props: {
@@ -4914,6 +4924,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    console.log(new Date());
     this.init();
   },
   data: function data() {
@@ -69565,7 +69576,7 @@ var render = function() {
                         : _c("td", [
                             _vm._v(
                               _vm._s(_vm.app.extend.wanted.fssp_wanted) +
-                                "\n                            "
+                                "\n\n                            "
                             ),
                             !_vm.status && !_vm.app.extend.wanted.fssp_wanted
                               ? _c("span", { staticClass: "sp" })
@@ -69576,7 +69587,7 @@ var render = function() {
                     _c("tr", [
                       _c("td", [
                         _vm._v(
-                          "Нахождение в списках террористов и экстремистов"
+                          "Нахождение в списках террористов и экстремистов "
                         )
                       ]),
                       _vm._v(" "),
@@ -69588,6 +69599,30 @@ var render = function() {
                                 "\n                            "
                             ),
                             !_vm.status && !_vm.app.extend.wanted.fed_fsm
+                              ? _c("span", { staticClass: "sp" })
+                              : _vm._e()
+                          ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("td", [
+                        _vm._v("Федеральной службе исполнения наказаний ")
+                      ]),
+                      _vm._v(" "),
+                      _vm.serviceNotRespond(14)
+                        ? _c("td", [
+                            _vm._v(">" + _vm._s(_vm.service_error_message))
+                          ])
+                        : _c("td", [
+                            _c("div", {
+                              domProps: {
+                                innerHTML: _vm._s(
+                                  _vm.app.extend.wanted.fed_fsin
+                                )
+                              }
+                            }),
+                            _vm._v(" "),
+                            !_vm.status && !_vm.app.extend.wanted.fed_fsin
                               ? _c("span", { staticClass: "sp" })
                               : _vm._e()
                           ])

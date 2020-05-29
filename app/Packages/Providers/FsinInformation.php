@@ -91,7 +91,7 @@ class FsinInformation
                 $retData->setStatusResult(true);
             } else {
                 $retData->setResult([
-                    'result' => 'Отсутствует',
+                    'result' => 'В розыске отсутствует',
                     'app_id' => $this->app->id
                 ]);
             }

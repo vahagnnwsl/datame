@@ -550,18 +550,28 @@
                             <td>Местный розыск</td>
                             <td v-if="serviceNotRespond(9)">{{ service_error_message }}</td>
                             <td v-else>{{ app.extend.wanted.fssp_wanted}}
+
                                 <span class="sp" v-if="!status && !app.extend.wanted.fssp_wanted"></span>
 
                             </td>
                         </tr>
                         <tr>
-                            <td>Нахождение в списках террористов и экстремистов</td>
+                            <td>Нахождение в списках террористов и экстремистов </td>
                             <td v-if="serviceNotRespond(7)">{{ service_error_message }}</td>
                             <td v-else>{{ app.extend.wanted.fed_fsm }}
                                 <span class="sp" v-if="!status && !app.extend.wanted.fed_fsm"></span>
 
                             </td>
                         </tr>
+                        <tr>
+                            <td>Федеральной службе исполнения наказаний </td>
+                            <td v-if="serviceNotRespond(14)">>{{ service_error_message }}</td>
+                            <td v-else>
+                                <div v-html="app.extend.wanted.fed_fsin"></div>
+                                <span class="sp" v-if="!status && !app.extend.wanted.fed_fsin"></span>
+                            </td>
+                        </tr>
+
                     </table>
 
                     <!--                    <table class="info_table">-->
@@ -689,6 +699,7 @@
             }
         },
         mounted() {
+            console.log(new Date())
             this.init();
         },
         data() {
@@ -699,7 +710,7 @@
                 servicesHeader: [],
                 services: [],
                 message: null,
-                service_error_message: "Сервис не отвечает",
+                 service_error_message: "Сервис не отвечает",
                 refreshTime: 3000, // 5сек
                 loading: true,
                 timerId: null,
