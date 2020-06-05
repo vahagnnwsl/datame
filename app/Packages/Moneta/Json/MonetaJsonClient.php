@@ -10,10 +10,13 @@ namespace App\Packages\Moneta\Json;
 
 
 use App\Packages\Moneta\Json\Request\BaseRequest;
+use App\Packages\Providers\ArrayProxyInjector;
 use GuzzleHttp\Client;
 
 class MonetaJsonClient
 {
+    use ArrayProxyInjector;
+
     protected $client;
     protected $url;
     protected $response;
@@ -23,7 +26,8 @@ class MonetaJsonClient
     public function __construct()
     {
         $this->url = "https://service.moneta.ru/services";
-        $this->client = new Client();
+        $this->selectProxy();
+        $this->client = new Client($this->injectProxyOptions());
     }
 
     /**

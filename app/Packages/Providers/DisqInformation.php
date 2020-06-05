@@ -22,6 +22,7 @@ use jumper423\decaptcha\services\RuCaptcha;
  */
 class DisqInformation implements IProvider
 {
+    use CurlProxyInjector;
 
     /**
      * @var App
@@ -39,6 +40,7 @@ class DisqInformation implements IProvider
         //rn - группа стран Россия, Украина, Беларусь, Казахстан | Определяет язык очереди, в которую должна попасть капча. |
         $this->ruCaptchaService = new RuCaptchaProvider([RuCaptcha::ACTION_FIELD_LANGUAGE => 'rn']);
         $this->logger = $logger;
+        $this->selectProxy();
     }
 
     /**
@@ -58,6 +60,7 @@ class DisqInformation implements IProvider
             $path = "";
             $data = "";
             $curl = curl_init($host . $path);
+            $curl = $this->injectProxyOptions($curl);
             curl_setopt($curl, CURLOPT_URL, $host . $path);
             curl_setopt($curl, CURLOPT_TIMEOUT, 60);
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
@@ -84,6 +87,7 @@ class DisqInformation implements IProvider
                 $path = "static/captcha.bin";
                 $data = "a=" . $captchanum[0];
                 $curl = curl_init($host . $path);
+                $curl = $this->injectProxyOptions($curl);
                 curl_setopt($curl, CURLOPT_URL, $host . $path);
                 curl_setopt($curl, CURLOPT_TIMEOUT, 60);
                 curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
@@ -113,6 +117,7 @@ class DisqInformation implements IProvider
                         $data = "fam=" . mb_strtoupper($this->app->lastname) . "&nam=" . mb_strtoupper($this->app->name) . "&otch=" . mb_strtoupper($this->app->patronymic) . "&birthDate={$this->app->birthday->format('d.m.Y')}&captcha=$codeCaptcha&captchaToken=$captchanumber";
 
                         $curl = curl_init($host . $path);
+                        $curl = $this->injectProxyOptions($curl);
                         curl_setopt($curl, CURLOPT_URL, $host . $path);
                         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
                         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);

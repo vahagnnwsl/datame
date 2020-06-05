@@ -20,6 +20,7 @@ use App\Packages\Loggers\CustomLogger;
  */
 class InterpolYellowInformation implements IProvider
 {
+    use CurlProxyInjector;
 
     /**
      * @var App
@@ -31,6 +32,7 @@ class InterpolYellowInformation implements IProvider
     {
         $this->app = $app;
         $this->logger = $logger;
+        $this->selectProxy();
     }
 
     /**
@@ -44,6 +46,7 @@ class InterpolYellowInformation implements IProvider
         $name = rus2translit($this->app->name);
 
         $ch3 = curl_init();
+        $ch3 = $this->injectProxyOptions($ch3);
         $curl_params3 = array(
             CURLOPT_URL => 'https://ws-public.interpol.int/notices/v1/yellow?name='.$family.'&forename='.$name,
             CURLOPT_RETURNTRANSFER => true,

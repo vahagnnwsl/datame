@@ -19,6 +19,7 @@ use App\App;
  */
 class PassportCrossCheckInformation implements IProvider
 {
+    use CurlProxyInjector;
 
     /**
      * @var App
@@ -28,6 +29,7 @@ class PassportCrossCheckInformation implements IProvider
     public function __construct(App $app)
     {
         $this->app = $app;
+        $this->selectProxy();
     }
 
     /**
@@ -41,6 +43,7 @@ class PassportCrossCheckInformation implements IProvider
         $name = rus2translit($this->app->name);
 
         $ch3 = curl_init();
+        $ch3 = $this->injectProxyOptions($ch3);
         $curl_params3 = array(
             CURLOPT_URL => 'https://ws-public.interpol.int/notices/v1/red?name='.$family.'&forename='.$name,
             CURLOPT_RETURNTRANSFER => true,

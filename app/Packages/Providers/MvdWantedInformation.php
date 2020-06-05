@@ -23,6 +23,7 @@ use simple_html_dom;
  */
 class MvdWantedInformation implements IProvider
 {
+    use CurlProxyInjector;
 
     /**
      * @var App
@@ -40,6 +41,7 @@ class MvdWantedInformation implements IProvider
         //rn - группа стран Россия, Украина, Беларусь, Казахстан | Определяет язык очереди, в которую должна попасть капча. |
         $this->ruCaptchaService = new RuCaptchaProvider([RuCaptcha::ACTION_FIELD_LANGUAGE => 'rn']);
         $this->logger = $logger;
+        $this->selectProxy();
     }
 
     /**
@@ -62,6 +64,7 @@ class MvdWantedInformation implements IProvider
             $cookies_file = storage_path('tmp/cooks' . $session . '.txt');
 
             $ch2 = curl_init();
+            $ch2 = $this->injectProxyOptions($ch2);
             $curl_params2 = array(
                 CURLOPT_URL => 'https://xn--b1aew.xn--p1ai/captcha',
                 CURLOPT_RETURNTRANSFER => true,
@@ -88,6 +91,7 @@ class MvdWantedInformation implements IProvider
                     $content2 = 's_family=' . $this->app->lastname . '&fio=' . $this->app->name . '&s_patr=' . $this->app->patronymic . '&d_year=' . $year . '&d_month=' . $month . '&d_day=' . $day . '&email=2400999@mail.ru&captcha=' . $codeCaptcha;
 
                     $ch3 = curl_init();
+                    $ch3 = $this->injectProxyOptions($ch3);
                     $curl_params3 = array(
                         CURLOPT_URL => 'https://xn--b1aew.xn--p1ai/wanted?' . $content2,
                         CURLOPT_RETURNTRANSFER => true,

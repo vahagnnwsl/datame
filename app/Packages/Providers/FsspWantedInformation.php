@@ -21,6 +21,7 @@ use DOMXPath;
  */
 class FsspWantedInformation implements IProvider
 {
+    use CurlProxyInjector;
 
     /**
      * @var App
@@ -32,6 +33,7 @@ class FsspWantedInformation implements IProvider
     {
         $this->app = $app;
         $this->logger = $logger;
+        $this->selectProxy();
     }
 
     /**
@@ -67,6 +69,7 @@ class FsspWantedInformation implements IProvider
                 )
             );
             $ch = curl_init();
+            $ch = $this->injectProxyOptions($ch);
             $curl_params = array(
                 CURLOPT_URL => 'http://is.fssprus.ru/ajax_search?'.http_build_query($params),
                 CURLOPT_RETURNTRANSFER => true,
@@ -150,6 +153,7 @@ class FsspWantedInformation implements IProvider
                             $params['page'] = $i;
 
                             $ch = curl_init();
+                            $ch = $this->injectProxyOptions($ch);
                             $curl_params = array(
                                 CURLOPT_URL => 'http://is.fssprus.ru/ajax_search?'.http_build_query($params),
                                 CURLOPT_RETURNTRANSFER => true,

@@ -22,6 +22,7 @@ use Storage;
 
 class InnPdfInformation implements IProvider
 {
+    use ArrayProxyInjector;
 
     private $host = "https://egrul.nalog.ru/";
 
@@ -42,8 +43,7 @@ class InnPdfInformation implements IProvider
     {
         $this->inn = $inn;
         $this->ruCaptchaService = new RuCaptchaProvider([RuCaptcha::ACTION_FIELD_LANGUAGE => 'rn']);
-
-
+        $this->selectProxy();
     }
 
 
@@ -73,11 +73,11 @@ class InnPdfInformation implements IProvider
 
     public function search($token)
     {
-        $client = new Client([
+        $client = new Client($this->injectProxyOptions([
             'defaults' => [
                 'headers' => ['Cookie' => 'JSESSIONID=' . $this->sessionId],
             ]
-        ]);
+        ]));
 
         $time = microtime(true);
         $time = explode('.', $time);
@@ -90,11 +90,11 @@ class InnPdfInformation implements IProvider
 
     public function req($token)
     {
-        $client = new Client([
+        $client = new Client($this->injectProxyOptions([
             'defaults' => [
                 'headers' => ['Cookie' => 'JSESSIONID=' . $this->sessionId],
             ]
-        ]);
+        ]));
 
         $time = microtime(true);
         $time = explode('.', $time);
@@ -111,11 +111,11 @@ class InnPdfInformation implements IProvider
         $captcha = $this->getCaptcha();
         $this->sessionId = $captcha['session'];
 
-        $client = new Client([
+        $client = new Client($this->injectProxyOptions([
             'defaults' => [
                 'headers' => ['Cookie' => 'JSESSIONID=' . $this->sessionId],
             ]
-        ]);
+        ]));
         $response = $client->request('POST', $this->host, [
             'form_params' => [
                 'query' => $this->inn,
@@ -130,11 +130,11 @@ class InnPdfInformation implements IProvider
         $time = microtime(true);
         $time = explode('.', $time);
         $time = $time[0] . $time[1];
-        $client = new Client([
+        $client = new Client($this->injectProxyOptions([
             'defaults' => [
                 'headers' => ['Cookie' => 'JSESSIONID=' . $this->sessionId],
             ]
-        ]);
+        ]));
 
 
         $response = $client->request('GET', $this->host . 'vyp-status/' . $token . '?r=' . $time . '&_=' . $time);
@@ -148,11 +148,11 @@ class InnPdfInformation implements IProvider
 
     public function download($token)
     {
-        $client = new Client([
+        $client = new Client($this->injectProxyOptions([
             'defaults' => [
                 'headers' => ['Cookie' => 'JSESSIONID=' . $this->sessionId],
             ]
-        ]);
+        ]));
 
         $response = $client->request('GET', $this->host . 'vyp-download/' . $token);
         $path = "pdf/" . $this->inn . ".pdf";
@@ -181,14 +181,14 @@ class InnPdfInformation implements IProvider
             $data = ['token' => 0, 'src' => '', 'base64', 'status' => false];
             $uri = 'https://egrul.nalog.ru';
 
-            $client = new Client([
+            $client = new Client($this->injectProxyOptions([
                 // Base URI is used with relative requests
                 'base_uri' => $uri,
                 // You can set any number of default request options.
                 'timeout' => 30,
                 'cookies' => true,
                 'verify' => false
-            ]);
+            ]));
 
             $response = $client->request('GET', 'static/captcha-dialog.html');
 

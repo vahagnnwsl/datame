@@ -24,6 +24,7 @@ use DOMDocument;
  */
 class DebtorInformation implements IProvider
 {
+    use CurlProxyInjector;
 
     /**
      * @var FindInn
@@ -35,6 +36,7 @@ class DebtorInformation implements IProvider
     {
         $this->inn = $inn;
         $this->logger;
+        $this->selectProxy();
     }
 
     public function check()
@@ -50,6 +52,7 @@ class DebtorInformation implements IProvider
         do {
 
             $ch = curl_init();
+            $ch = $this->injectProxyOptions($ch);
             curl_setopt($ch, CURLOPT_URL, "http://bankrot.fedresurs.ru/DebtorsSearch.aspx");
 
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -152,6 +155,7 @@ class DebtorInformation implements IProvider
             }
 
             $ch = curl_init();
+            $ch = $this->injectProxyOptions($ch);
             curl_setopt($ch, CURLOPT_URL, $response_item['link']);
 
             curl_setopt($ch, CURLOPT_HTTPHEADER, [

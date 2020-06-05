@@ -22,17 +22,21 @@ use GuzzleHttp\Client;
  */
 class HonestBusinessInformation implements IProvider
 {
+    use ArrayProxyInjector;
 
     /**
      * @var App
      */
     private $inn;
     private $logger;
+    private $client;
 
     public function __construct(FindInn $inn, CustomLogger $logger)
     {
         $this->inn = $inn;
         $this->logger = $logger;
+        $this->selectProxy();
+        $this->client = new Client($this->injectProxyOptions());
     }
 
     /**
@@ -43,9 +47,7 @@ class HonestBusinessInformation implements IProvider
     {
         $retData = new Result();
 
-        $client = new Client();
-
-        $response = $client->request('POST', 'https://zachestnyibiznesapi.ru/paid/data/search', [
+        $response = $this->client->request('POST', 'https://zachestnyibiznesapi.ru/paid/data/search', [
             'form_params' => [
                 'api_key' => config('datame.za_chestnyi_biznes'),
                 'string' => $this->inn->inn

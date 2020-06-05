@@ -22,6 +22,7 @@ use GuzzleHttp\RequestOptions;
  */
 class FsspInformationNew implements IProvider
 {
+    use ArrayProxyInjector;
 
     private $app;
     private $logger;
@@ -34,7 +35,8 @@ class FsspInformationNew implements IProvider
     {
         $this->app = $app;
         $this->logger = $logger;
-        $this->client = new Client();
+        $this->selectProxy();
+        $this->client = new Client($this->injectProxyOptions());
         $this->regions = config('fssp_regions');
     }
 

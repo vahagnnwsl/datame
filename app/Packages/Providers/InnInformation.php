@@ -22,6 +22,7 @@ use Vinelab\Http\Client as HttpClient;
 
 class InnInformation implements IProvider
 {
+    use ArrayProxyInjector;
 
     private $host = "https://service.nalog.ru/";
     private $path = "inn-proc.do";
@@ -42,6 +43,7 @@ class InnInformation implements IProvider
         //rn - группа стран Россия, Украина, Беларусь, Казахстан | Определяет язык очереди, в которую должна попасть капча. |
         $this->ruCaptchaService = new RuCaptchaProvider([RuCaptcha::ACTION_FIELD_LANGUAGE => 'rn']);
         $this->logger = $logger;
+        $this->selectProxy();
     }
 
     /**
@@ -220,14 +222,14 @@ class InnInformation implements IProvider
             $data = ['token' => 0, 'src' => '', 'base64', 'status' => false];
             $uri = 'https://service.nalog.ru';
 
-            $client = new Client([
+            $client = new Client($this->injectProxyOptions([
                 // Base URI is used with relative requests
                 'base_uri' => $uri,
                 // You can set any number of default request options.
                 'timeout' => 30,
                 'cookies' => true,
                 'verify' => false
-            ]);
+            ]));
             $response = $client->request('GET', 'static/captcha-dialog.html');
 
             foreach ($client->getConfig('cookies') as $value) {

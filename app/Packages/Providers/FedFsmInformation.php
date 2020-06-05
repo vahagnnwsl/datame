@@ -20,6 +20,8 @@ use App\Packages\Loggers\CustomLogger;
 class FedFsmInformation implements IProvider
 {
 
+    use CurlProxyInjector;
+
     /**
      * @var App
      */
@@ -30,6 +32,7 @@ class FedFsmInformation implements IProvider
     {
         $this->app = $app;
         $this->logger = $logger;
+        $this->selectProxy();
     }
 
     /**
@@ -46,6 +49,7 @@ class FedFsmInformation implements IProvider
         $cookies_file = storage_path('/tmp/cookies' . $session . '.txt');
 
         $ch2 = curl_init();
+        $ch2 = $this->injectProxyOptions($ch2);
         $curl_params2 = array(
             CURLOPT_URL => 'http://www.fedsfm.ru/TerroristSearchAutocomplete?query=' . $this->app->lastname . '+' . $this->app->name . '+' . $this->app->patronymic . '*%2C+' . $this->app->birthday->format('d.m.Y'),
             CURLOPT_RETURNTRANSFER => true,
@@ -66,6 +70,7 @@ class FedFsmInformation implements IProvider
             $content = array("rowIndex" => 0, "pageLength" => 50, "searchText" => "$suspect");
 
             $ch3 = curl_init();
+            $ch3 = $this->injectProxyOptions($ch3);
             $curl_params3 = array(
                 CURLOPT_URL => 'http://www.fedsfm.ru/TerroristSearch',
                 CURLOPT_POST => true,

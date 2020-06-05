@@ -20,6 +20,8 @@ use Throwable;
 
 class FsspInformation
 {
+    use CurlProxyInjector;
+
     /**
      * @var App
      */
@@ -30,6 +32,7 @@ class FsspInformation
     {
         $this->app = $app;
         $this->logger = $logger;
+        $this->selectProxy();
     }
 
     /**
@@ -93,6 +96,7 @@ class FsspInformation
 
 //print_r($params);
                 $ch = curl_init();
+                $ch = $this->injectProxyOptions($ch);
                 $curl_params = array(
                     CURLOPT_URL => 'http://is.fssprus.ru/ajax_search?' . http_build_query($params),
                     CURLOPT_RETURNTRANSFER => true,
@@ -185,6 +189,7 @@ class FsspInformation
                             $new_cookies_file2 = $storagePathCooks . $new_session;
 
                             $ch2 = curl_init();
+                            $ch2 = $this->injectProxyOptions($ch2);
                             $curl_params2 = array(
                                 CURLOPT_URL => "http://is.fssprus.ru/get_receipt/?receipt=" . $number,
                                 CURLOPT_RETURNTRANSFER => true,
@@ -303,6 +308,7 @@ class FsspInformation
                                 $params['page'] = $i;
 
                                 $ch = curl_init();
+                                $ch = $this->injectProxyOptions($ch);
                                 $curl_params = array(
                                     CURLOPT_URL => 'http://is.fssprus.ru/ajax_search?' . http_build_query($params),
                                     CURLOPT_RETURNTRANSFER => true,
@@ -358,6 +364,7 @@ class FsspInformation
                                             $filenumber = preg_replace('/[^0-9]/', '', $number);
 
                                             $ch2 = curl_init();
+                                            $ch2 = $this->injectProxyOptions($ch2);
                                             $curl_params2 = array(
                                                 CURLOPT_URL => "http://is.fssprus.ru/get_receipt/?receipt=" . $number,
                                                 CURLOPT_RETURNTRANSFER => true,

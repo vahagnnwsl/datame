@@ -22,6 +22,8 @@ use simple_html_dom;
 
 class FsinInformation
 {
+    use ArrayProxyInjector;
+
     /**
      * @var App
      */
@@ -34,11 +36,11 @@ class FsinInformation
     {
         $this->app = $app;
         $this->logger = $logger;
-        $this->client = new Client(
-            [
-                'base_uri' => 'http://xn--h1akkl.xn--p1ai',
-            ]
-        );
+        $this->selectProxy();
+        $guzzleOptions = [
+            'base_uri' => 'http://xn--h1akkl.xn--p1ai'
+        ];
+        $this->client = new Client($this->injectProxyOptions($guzzleOptions));
     }
 
     /**
