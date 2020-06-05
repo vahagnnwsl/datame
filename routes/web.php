@@ -66,6 +66,10 @@ Route::group(['middleware' => ['auth','verified']], function() {
             Route::get('users', 'Admin\UsersController@index')->name('admin.users');
             Route::get('searching', 'Admin\SearchingController@index')->name('admin.searching');
             Route::get('messages', 'Admin\MessagesController@index')->name('admin.messages');
+            Route::get('proxies', 'Admin\ProxyController@index')->name('admin.proxies');
+            Route::post('proxies', 'Admin\ProxyController@store')->name('admin.proxies.store');
+            Route::post('proxies/{id}', 'Admin\ProxyController@update')->name('admin.proxies.update');
+            Route::post('proxies/{id}/delete', 'Admin\ProxyController@destroy')->name('admin.proxies.destroy');
 
         });
     });
