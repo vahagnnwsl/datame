@@ -14,4 +14,7 @@ class Proxy extends Model
      * @var string
      */
     protected $table = 'proxies';
+
+    protected $guarded = [];
+
 }

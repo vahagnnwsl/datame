@@ -12,6 +12,14 @@ import VueTheMask from 'vue-the-mask'
 import vueMask from 'vue-jquery-mask';
 import Vuex from 'vuex';
 import Notifications from 'vue-notification'
+import ru from 'vee-validate/dist/locale/ru';
+
+
+import VeeValidate, { Validator } from 'vee-validate';
+
+
+Vue.use(VeeValidate);
+Validator.localize('ru', ru);
 
 window.Vue.use(VueTheMask);
 
