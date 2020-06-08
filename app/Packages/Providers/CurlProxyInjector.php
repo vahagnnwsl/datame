@@ -78,6 +78,14 @@ trait CurlProxyInjector
         !$proxyUserPwd?:curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyUserPwd);
         !$proxyIpPort && !$proxyUserPwd?:curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 
+        $this->updateUsedCount();
+
         return $ch;
+    }
+
+    private function updateUsedCount()
+    {
+        $this->proxy->used_count++;
+        $this->proxy->save();
     }
 }

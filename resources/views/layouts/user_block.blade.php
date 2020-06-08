@@ -28,6 +28,7 @@
                             <li><a href="{{ route('admin.users') }}">Пользователи</a></li>
                             <li><a href="{{ route('admin.searching') }}">Искомые лица</a></li>
                             <li><a href="{{ route('admin.messages') }}">Сообщения</a></li>
+                            <li><a href="{{ route('admin.proxies') }}">Прокси</a></li>
                         @else
                             <li><a href="{{ route('messages') }}">Сообщения
                                     @if(Auth::user()->newMessagesCount() > 0)

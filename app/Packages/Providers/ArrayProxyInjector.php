@@ -5,7 +5,6 @@ namespace App\Packages\Providers;
 
 
 use App\Proxy;
-use GuzzleHttp\Client;
 
 trait ArrayProxyInjector
 {
@@ -75,6 +74,14 @@ trait ArrayProxyInjector
         // Default http protocol
         $options['proxy'] = "http://" . (!$proxyUserPwd?: $proxyUserPwd . "@") . $proxyIpPort;
 
+        $this->updateUsedCount();
+
         return $options;
+    }
+
+    private function updateUsedCount()
+    {
+        $this->proxy->used_count++;
+        $this->proxy->save();
     }
 }
