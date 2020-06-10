@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\DBBulk;
 use DB;
 use Illuminate\Support\ServiceProvider;
 use Schema;
@@ -37,5 +38,7 @@ class AppServiceProvider extends ServiceProvider
 //                $query->time
 //            ]);
         });
+
+        $this->app->singleton('db-bulk', DBBulk::class);
     }
 }

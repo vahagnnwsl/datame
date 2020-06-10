@@ -13,12 +13,12 @@ class CustomData extends Model
     protected $fillable = [
         'full_name',
         'birthday',
-        'passport',
-        'passport_date',
         'additional'
     ];
 
     protected $casts = [
         'additional' => 'array'
     ];
+
+    public $timestamps = false;
 }

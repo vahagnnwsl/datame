@@ -16,12 +16,10 @@ class CreateCustomDataTable extends Migration
         Schema::create('custom_data', function (Blueprint $table) {
             $table->increments('id');
             $table->string('full_name')->index();
-            $table->timestamp('birthday')->index();
-            $table->string('passport')->index();
-            $table->timestamp('passport_date')->index();
+            $table->date('birthday')->index();
             $table->json('additional')->nullable();
 
-            $table->timestamps();
+            $table->unique(['full_name', 'birthday']);
         });
     }
 

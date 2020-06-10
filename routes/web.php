@@ -70,7 +70,6 @@ Route::group(['middleware' => ['auth','verified']], function() {
             Route::post('proxies', 'Admin\ProxyController@store')->name('admin.proxies.store');
             Route::post('proxies/{id}', 'Admin\ProxyController@update')->name('admin.proxies.update');
             Route::post('proxies/{id}/delete', 'Admin\ProxyController@destroy')->name('admin.proxies.destroy');
-            Route::get('databases', 'Admin\CustomDataController@index')->name('admin.custom_data');
 
         });
     });
