@@ -18,6 +18,7 @@
                         <th>PORT</th>
                         <th>Логин</th>
                         <th>Пароль</th>
+                        <th>Счет</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -27,6 +28,7 @@
                         <td>{{proxy.port}}</td>
                         <td>{{proxy.username}}</td>
                         <td>{{proxy.password}}</td>
+                        <td>{{proxy.used_count}}</td>
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-link" @click="showDeleteModal(proxy.id)">
