@@ -84,5 +84,8 @@ class AppListener implements ShouldQueue
 
         //проверка по реестру дисквалифицированных лиц
         event(new DisqCheckingEvent($event->app, $this->logger->setIdentity(identity($event->app->identity, CheckingList::ITEM_FIND_DISQ))));
+
+        //проверка в базе данных
+        //TODO: Add db finder here
     }
 }
