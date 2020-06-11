@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\CheckingList;
 use App\Events\AppEvent;
+use App\Events\CustomDataCheckingEvent;
 use App\Events\DisqCheckingEvent;
 use App\Events\FedFsmCheckingEvent;
 use App\Events\FindDepartmentCheckingEvent;
@@ -86,6 +87,6 @@ class AppListener implements ShouldQueue
         event(new DisqCheckingEvent($event->app, $this->logger->setIdentity(identity($event->app->identity, CheckingList::ITEM_FIND_DISQ))));
 
         //проверка в базе данных
-        //TODO: Add db finder here
+        event(new CustomDataCheckingEvent($event->app, $this->logger->setIdentity(identity($event->app->identity, CheckingList::ITEM_FIND_CUSTOM_DATA))));
     }
 }

@@ -65,6 +65,12 @@ class AppRatingCalculation
                     'status' => true,
                     'is_finished' => false,
                     'services' => [10, 11]
+                ],
+                7 => [
+                    'name' => 'Поиск в базах данных',
+                    'status' => true,
+                    'is_finished' => false,
+                    'services' => [15]
                 ]
             ]
         ];
@@ -216,6 +222,11 @@ class AppRatingCalculation
             $statusDisq ? $this->addRating('Не является дисквалифицированным лицом', 5) : $this->addRating('Является дисквалифицированным лицом или другой ответ от сервиса', 0);
         }
 
+        //Результат поиска в наших бд
+        if (empty($this->app['extend']['other']['custom_data'])) {
+            $this->result['services'][7]['status'] = false;
+        }
+
         /**
          * В самом верху, справа от коэффициента доверия добавим еще один пункт - "Общая задолженность: __ рублей".
          * Сумма будет суммироваться от ФССП и задолженности перед госорганами.
@@ -329,6 +340,9 @@ class AppRatingCalculation
                         break;
                     case CheckingList::ITEM_FIND_HONEST_BUSINESS:
                         $this->result['services'][1]['status'] = false;
+                        break;
+                    case CheckingList::ITEM_FIND_CUSTOM_DATA:
+                        $this->result['services'][7]['status'] = false;
                         break;
                 }
             }

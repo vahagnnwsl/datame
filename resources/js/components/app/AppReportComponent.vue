@@ -668,6 +668,22 @@
                         </tr>
                     </table>
 
+                    <!--Результаты с наших баз данных-->
+                    <table class="info_table">
+                        <tr>
+                            <th colspan="2">Результаты поиска в наших баз данных</th>
+                        </tr>
+                        <tr v-if="serviceMessage(15) != null">
+                            <td>
+                                {{ serviceMessage(15) }}
+                            </td>
+                        </tr>
+                        <tr v-else v-for="(value,key) in app.extend.other.custom_data">
+                            <td v-if="value.length > 1">{{key}}</td>
+                            <td v-if="value.length > 1">{{value}}</td>
+                        </tr>
+                    </table>
+
 
                     <p>КОНФИДЕНЦИАЛЬНОСТЬ. Информация, содержащаяся в данном документе, является конфиденциальной и
                         предназначена исключительно для предполагаемого адресата. Любое распространение

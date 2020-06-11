@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\AppEvent;
+use App\Events\CustomDataCheckingEvent;
 use App\Events\DebtorCheckingEvent;
 use App\Events\DisqCheckingEvent;
 use App\Events\FedFsmCheckingEvent;
@@ -22,6 +23,7 @@ use App\Events\MvdWantedCheckingEvent;
 use App\Events\PassportCheckingEvent;
 use App\Events\PassportNotValidEvent;
 use App\Listeners\AppListener;
+use App\Listeners\FindCustomDataListener;
 use App\Listeners\DebtorListener;
 use App\Listeners\DisqListener;
 use App\Listeners\FedFsmListener;
@@ -106,6 +108,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         FindDepartmentCheckingEvent::class => [
             FindDepartmentListener::class
+        ],
+        CustomDataCheckingEvent::class => [
+            FindCustomDataListener::class
         ]
     ];
 

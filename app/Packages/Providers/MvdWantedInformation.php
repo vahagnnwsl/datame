@@ -112,7 +112,7 @@ class MvdWantedInformation implements IProvider
 
                     $check_captcha = $html->find('span[style=color:red;font-weight:bold]');
 
-                    if(isset($check_captcha[0]) && preg_match('/неверный код/sei', $check_captcha[0]->plaintext)) {
+                    if(isset($check_captcha[0]) && preg_match('/неверный код/si', $check_captcha[0]->plaintext)) {
                         $this->ruCaptchaService->nonTrue();
                         $retData->setResult("Неверный код");
                         $this->logger->warning("Неверный код");

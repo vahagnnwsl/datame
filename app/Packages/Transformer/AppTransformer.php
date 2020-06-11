@@ -438,8 +438,11 @@ class AppTransformer
                 });
             }
 
-
-
+            //В нашей базе
+            $customData = $app->customData()->first();
+            if (!is_null($customData)) {
+                $data['extend']['other']['custom_data'] = $customData->additional;
+            }
 
 
             //расчет коэфициента
@@ -450,6 +453,7 @@ class AppTransformer
             $data['extend']['trust']['services'] = $calculation['services'];
             $data['extend']['trust']['parts'] = $calculation['rating']['parts'];
         }
+
         return $data;
     }
 
@@ -519,6 +523,9 @@ class AppTransformer
                 break;
             case CheckingList::ITEM_FIND_FSIN:
                 $dt['name'] = 'Федеральная служба исполнения наказаний';
+                break;
+            case CheckingList::ITEM_FIND_CUSTOM_DATA:
+                $dt['name'] = 'Поиск в нашей базе данных';
                 break;
         }
 

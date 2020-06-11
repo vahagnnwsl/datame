@@ -176,4 +176,12 @@ class App extends Model
         return $this->hasOne('App\FindDepartment', 'app_id', 'id');
     }
 
+    /**
+     * Кастомная база данных
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function customData() {
+        return $this->hasOne('App\FindCustomData', 'app_id', 'id');
+    }
 }
