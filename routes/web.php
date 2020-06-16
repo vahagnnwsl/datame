@@ -71,6 +71,12 @@ Route::group(['middleware' => ['auth','verified']], function() {
             Route::post('proxies/{id}', 'Admin\ProxyController@update')->name('admin.proxies.update');
             Route::post('proxies/{id}/delete', 'Admin\ProxyController@destroy')->name('admin.proxies.destroy');
 
+            Route::get('own-databases', 'Admin\OwnDatabasesController@index')->name('admin.own-databases');
+            Route::get('files', 'Admin\OwnDatabasesController@getFiles')->name('admin.get-files');
+            Route::post('files/fields', 'Admin\OwnDatabasesController@getFileFields')->name('admin.get-file-fields');
+            Route::post('files/fields/save', 'Admin\OwnDatabasesController@saveFileFields')->name('admin.save-file-fields');
+
+
         });
     });
 
