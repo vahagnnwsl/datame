@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('datame:app-check-scheduler')->everyMinute();
+        $schedule->command('datame:import-custom-data')->everyMinute();
     }
 
     /**

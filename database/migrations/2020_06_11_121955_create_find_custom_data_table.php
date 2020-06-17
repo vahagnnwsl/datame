@@ -16,7 +16,7 @@ class CreateFindCustomDataTable extends Migration
         Schema::create('find_custom_data', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('app_id');
-            $table->json('additional');
+            $table->text('additional');
             $table->timestamps();
             $table->foreign('app_id')->references('id')->on('apps')->onDelete('cascade');
         });
