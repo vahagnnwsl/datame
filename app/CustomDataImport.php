@@ -15,12 +15,12 @@ class CustomDataImport extends Model
     const STATUS_FAILED = 3;
 
     const MAP_TYPES = [
+        'additional' => 'Дополнительная',
         'full_name' => 'ФИО',
         'first_name' => 'Имя',
         'last_name' => 'Фамилия',
         'patronymic' => 'Отчество',
-        'birthday' => 'День рождения',
-        'additional' => 'Дополнительная'
+        'birthday' => 'День рождения'
     ];
 
     protected $fillable = [
