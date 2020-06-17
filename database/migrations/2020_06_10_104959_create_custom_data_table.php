@@ -17,7 +17,7 @@ class CreateCustomDataTable extends Migration
             $table->increments('id');
             $table->string('full_name')->index();
             $table->date('birthday')->index();
-            $table->json('additional')->nullable();
+            $table->text('additional')->nullable();
 
             $table->unique(['full_name', 'birthday']);
         });

@@ -18,7 +18,7 @@ class CreateCustomDataImportsTable extends Migration
             $table->string('file');
             $table->string('delimiter')->default('|');
             $table->string('short_description')->nullable();
-            $table->json('columns_map')->nullable();
+            $table->text('columns_map')->nullable();
             $table->text('error_message')->nullable();
             $table->tinyInteger('status')->default(0)->comment('0: new, 1: processing, 2: success, 3: failed');
             $table->timestamps();
