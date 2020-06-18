@@ -703,6 +703,31 @@
 
                 </table>
 
+                <!--Результаты с наших баз данных-->
+                <table class="info_table">
+                    <tr>
+                        <th colspan="2">Результаты поиска в наших баз данных</th>
+                    </tr>
+                    @if(serviceNotRespond(15, $services) || !isset($app['extend']['other']['custom_data']))
+                        <tr>
+                            <td>{{ $service_error_message }}</td>
+                        </tr>
+                    @else
+                        @if(!is_null(serviceMessage(15, $services)))
+                            <tr>
+                                <td>{{ serviceMessage(15, $services) }}</td>
+                            </tr>
+                        @else
+                            @foreach ($app['extend']['other']['custom_data'] as $key => $value)
+                                <tr>
+                                    <td>{{$key}}</td>
+                                    <td>{{$value}}</td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    @endif
+                </table>
+
 
                 <p style="text-align: justify !important;">КОНФИДЕНЦИАЛЬНОСТЬ. Информация, содержащаяся в данном
                     документе, является конфиденциальной и предназначена исключительно для предполагаемого адресата.
