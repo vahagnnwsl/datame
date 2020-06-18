@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div
         <div class="row" style="padding-left: 10px">
             <div class="row">
                 <button type="button" class="add_user" @click="showForm" style="float: right"><i class="plus"></i>Добавить
@@ -11,12 +11,12 @@
                     <table class="table" style="padding: 10px">
                         <thead>
                         <tr>
-                            <th>FIle</th>
-                            <th>Delimiter</th>
-                            <th>Short description</th>
+                            <th>Файл</th>
+                            <th>Разделитель</th>
+                            <th>Описание</th>
                             <th>Status</th>
                         </tr>
-                        </thead>
+                        </thead>asdasd
                         <tbody>
                         <tr v-for="(item,index) in imports" :key="index">
                             <td>{{item.file}}</td>
