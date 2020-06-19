@@ -48,7 +48,7 @@
                                     <li v-if="status">
                                         Задолженности отсутствуют
                                     </li>
-                                    <li v-else class="progress-li">
+                                    <li v-if="serviceStatus(3).status !== 4" class="progress-li">
                                         Задолженности отсутствуют
                                     </li>
                                 </template>
@@ -292,16 +292,16 @@
                                     <tr class="big_border">
                                         <td>Руководитель</td>
                                         <td>{{ item.rukovoditel}}</td>
-                                    </tr>
+                                    </tr>s
 
                                 </template>
 
                                 <tr v-if="app.extend.business.ul.length === 0">
-                                    <td colspan="2" class="mid" v-if="status">Не является руководителем или совладельцем
+                                    <td colspan="2" class="mid" v-if="serviceStatus(12).status === 4">Не является руководителем или совладельцем
                                         коммерческих
                                         структур.
                                     </td>
-                                    <td colspan="2" class="mid" v-else>
+                                    <td colspan="2" class="mid" v-if="!status && serviceStatus(12).status !== 4">
                                         <span class="sp"></span>
                                     </td>
                                 </tr>
@@ -355,10 +355,10 @@
                                 </template>
 
                                 <tr v-if="app.extend.business.ip.length === 0">
-                                    <td colspan="2" class="mid" v-if="status">Не является индивидуальным
+                                    <td colspan="2" class="mid" v-if="serviceStatus(12).status === 4">Не является индивидуальным
                                         предпринимателем.
                                     </td>
-                                    <td colspan="2" class="mid" v-else>
+                                    <td colspan="2" class="mid" v-if="!status && serviceStatus(12).status !== 4">
                                         <span class="sp"></span>
                                     </td>
                                 </tr>
@@ -417,11 +417,11 @@
                                 </tr>
 
                                 <tr v-if="app.extend.tax.items.length === 0">
-                                    <td colspan="2" class="mid" v-if="status">
+                                    <td colspan="2" class="mid" v-if="serviceStatus(3).status === 4">
                                         Задолженности не найдены
                                     </td>
 
-                                    <td colspan="2" class="mid" v-else>
+                                    <td colspan="2" class="mid" v-if="!status &&   serviceStatus(3).status !== 4">
                                         <span class="sp"></span>
                                     </td>
 
@@ -556,7 +556,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Нахождение в списках террористов и экстремистов </td>
+                            <td>Нахождение в списках террористов и экстремистов</td>
                             <td v-if="serviceNotRespond(7)">{{ service_error_message }}</td>
                             <td v-else>{{ app.extend.wanted.fed_fsm }}
                                 <span class="sp" v-if="!status && !app.extend.wanted.fed_fsm"></span>
@@ -564,7 +564,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Федеральной службе исполнения наказаний </td>
+                            <td>Федеральной службе исполнения наказаний</td>
                             <td v-if="serviceNotRespond(14)">>{{ service_error_message }}</td>
                             <td v-else>
                                 <div v-html="app.extend.wanted.fed_fsin"></div>
@@ -660,7 +660,7 @@
                                         <div v-if="item.name_org_protocol != null">{{ item.name_org_protocol }}</div>
                                         <br>
                                     </div>
-                                    <div v-if="!status &&   serviceMessage(10)=== null">
+                                    <div v-if="!status &&   serviceStatus(10).status !== 4">
                                         <span class="sp"></span>
                                     </div>
                                 </template>
@@ -681,6 +681,11 @@
                         <tr v-else v-for="(value,key) in app.extend.other.custom_data">
                             <td v-if="value.length > 1">{{key}}</td>
                             <td v-if="value.length > 1">{{value}}</td>
+                        </tr>
+                        <tr v-if="serviceStatus(4).status !== 4">
+                            <td>
+                                <span class="sp"></span>
+                            </td>
                         </tr>
                     </table>
 
@@ -715,7 +720,7 @@
             }
         },
         mounted() {
-            console.log(new Date())
+
             this.init();
         },
         data() {
@@ -726,7 +731,7 @@
                 servicesHeader: [],
                 services: [],
                 message: null,
-                 service_error_message: "Сервис не отвечает",
+                service_error_message: "Сервис не отвечает",
                 refreshTime: 3000, // 5сек
                 loading: true,
                 timerId: null,
@@ -867,5 +872,6 @@
     .progress-li::before {
         background-image: url("/img/Spin-1s-480px.gif") !important;
     }
+
 
 </style>
