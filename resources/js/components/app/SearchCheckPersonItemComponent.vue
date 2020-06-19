@@ -15,7 +15,7 @@
             <div >
                 <a v-if="parseInt(data.status) === 4 || parseInt(data.status) === 3 " v-bind:href="urlPdf" target="_blank" class="main_btn download" style="color: white;top:8px;line-height: 16px;height: 44px">Скачать pdf</a>
                 <a v-bind:href="urlOnline" v-if="parseInt(data.status) !== 1" target="_blank" class="main_btn look_online" style="color: white;top:62px;;line-height: 16px;height: 44px">Посмотреть онлайн</a>
-                <a v-if="parseInt(data.status) === 2 || (parseInt(data.status) === 3 && parseInt(data['checking_count']) === 3)"  class="main_btn download" style="color: white;top: 115px;line-height: 16px;height: 44px">Проверяется</a>
+                <a v-if="parseInt(data.status) === 2 || (parseInt(data.status) === 3 && parseInt(data.checking_count) < 3)"  class="main_btn download" style="color: white;top: 115px;line-height: 16px;height: 44px">Проверяется</a>
             </div>
 
         </div>
