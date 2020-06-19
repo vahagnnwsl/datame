@@ -682,7 +682,7 @@
                             <td v-if="value.length > 1">{{key}}</td>
                             <td v-if="value.length > 1">{{value}}</td>
                         </tr>
-                        <tr v-if="serviceStatus(4).status !== 4">
+                        <tr v-if="serviceStatus(15).status !== 4">
                             <td>
                                 <span class="sp"></span>
                             </td>
