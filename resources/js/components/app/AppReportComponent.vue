@@ -442,9 +442,12 @@
                         </tr>
 
                         <template v-if="serviceNotRespond(4)">
-                            <tr>
+                            <tr v-if="status">
                                 <td colspan="2" class="mid">{{ service_error_message }}</td>
                             </tr>
+                            <td colspan="2" class="mid" v-else>
+                                <span class="sp"></span>
+                            </td>
                         </template>
                         <template v-else>
 
