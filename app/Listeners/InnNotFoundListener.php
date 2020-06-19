@@ -45,7 +45,7 @@ class InnNotFoundListener implements ShouldQueue
         $event->logger->setIdentity(identity($event->app->identity, CheckingList::ITEM_FIND_TAX));
         $event->logger->info($message);
 
-        $message = "Поиск по начилию банкротства провести не представляется возможным - ИНН не найден!";
+        $message = "Поиск по наличию банкротства провести не представляется возможным - ИНН не найден!";
         $checkingItem = $this->getCheckingList($event->app, CheckingList::ITEM_FIND_DEBTOR);
         $this->setMessage($checkingItem, $message);
         $event->logger->setIdentity(identity($event->app->identity, CheckingList::ITEM_FIND_DEBTOR));

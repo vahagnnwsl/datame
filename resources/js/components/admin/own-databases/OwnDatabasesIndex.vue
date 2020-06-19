@@ -16,7 +16,7 @@
                             <th>Описание</th>
                             <th>Status</th>
                         </tr>
-                        </thead>asdasd
+                        </thead>
                         <tbody>
                         <tr v-for="(item,index) in imports" :key="index">
                             <td>{{item.file}}</td>
