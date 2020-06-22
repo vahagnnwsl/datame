@@ -281,18 +281,10 @@ if(!function_exists('serviceMessage')) {
 
 if (!function_exists('convert')) {
     function convert($content) {
-        if(!mb_check_encoding($content, 'UTF-8')
-            OR !($content === mb_convert_encoding(mb_convert_encoding($content, 'UTF-32', 'UTF-8' ), 'UTF-8', 'UTF-32'))) {
-
-            $content = mb_convert_encoding($content, 'UTF-8');
-
-//            if (mb_check_encoding($content, 'UTF-8')) {
-//                $this->info("Converted string to UTF-8");
-//            } else {
-//                $this->warn("Cannot convert string to UTF-8");
-//            }
+        if (mb_convert_encoding($content, 'UTF-8') === $content) {
+            return $content;
         }
-        return $content;
+        return mb_convert_encoding($content, 'utf-8', 'windows-1251');
     }
 }
 
