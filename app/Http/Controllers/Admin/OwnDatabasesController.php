@@ -49,9 +49,9 @@ class OwnDatabasesController extends Controller
 
     public function getFileFields(Request $request)
     {
-
-
-        $line = file($this->path . '/' . $request->get('file'))[0];
+        $file = fopen($this->path . '/' . $request->get('file'), 'r');
+        $line = convert(fgets($file));
+        fclose($file);
 
         $exploded = explode($request->delimiter, $line);
 
