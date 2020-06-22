@@ -110,6 +110,7 @@ class CustomDataImport extends Command
             }
 
             while ($line = fgets($handle)) {
+                $line = $this->convert($line);
                 $line = trim($line);
                 $line = trim($line, $delimiter);
                 $line = explode($delimiter, $line);
@@ -118,6 +119,21 @@ class CustomDataImport extends Command
         } finally {
             fclose($handle);
         }
+    }
+
+    private function convert($content) {
+        if(!mb_check_encoding($content, 'UTF-8')
+            OR !($content === mb_convert_encoding(mb_convert_encoding($content, 'UTF-32', 'UTF-8' ), 'UTF-8', 'UTF-32'))) {
+
+            $content = mb_convert_encoding($content, 'UTF-8');
+
+            if (mb_check_encoding($content, 'UTF-8')) {
+                $this->info("Converted string to UTF-8");
+            } else {
+                $this->warn("Cannot convert string to UTF-8");
+            }
+        }
+        return $content;
     }
 
     private function processFailed(\App\CustomDataImport $customDataImport, string $errorMessage)
