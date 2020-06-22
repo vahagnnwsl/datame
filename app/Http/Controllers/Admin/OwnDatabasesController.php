@@ -52,6 +52,8 @@ class OwnDatabasesController extends Controller
         $file = fopen($this->path . '/' . $request->get('file'), 'r');
         $line = convert(fgets($file));
         fclose($file);
+        $line = trim($line);
+        $line = rtrim($line, $request->delimiter);
 
         $exploded = explode($request->delimiter, $line);
 
