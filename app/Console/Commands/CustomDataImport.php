@@ -132,7 +132,7 @@ class CustomDataImport extends Command
     private function processFailed(\App\CustomDataImport $customDataImport, string $errorMessage)
     {
         $customDataImport->status = \App\CustomDataImport::STATUS_FAILED;
-        $customDataImport->error_message = $errorMessage;
+        $customDataImport->error_message = mb_substr($errorMessage,0, 500);
         $customDataImport->save();
     }
 
