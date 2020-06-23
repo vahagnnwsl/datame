@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 
 class CustomDataImport extends Command
 {
-    protected $signature = 'datame:import-custom-data';
+    protected $signature = 'sadsd';
 
     protected $description = 'Import custom data files into custom_data table';
 
