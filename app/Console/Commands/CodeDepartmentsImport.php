@@ -13,7 +13,7 @@ class CodeDepartmentsImport extends Command
      *
      * @var string
      */
-    protected $signature = 'asdsad';
+    protected $signature = 'datame:import-code-department';
 
     /**
      * The console command description.

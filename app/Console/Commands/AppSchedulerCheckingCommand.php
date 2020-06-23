@@ -21,7 +21,7 @@ class AppSchedulerCheckingCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sadsad';
+    protected $signature = 'datame:app-check-scheduler';
 
     /**
      * The console command description.

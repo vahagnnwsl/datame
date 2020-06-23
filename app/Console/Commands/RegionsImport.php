@@ -12,7 +12,7 @@ class RegionsImport extends Command
      *
      * @var string
      */
-    protected $signature = 'sads';
+    protected $signature = 'datame:import-regions';
 
     /**
      * The console command description.

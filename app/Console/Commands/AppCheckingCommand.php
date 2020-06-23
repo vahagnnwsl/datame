@@ -18,7 +18,7 @@ class AppCheckingCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'asdsd';
+    protected $signature = 'datame:app-check {app_id}';
 
     /**
      * The console command description.
