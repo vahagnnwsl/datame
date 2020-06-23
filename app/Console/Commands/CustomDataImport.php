@@ -17,6 +17,11 @@ class CustomDataImport extends Command
 
     public function handle()
     {
+        if (\App\CustomDataImport::processing()->exists())
+        {
+            $this->info("Terminating... Another import is running");
+            $this->exit();
+        }
         $customDataImports = \App\CustomDataImport::new()->get();
 
         foreach ($customDataImports as $customDataImport) {
