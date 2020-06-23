@@ -20,7 +20,7 @@ class CustomDataImport extends Command
         if (\App\CustomDataImport::processing()->exists())
         {
             $this->info("Terminating... Another import is running");
-            $this->exit();
+            exit();
         }
         $customDataImports = \App\CustomDataImport::new()->get();
 
