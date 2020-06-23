@@ -85,7 +85,7 @@ class CustomDataImport extends Command
             $birthday = $data[$birthdayKey];
             unset($data[$birthdayKey]);
         }
-        $newData['birthday'] = !$birthday?:dt_parse($birthday);
+        $newData['birthday'] = !$birthday ?: dt_parse($birthday);
         $newData['additional'] = json_encode($data);
 
         return $newData;
@@ -100,7 +100,7 @@ class CustomDataImport extends Command
         $handle = fopen($dataFilePath, 'rb');
 
         try {
-            $columns = fgets($handle);
+            $columns = convert(fgets($handle));
             $columns = trim($columns, $delimiter);
             $columns = explode($delimiter, $columns);
             $columns = array_slice($columns, 0, count($columns) - 1);
@@ -114,7 +114,10 @@ class CustomDataImport extends Command
                 $line = trim($line);
                 $line = trim($line, $delimiter);
                 $line = explode($delimiter, $line);
-                yield $this->mapData(array_combine($columns, $line), $customDataImport->columns_map);
+
+                if (count($columns) == count($line)) {
+                    yield $this->mapData(array_combine($columns, $line), $customDataImport->columns_map);
+                }
             }
         } finally {
             fclose($handle);
