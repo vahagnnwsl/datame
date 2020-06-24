@@ -31,15 +31,14 @@ class CustomDataImport extends Command
 
     private function processImport(\App\CustomDataImport $customDataImport)
     {
-        $bulkData = [];
         $this->processStarted($customDataImport);
-
         $delimiter = $customDataImport->delimiter;
 
         $path = resource_path('files/custom_data_files/');
         $dataFilePath = $path . $customDataImport->file;
         $handle = fopen($dataFilePath, 'rb');
 
+        $bulkData = [];
         try {
             $columns = convert(fgets($handle));
             $columns = trim($columns, $delimiter);
@@ -50,8 +49,8 @@ class CustomDataImport extends Command
                 throw new \Exception("Columns parse exception");
             }
 
-            $bulkData = [];
-            while ($line = fgets($handle)) {
+            while (!feof($handle)) {
+                $line = fgets($handle);
                 $line = convert($line);
                 $line = trim($line);
                 $line = trim($line, $delimiter);
@@ -64,12 +63,15 @@ class CustomDataImport extends Command
                     if (count($bulkData) >= 1000) {
                         $this->info("Memory usage:" . (memory_get_usage() / 1000));
                         $this->runBulk($bulkData);
+                        unset($bulkData);
                         $bulkData = [];
                     }
                 }
             }
             if (!empty($bulkData)) {
                 $this->runBulk($bulkData);
+                unset($bulkData);
+                $bulkData = [];
             }
             $this->processSuccess($customDataImport);
         } catch (\Exception $e) {
