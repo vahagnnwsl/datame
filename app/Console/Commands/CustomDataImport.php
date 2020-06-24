@@ -23,10 +23,10 @@ class CustomDataImport extends Command
      */
     private $bulker;
 
-    public function __construct(DBBulk $bulker)
+    public function __construct()
     {
         parent::__construct();
-        $this->bulker = $bulker;
+        $this->bulker = new DBBulk();
     }
 
     public function handle()
@@ -56,14 +56,13 @@ class CustomDataImport extends Command
                 $i++;
 
                 if (count($this->bulkData) >= 1000) {
-//                    $this->runBulk();
-                    $this->bulkData = [];
+                    $this->runBulk();
                     $this->info(round(memory_get_usage() / 1024 / 1024, 2) . ' MB');
                 }
             }
-//            if (!empty($this->bulkData)) {
-//                $this->runBulk();
-//            }
+            if (!empty($this->bulkData)) {
+                $this->runBulk();
+            }
             $this->processSuccess($customDataImport);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
@@ -78,6 +77,7 @@ class CustomDataImport extends Command
             $this->bulker->insertOrUpdate('custom_data', $this->bulkData, ['additional']);
         } finally {
             $this->bulkData = [];
+            $this->info("Current bulk array length:" . count($this->bulkData));
         }
     }
 
