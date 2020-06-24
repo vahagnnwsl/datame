@@ -28,11 +28,10 @@ class DBBulk
         $params = Arr::flatten($rows);
 
         $query = "INSERT INTO {$table} (`{$columnsString}`) VALUES {$values} ON DUPLICATE KEY UPDATE {$updates}";
-
-        DB::connection()->disableQueryLog();
-        if ($withTransaction) DB::beginTransaction();
-        DB::statement($query, $params);
-        if ($withTransaction) DB::commit();
+        DB::getPdo()->prepare($query)->execute($params);
+//        if ($withTransaction) DB::beginTransaction();
+//        DB::statement($query, $params);
+//        if ($withTransaction) DB::commit();
 
         return $query;
     }
