@@ -36,8 +36,8 @@ class CustomDataImport extends Command
         try {
             $i = 0;
             $bulkData = [];
-            $iterator = $this->generateData($customDataImport);
-            foreach ($iterator as &$datum) {
+            $iterator = &$this->generateData($customDataImport);
+            foreach ($iterator as $datum) {
                 $bulkData[] = $datum;
                 $i++;
 
