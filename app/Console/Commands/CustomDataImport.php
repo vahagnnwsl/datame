@@ -74,7 +74,7 @@ class CustomDataImport extends Command
     {
         try {
             $this->info("Running bulk of " . count($this->bulkData) . " items...");
-//            $this->bulker->insertOrUpdate('custom_data', $this->bulkData, ['additional']);
+            $this->bulker->insertOrUpdate('custom_data', $this->bulkData, ['additional']);
         } finally {
             $this->bulkData = [];
             $this->info("Current bulk array length:" . count($this->bulkData));
