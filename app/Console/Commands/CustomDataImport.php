@@ -40,7 +40,7 @@ class CustomDataImport extends Command
             $i = 0;
             $iterator = $this->generateData($customDataImport);
             foreach ($iterator as $datum) {
-                CustomData::query()->insert($datum);
+                CustomData::query()->updateOrInsert(array_keys($datum), $datum);
                 $i++;
                 if ($i % 500 == 0) {
                     $this->info(round(memory_get_usage() / 1024 / 1024, 2) . ' MB');
