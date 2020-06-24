@@ -37,7 +37,7 @@ class CustomDataImport extends Command
             $i = 0;
             $bulkData = [];
             $iterator = $this->generateData($customDataImport);
-            foreach ($iterator as $datum) {
+            foreach ($iterator as &$datum) {
                 $bulkData[] = $datum;
                 $i++;
 
@@ -97,7 +97,7 @@ class CustomDataImport extends Command
         return $newData;
     }
 
-    private function &generateData(\App\CustomDataImport $customDataImport)
+    private function generateData(\App\CustomDataImport $customDataImport)
     {
         $delimiter = $customDataImport->delimiter;
 
