@@ -31,11 +31,11 @@ class CustomDataImport extends Command
 
     private function processImport(\App\CustomDataImport $customDataImport)
     {
+        $bulkData = [];
         $this->processStarted($customDataImport);
 
         try {
             $i = 0;
-            $bulkData = [];
             foreach ($this->generateData($customDataImport) as $datum) {
                 $bulkData[] = $datum;
                 $i++;
@@ -44,6 +44,7 @@ class CustomDataImport extends Command
                 if (count($bulkData) >= 1000) {
                     $this->runBulk($bulkData);
                     $bulkData = [];
+                    $this->info("Memory usage:" . (memory_get_usage() / 1000));
                 }
             }
             if (!empty($bulkData)) {
@@ -121,7 +122,8 @@ class CustomDataImport extends Command
                 $line = explode($delimiter, $line);
 
                 if (count($columns) == count($line)) {
-                    yield $this->mapData(array_combine($columns, $line), $customDataImport->columns_map);
+                    $data = array_combine($columns, $line);
+                    yield $this->mapData($data, $customDataImport->columns_map);
                 }
             }
         } finally {
