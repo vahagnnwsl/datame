@@ -39,12 +39,11 @@ class CustomDataImport extends Command
             foreach ($this->generateData($customDataImport) as $datum) {
                 $bulkData[] = $datum;
                 $i++;
-                $this->info("Added $i rows");
 
                 if (count($bulkData) >= 1000) {
+                    $this->info("Memory usage:" . (memory_get_usage() / 1000));
                     $this->runBulk($bulkData);
                     $bulkData = [];
-                    $this->info("Memory usage:" . (memory_get_usage() / 1000));
                 }
             }
             if (!empty($bulkData)) {
