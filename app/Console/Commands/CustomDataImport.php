@@ -52,17 +52,14 @@ class CustomDataImport extends Command
             $i = 0;
             $iterator = $this->generateData($customDataImport);
             foreach ($iterator as $datum) {
+                $this->bulkData[] = $datum;
                 $i++;
-                if ($i % 1000 == 0) {
+
+                if (count($this->bulkData) >= 1000) {
+//                    $this->runBulk();
+                    $this->bulkData = [];
                     $this->info(round(memory_get_usage() / 1024 / 1024, 2) . ' MB');
                 }
-//                $this->bulkData[] = $datum;
-//                $i++;
-//
-//                if (count($this->bulkData) >= 1000) {
-//                    $this->runBulk();
-//                    $this->info(round(memory_get_usage() / 1024 / 1024, 2) . ' MB');
-//                }
             }
 //            if (!empty($this->bulkData)) {
 //                $this->runBulk();
