@@ -34,16 +34,38 @@ class CustomDataImport extends Command
         $bulkData = [];
         $this->processStarted($customDataImport);
 
-        try {
-            $i = 0;
-            foreach ($this->generateData($customDataImport) as $datum) {
-                $bulkData[] = $datum;
-                $i++;
+        $delimiter = $customDataImport->delimiter;
 
-                if (count($bulkData) >= 1000) {
-                    $this->info("Memory usage:" . (memory_get_usage() / 1000));
-                    $this->runBulk($bulkData);
-                    $bulkData = [];
+        $path = resource_path('files/custom_data_files/');
+        $dataFilePath = $path . $customDataImport->file;
+        $handle = fopen($dataFilePath, 'rb');
+
+        try {
+            $columns = convert(fgets($handle));
+            $columns = trim($columns, $delimiter);
+            $columns = explode($delimiter, $columns);
+            $columns = array_slice($columns, 0, count($columns) - 1);
+
+            if (count($columns) < 2) {
+                throw new \Exception("Columns parse exception");
+            }
+
+            $bulkData = [];
+            while ($line = fgets($handle)) {
+                $line = convert($line);
+                $line = trim($line);
+                $line = trim($line, $delimiter);
+                $line = explode($delimiter, $line);
+
+                if (count($columns) == count($line)) {
+                    $datum = $this->mapData(array_combine($columns, $line), $customDataImport->columns_map);
+
+                    $bulkData[] = $datum;
+                    if (count($bulkData) >= 1000) {
+                        $this->info("Memory usage:" . (memory_get_usage() / 1000));
+                        $this->runBulk($bulkData);
+                        $bulkData = [];
+                    }
                 }
             }
             if (!empty($bulkData)) {
@@ -53,6 +75,8 @@ class CustomDataImport extends Command
         } catch (\Exception $e) {
             $this->error($e->getMessage());
             $this->processFailed($customDataImport, $e->getMessage());
+        } finally {
+            fclose($handle);
         }
     }
 
