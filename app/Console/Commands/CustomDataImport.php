@@ -15,6 +15,8 @@ class CustomDataImport extends Command
 
     protected $description = 'Import custom data files into custom_data table';
 
+    private $bulkData = [];
+
     public function handle()
     {
         if (\App\CustomDataImport::processing()->exists())
@@ -32,25 +34,22 @@ class CustomDataImport extends Command
     private function processImport(\App\CustomDataImport $customDataImport)
     {
         $this->processStarted($customDataImport);
+        $this->bulkData = [];
 
         try {
             $i = 0;
-            $bulkData = [];
             $iterator = $this->generateData($customDataImport);
             foreach ($iterator as $datum) {
-                $bulkData[] = $datum;
+                $this->bulkData[] = $datum;
                 $i++;
 
-                if (count($bulkData) >= 1000) {
-                    $this->runBulk($bulkData);
-                    unset($bulkData);
-                    $bulkData = [];
+                if (count($this->bulkData) >= 1000) {
+                    $this->runBulk();
                     $this->info(round(memory_get_usage() / 1024 / 1024, 2) . ' MB');
                 }
             }
-            if (!empty($bulkData)) {
-                $this->runBulk($bulkData);
-                unset($bulkData);
+            if (!empty($this->bulkData)) {
+                $this->runBulk();
             }
             $this->processSuccess($customDataImport);
         } catch (\Exception $e) {
@@ -59,10 +58,14 @@ class CustomDataImport extends Command
         }
     }
 
-    private function runBulk(array $data)
+    private function runBulk()
     {
-        $this->info("Running bulk of " . count($data) . " items...");
-        DBBulkFacade::insertOrUpdate('custom_data', $data, ['additional']);
+        try {
+            $this->info("Running bulk of " . count($this->bulkData) . " items...");
+            DBBulkFacade::insertOrUpdate('custom_data', $this->bulkData, ['additional']);
+        } finally {
+            $this->bulkData = [];
+        }
     }
 
     private function mapData(array $data, array $map)
