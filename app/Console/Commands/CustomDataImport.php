@@ -51,7 +51,6 @@ class CustomDataImport extends Command
             if (!empty($bulkData)) {
                 $this->runBulk($bulkData);
                 unset($bulkData);
-                $bulkData = [];
             }
             $this->processSuccess($customDataImport);
         } catch (\Exception $e) {
@@ -66,7 +65,7 @@ class CustomDataImport extends Command
         DBBulkFacade::insertOrUpdate('custom_data', $data, ['additional']);
     }
 
-    private function mapData(array $data, array $map)
+    private function mapData(array $data, array &$map)
     {
         $newData = [];
 
