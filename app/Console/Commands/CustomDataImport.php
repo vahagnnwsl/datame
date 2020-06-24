@@ -134,6 +134,9 @@ class CustomDataImport extends Command
             }
 
             while ($line = fgets($handle)) {
+                $data = null;
+                $result = null;
+                
                 $line = convert($line);
                 $line = trim($line);
                 $line = trim($line, $delimiter);
