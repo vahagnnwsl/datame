@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\CustomData;
 use App\Facades\DBBulkFacade;
+use App\Services\DBBulk;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 
@@ -16,6 +17,17 @@ class CustomDataImport extends Command
     protected $description = 'Import custom data files into custom_data table';
 
     private $bulkData = [];
+
+    /**
+     * @var DBBulk
+     */
+    private $bulker;
+
+    public function __construct(DBBulk $bulker)
+    {
+        parent::__construct();
+        $this->bulker = $bulker;
+    }
 
     public function handle()
     {
@@ -40,27 +52,17 @@ class CustomDataImport extends Command
             $i = 0;
             $iterator = $this->generateData($customDataImport);
             foreach ($iterator as $datum) {
-                try {
-                    CustomData::query()->insert($datum);
-                    $i++;
-                } catch (\Exception $e) {
-                    //Ignore duplication
-                }
+                $this->bulkData[] = $datum;
+                $i++;
 
-                if ($i % 500 == 0) {
+                if (count($this->bulkData) >= 1000) {
+                    $this->runBulk();
                     $this->info(round(memory_get_usage() / 1024 / 1024, 2) . ' MB');
                 }
-//                $this->bulkData[] = $datum;
-//                $i++;
-
-//                if (count($this->bulkData) >= 1000) {
-//                    $this->runBulk();
-//                    $this->info(round(memory_get_usage() / 1024 / 1024, 2) . ' MB');
-//                }
             }
-//            if (!empty($this->bulkData)) {
-//                $this->runBulk();
-//            }
+            if (!empty($this->bulkData)) {
+                $this->runBulk();
+            }
             $this->processSuccess($customDataImport);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
@@ -72,7 +74,7 @@ class CustomDataImport extends Command
     {
         try {
             $this->info("Running bulk of " . count($this->bulkData) . " items...");
-            DBBulkFacade::insertOrUpdate('custom_data', $this->bulkData, ['additional']);
+            $this->bulker->insertOrUpdate('custom_data', $this->bulkData, ['additional']);
         } finally {
             $this->bulkData = [];
         }
