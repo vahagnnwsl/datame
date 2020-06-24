@@ -9,7 +9,6 @@ use App\Facades\DBBulkFacade;
 use App\Services\DBBulk;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class CustomDataImport extends Command
 {
@@ -77,7 +76,6 @@ class CustomDataImport extends Command
             $this->info("Running bulk of " . count($this->bulkData) . " items...");
             $this->bulker->insertOrUpdate('custom_data', $this->bulkData, ['additional']);
         } finally {
-            DB::clearResolvedInstances();
             $this->bulkData = [];
             $this->info("Current bulk array length:" . count($this->bulkData));
         }

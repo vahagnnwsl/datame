@@ -29,6 +29,7 @@ class DBBulk
 
         $query = "INSERT INTO {$table} (`{$columnsString}`) VALUES {$values} ON DUPLICATE KEY UPDATE {$updates}";
 
+        DB::connection()->disableQueryLog();
         if ($withTransaction) DB::beginTransaction();
         DB::statement($query, $params);
         if ($withTransaction) DB::commit();
