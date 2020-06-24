@@ -65,7 +65,7 @@ class CustomDataImport extends Command
         DBBulkFacade::insertOrUpdate('custom_data', $data, ['additional']);
     }
 
-    private function mapData(array $data, array &$map)
+    private function mapData(array &$data, array &$map)
     {
         $newData = [];
 
@@ -102,6 +102,7 @@ class CustomDataImport extends Command
     private function generateData(\App\CustomDataImport $customDataImport)
     {
         $delimiter = $customDataImport->delimiter;
+        $columnsMap = $customDataImport->columns_map;
 
         $path = resource_path('files/custom_data_files/');
         $dataFilePath = $path . $customDataImport->file;
@@ -125,7 +126,7 @@ class CustomDataImport extends Command
 
                 if (count($columns) == count($line)) {
                     $data = array_combine($columns, $line);
-                    yield $this->mapData($data, $customDataImport->columns_map);
+                    yield $this->mapData($data, $columnsMap);
                 }
             }
         } finally {
