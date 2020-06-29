@@ -12,9 +12,9 @@
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
 
     <link rel="stylesheet" href="{{ asset('libs/bootstrap/bootstrap.min.css') }}">
-    <link
-        href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic"
-        rel="stylesheet">
+{{--    <link--}}
+{{--        href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic"--}}
+{{--        rel="stylesheet">--}}
     <link rel="stylesheet" href="{{ mix('css/fonts.css') }}">
     <link rel="stylesheet" href="{{ mix('css/main.css') }}">
     <link rel="stylesheet" href="{{ mix('css/media.css') }}">
