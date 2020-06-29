@@ -64,7 +64,7 @@ class AppRatingCalculation
                     'name' => 'Иные источники',
                     'status' => true,
                     'is_finished' => false,
-                    'services' => [10, 11]
+                    'services' => [10, 11, 16]
                 ],
                 7 => [
                     'name' => 'Поиск в базах данных',
@@ -307,6 +307,9 @@ class AppRatingCalculation
                 switch ($item['type']) {
                     case CheckingList::ITEM_PASSPORT:
                         $this->result['services'][0]['status'] = false;
+                        break;
+                    case CheckingList::ITEM_FIND_FT_SERVICE:
+                        $this->result['services'][6]['status'] = false;
                         break;
                     case CheckingList::ITEM_FIND_TAX:
                         $this->result['services'][4]['status'] = false;

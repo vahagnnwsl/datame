@@ -67,4 +67,8 @@ class FindInn extends Model
     public function honestBusinessIp() {
         return $this->hasMany('App\HonestBusinessIp', 'find_inn_id', 'id');
     }
+
+    public function fsn() {
+        return $this->hasOne('App\FtService', 'inn_id', 'id');
+    }
 }

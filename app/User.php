@@ -73,7 +73,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'oferta_confirmed', 'name', 'email', 'phone', 'lastname', 'type_user', 'password', 'inn', 'ogrn', 'director', 'manager', 'confirmed', 'date_service', 'check_quantity'
+        'oferta_confirmed', 'name','session_id',  'email', 'phone', 'lastname', 'type_user', 'password', 'inn', 'ogrn', 'director', 'manager', 'confirmed', 'date_service', 'check_quantity'
     ];
 
     protected $dates = [
@@ -134,4 +134,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function newMessagesCount() {
         return $this->hasMany('App\UserMessage', 'to_user_id', 'id')->where('is_read', false)->count();
     }
+
 }

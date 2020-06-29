@@ -13,6 +13,7 @@ use App\Events\FsspCheckingEvent;
 use App\Events\FsinChekingEvent;
 
 use App\Events\FsspWantedCheckingEvent;
+use App\Events\FtsCheckingEvent;
 use App\Events\HonestBusinessCheckingEvent;
 use App\Events\InnCheckingEvent;
 use App\Events\InnFoundEvent;
@@ -34,6 +35,7 @@ use App\Listeners\FsinListner;
 use App\Listeners\FindDepartmentListener;
 use App\Listeners\FsspListener;
 use App\Listeners\FsspWantedListener;
+use App\Listeners\FtsListener;
 use App\Listeners\HonestBusinessListener;
 use App\Listeners\InnFoundListener;
 use App\Listeners\InnListener;
@@ -111,6 +113,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         CustomDataCheckingEvent::class => [
             FindCustomDataListener::class
+        ],
+        FtsCheckingEvent::class => [
+            FtsListener::class
         ]
     ];
 

@@ -43,6 +43,7 @@ class CheckingList extends Model
     const ITEM_FIND_CODE_DEPARTMENT = 13;
     const ITEM_FIND_FSIN = 14;
     const ITEM_FIND_CUSTOM_DATA = 15;
+    const ITEM_FIND_FT_SERVICE = 16;
 
     private static $services = [
         CheckingList::ITEM_PASSPORT,
@@ -59,7 +60,8 @@ class CheckingList extends Model
         CheckingList::ITEM_FIND_HONEST_BUSINESS,
         CheckingList::ITEM_FIND_CODE_DEPARTMENT,
         CheckingList::ITEM_FIND_FSIN,
-        CheckingList::ITEM_FIND_CUSTOM_DATA
+        CheckingList::ITEM_FIND_CUSTOM_DATA,
+        CheckingList::ITEM_FIND_FT_SERVICE
     ];
 
     protected $guarded = [];

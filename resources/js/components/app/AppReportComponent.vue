@@ -292,12 +292,14 @@
                                     <tr class="big_border">
                                         <td>Руководитель</td>
                                         <td>{{ item.rukovoditel}}</td>
-                                    </tr>s
+                                    </tr>
+                                    s
 
                                 </template>
 
                                 <tr v-if="app.extend.business.ul.length === 0">
-                                    <td colspan="2" class="mid" v-if="serviceStatus(12).status === 4">Не является руководителем или совладельцем
+                                    <td colspan="2" class="mid" v-if="serviceStatus(12).status === 4">Не является
+                                        руководителем или совладельцем
                                         коммерческих
                                         структур.
                                     </td>
@@ -355,7 +357,8 @@
                                 </template>
 
                                 <tr v-if="app.extend.business.ip.length === 0">
-                                    <td colspan="2" class="mid" v-if="serviceStatus(12).status === 4">Не является индивидуальным
+                                    <td colspan="2" class="mid" v-if="serviceStatus(12).status === 4">Не является
+                                        индивидуальным
                                         предпринимателем.
                                     </td>
                                     <td colspan="2" class="mid" v-if="!status && serviceStatus(12).status !== 4">
@@ -664,6 +667,23 @@
                                         <br>
                                     </div>
                                     <div v-if="!status &&   serviceStatus(10).status !== 4">
+                                        <span class="sp"></span>
+                                    </div>
+                                </template>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="word_break">Проверка статуса налогоплательщика </td>
+                            <td v-if="serviceNotRespond(16)">{{ service_error_message }}</td>
+                            <td v-else>
+                                <template v-if="serviceMessage(16) != null">
+                                    {{ serviceMessage(16) }}
+                                </template>
+                                <template>
+                                    <div v-if="app.extend.other.fts">
+                                        <div>{{ app.extend.other.fts.message }}</div>
+                                    </div>
+                                    <div v-if="!status &&   serviceStatus(16).status !== 4">
                                         <span class="sp"></span>
                                     </div>
                                 </template>

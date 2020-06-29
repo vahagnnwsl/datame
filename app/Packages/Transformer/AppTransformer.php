@@ -185,6 +185,7 @@ class AppTransformer
                 'other' => [
                     'disq' => null,
                     'debtor' => null,
+                    'fts' => null,
                 ],
                 'business' => [
                     'ul' => [],
@@ -398,6 +399,11 @@ class AppTransformer
                 }
             }
 
+            if (!is_null($individualInn)) {
+                $data['extend']['other']['fts'] = $individualInn->fsn;
+            }
+
+
 
             $disq = $app->disq()->get();
             if ($disq->isNotEmpty()) {
@@ -526,6 +532,9 @@ class AppTransformer
                 break;
             case CheckingList::ITEM_FIND_CUSTOM_DATA:
                 $dt['name'] = 'Поиск в нашей базе данных';
+                break;
+            case CheckingList::ITEM_FIND_FT_SERVICE:
+                $dt['name'] = 'Проверка статусаналогоплательщика налога напрофессиональный доход(самозанятого)';
                 break;
         }
 

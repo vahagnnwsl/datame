@@ -6,6 +6,7 @@ namespace App\Packages\Services;
 use App\App;
 use App\CheckingList;
 use App\Events\DebtorCheckingEvent;
+use App\Events\FtsCheckingEvent;
 use App\Events\HonestBusinessCheckingEvent;
 use App\Events\InnFoundEvent;
 use App\Events\InnNotFoundEvent;
@@ -78,10 +79,13 @@ class InnCheckingService
                 //проверка паспорта проведена
 //            $checkingItem->is_checked = true;
 //            $checkingItem->save();
-                if(!is_null($findInn->inn) && is_numeric($findInn->inn)) {
+                if(!is_null($findInn->inn) && is_numeric($findInn->inn))
+                {
                     event(new InnFoundEvent($findInn, $this->logger->setIdentity(identity($this->app->identity, CheckingList::ITEM_FIND_INN))));
                     event(new DebtorCheckingEvent($findInn, $this->logger->setIdentity(identity($this->app->identity, CheckingList::ITEM_FIND_DEBTOR))));
                     event(new HonestBusinessCheckingEvent($findInn, $this->logger->setIdentity(identity($this->app->identity, CheckingList::ITEM_FIND_HONEST_BUSINESS))));
+                    event(new FtsCheckingEvent($findInn, $this->logger->setIdentity(identity($this->app->identity, CheckingList::ITEM_FIND_FT_SERVICE))));
+
                 } else {
                     event(new InnNotFoundEvent($this->app, $this->logger->setIdentity(identity($this->app->identity, CheckingList::ITEM_FIND_INN))));
                 }

@@ -20,6 +20,14 @@
                     </div>
                 @endif
 
+                @if(session()->has('loginError'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li>{{session()->get('loginError')}}</li>
+                        </ul>
+                    </div>
+                @endif
+
                 <label>
                     <p>Логин: <i></i></p>
                     <input type="text" name="email" required>
@@ -28,13 +36,15 @@
                     <p>Пароль: <i></i></p>
                     <div class="input-group" id="show_hide_password">
                         <input class="form-control" type="password" name="password" id="password" required>
-                        <div class="input-group-addon" style="border:none;border-top: 1px solid #EDEDED;background-color:#FFFFFF">
+                        <div class="input-group-addon"
+                             style="border:none;border-top: 1px solid #EDEDED;background-color:#FFFFFF">
                             <a href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </label>
                 <label class="checkbox_label">
-                    <a target="_blank" href="{{ route('password.request') }}" class="oferta_link" style="float: right">Забыл пароль?</a>
+                    <a target="_blank" href="{{ route('password.request') }}" class="oferta_link" style="float: right">Забыл
+                        пароль?</a>
                 </label>
 
                 <button type="submit" class="main_btn submit_btn">Войти</button>
@@ -50,22 +60,23 @@
 @push('keywords')проверка налогов онлайн, проверка судимости онлайн, проверка человека онлайн, проверка по паспорту онлайн@endpush
 
 @push('header')
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 @endpush
 
 
 @push('scripts')
     <script type="text/javascript">
-        $("#show_hide_password a").on('click', function(event) {
+        $("#show_hide_password a").on('click', function (event) {
             event.preventDefault();
-            if($('#show_hide_password input').attr("type") == "text"){
+            if ($('#show_hide_password input').attr("type") == "text") {
                 $('#show_hide_password input').attr('type', 'password');
-                $('#show_hide_password i').addClass( "fa-eye-slash" );
-                $('#show_hide_password i').removeClass( "fa-eye" );
-            }else if($('#show_hide_password input').attr("type") == "password"){
+                $('#show_hide_password i').addClass("fa-eye-slash");
+                $('#show_hide_password i').removeClass("fa-eye");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
                 $('#show_hide_password input').attr('type', 'text');
-                $('#show_hide_password i').removeClass( "fa-eye-slash" );
-                $('#show_hide_password i').addClass( "fa-eye" );
+                $('#show_hide_password i').removeClass("fa-eye-slash");
+                $('#show_hide_password i').addClass("fa-eye");
             }
         });
     </script>
