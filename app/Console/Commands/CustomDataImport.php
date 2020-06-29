@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\CustomData;
 use App\Facades\DBBulkFacade;
+use App\Services\DBBulk;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 
@@ -14,6 +15,19 @@ class CustomDataImport extends Command
     protected $signature = 'datame:import-custom-data';
 
     protected $description = 'Import custom data files into custom_data table';
+
+    private $bulkData = [];
+
+    /**
+     * @var DBBulk
+     */
+    private $bulker;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->bulker = new DBBulk();
+    }
 
     public function handle()
     {
@@ -32,22 +46,22 @@ class CustomDataImport extends Command
     private function processImport(\App\CustomDataImport $customDataImport)
     {
         $this->processStarted($customDataImport);
+        $this->bulkData = [];
 
         try {
             $i = 0;
-            $bulkData = [];
-            foreach ($this->generateData($customDataImport) as $datum) {
-                $bulkData[] = $datum;
+            $iterator = $this->generateData($customDataImport);
+            foreach ($iterator as $datum) {
+                $this->bulkData[] = $datum;
                 $i++;
-                $this->info("Added $i rows");
 
-                if (count($bulkData) >= 1000) {
-                    $this->runBulk($bulkData);
-                    $bulkData = [];
+                if (count($this->bulkData) >= 1000) {
+                    $this->runBulk();
+                    $this->info(round(memory_get_usage() / 1024 / 1024, 2) . ' MB');
                 }
             }
-            if (!empty($bulkData)) {
-                $this->runBulk($bulkData);
+            if (!empty($this->bulkData)) {
+                $this->runBulk();
             }
             $this->processSuccess($customDataImport);
         } catch (\Exception $e) {
@@ -56,10 +70,17 @@ class CustomDataImport extends Command
         }
     }
 
-    private function runBulk(array $data)
+    private function runBulk()
     {
-        $this->info("Running bulk of " . count($data) . " items...");
-        DBBulkFacade::insertOrUpdate('custom_data', $data, ['additional']);
+        try {
+            $this->info("Running bulk of " . count($this->bulkData) . " items...");
+            $this->bulker->insertOrUpdate('custom_data', $this->bulkData, ['additional']);
+        } catch (\Exception $e) {
+            //Ignore exception
+        } finally {
+            $this->bulkData = [];
+            $this->info("Current bulk array length:" . count($this->bulkData));
+        }
     }
 
     private function mapData(array $data, array $map)
@@ -99,6 +120,7 @@ class CustomDataImport extends Command
     private function generateData(\App\CustomDataImport $customDataImport)
     {
         $delimiter = $customDataImport->delimiter;
+        $columnsMap = $customDataImport->columns_map;
 
         $path = resource_path('files/custom_data_files/');
         $dataFilePath = $path . $customDataImport->file;
@@ -121,7 +143,9 @@ class CustomDataImport extends Command
                 $line = explode($delimiter, $line);
 
                 if (count($columns) == count($line)) {
-                    yield $this->mapData(array_combine($columns, $line), $customDataImport->columns_map);
+                    $data = array_combine($columns, $line);
+                    $result = $this->mapData($data, $columnsMap);
+                    yield $result;
                 }
             }
         } finally {
