@@ -796,6 +796,7 @@
                 }, self.refreshTime);
             },
             load() {
+
                 let self = this;
                 self.loading = true;
                 let url = `/api/apps/${self.app_id}`;
