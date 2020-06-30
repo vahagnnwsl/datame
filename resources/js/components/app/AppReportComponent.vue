@@ -622,6 +622,26 @@
                     <!--                    </table>-->
 
                     <!--Иные источники-->
+
+                    <table class="info_table">
+                        <tr>
+                            <th colspan="2">Коммерческие базы данных</th>
+                        </tr>
+                        <tr v-if="serviceMessage(15) != null">
+                            <td class="mid">
+                                Информация отсутствует
+                            </td>
+                        </tr>
+                        <tr v-else v-for="(value,key) in app.extend.other.custom_data">
+                            <td v-if="value.length > 1">{{key}}</td>
+                            <td v-if="value.length > 1">{{value}}</td>
+                        </tr>
+                        <tr v-if="serviceStatus(15).status !== 4">
+                            <td>
+                                <span class="sp"></span>
+                            </td>
+                        </tr>
+                    </table>
                     <table class="info_table">
                         <tr>
                             <th colspan="2">ИНЫЕ ИСТОЧНИКИ</th>
@@ -673,11 +693,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="word_break">Проверка статуса налогоплательщика </td>
+                            <td class="word_break">Реестр самозанятых </td>
                             <td v-if="serviceNotRespond(16)">{{ service_error_message }}</td>
                             <td v-else>
                                 <template v-if="serviceMessage(16) != null">
-                                    {{ serviceMessage(16) }}
+                                    Не является плательщиком на профессиональный доход (самозанятым)
                                 </template>
                                 <template>
                                     <div v-if="app.extend.other.fts">
@@ -692,25 +712,7 @@
                     </table>
 
                     <!--Результаты с наших баз данных-->
-                    <table class="info_table">
-                        <tr>
-                            <th colspan="2">Результаты поиска в наших баз данных</th>
-                        </tr>
-                        <tr v-if="serviceMessage(15) != null">
-                            <td>
-                                {{ serviceMessage(15) }}
-                            </td>
-                        </tr>
-                        <tr v-else v-for="(value,key) in app.extend.other.custom_data">
-                            <td v-if="value.length > 1">{{key}}</td>
-                            <td v-if="value.length > 1">{{value}}</td>
-                        </tr>
-                        <tr v-if="serviceStatus(15).status !== 4">
-                            <td>
-                                <span class="sp"></span>
-                            </td>
-                        </tr>
-                    </table>
+
 
 
                     <p>КОНФИДЕНЦИАЛЬНОСТЬ. Информация, содержащаяся в данном документе, является конфиденциальной и
