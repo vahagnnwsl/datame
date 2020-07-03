@@ -718,15 +718,19 @@
                                 <td>{{ serviceMessage(15, $services) }}</td>
                             </tr>
                         @else
-                            @foreach ($app['extend']['other']['custom_data'] as $database => $data)
-                                <tr>
-                                    <td colspan="2"><h4>{{$database}}</h4></td>
-                                </tr>
+                            @foreach ($app['extend']['other']['custom_data'] as $data)
                                 @foreach ($data as $key => $value)
-                                    <tr>
-                                        <td>{{$key}}</td>
-                                        <td>{{$value}}</td>
-                                    </tr>
+                                    @if ($key == 'База данных')
+                                        <tr>
+                                            <td><h4>{{$key}}</h4></td>
+                                            <td><h4>{{$value}}</h4></td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <td>{{$key}}</td>
+                                            <td>{{$value}}</td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             @endforeach
                         @endif

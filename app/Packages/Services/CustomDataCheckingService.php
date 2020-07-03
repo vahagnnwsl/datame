@@ -64,6 +64,7 @@ class CustomDataCheckingService
         foreach ($customData as $customDatum) {
             $info = $customDatum->additional;
             $info['База данных'] = $customDatum->database;
+            $info = array_reverse($info, true);
             $mergedData[] = $info;
         }
 
