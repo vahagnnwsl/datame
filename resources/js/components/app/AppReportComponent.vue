@@ -633,10 +633,7 @@
                             </td>
                         </tr>
 
-                        <template v-else v-for="(data,database) in app.extend.other.custom_data">
-                            <tr>
-                                <td colspan="2"><h4>{{database}}</h4></td>
-                            </tr>
+                        <template v-else v-for="(data) in app.extend.other.custom_data">
                             <tr v-for="(value,key) in data">
                                 <td v-if="value.length > 1">{{key}}</td>
                                 <td v-if="value.length > 1">{{value}}</td>

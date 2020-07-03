@@ -62,7 +62,9 @@ class CustomDataCheckingService
 
         $mergedData = [];
         foreach ($customData as $customDatum) {
-            $mergedData[$customDatum->database] = $customDatum->additional;
+            $info = $customDatum->additional;
+            $info['База данных'] = $customDatum->database;
+            $mergedData[] = $info;
         }
 
         $findCustomData = new FindCustomData();
