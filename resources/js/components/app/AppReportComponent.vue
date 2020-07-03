@@ -632,16 +632,24 @@
                                 Информация отсутствует
                             </td>
                         </tr>
-                        <tr v-else v-for="(value,key) in app.extend.other.custom_data">
-                            <td v-if="value.length > 1">{{key}}</td>
-                            <td v-if="value.length > 1">{{value}}</td>
-                        </tr>
+
+                        <template v-else v-for="(data,database) in app.extend.other.custom_data">
+                            <tr>
+                                <th colspan="2">{{database}}</th>
+                            </tr>
+                            <tr v-for="(value,key) in data">
+                                <td v-if="value.length > 1">{{key}}</td>
+                                <td v-if="value.length > 1">{{value}}</td>
+                            </tr>
+                        </template>
+
                         <tr v-if="serviceStatus(15).status !== 4">
                             <td>
                                 <span class="sp"></span>
                             </td>
                         </tr>
                     </table>
+
                     <table class="info_table">
                         <tr>
                             <th colspan="2">ИНЫЕ ИСТОЧНИКИ</th>
@@ -838,7 +846,7 @@
                 let service = _.find(this.services, function (o) {
                     return parseInt(o.type) === parseInt(service_id);
                 });
-                return parseInt(service.status) === 3;
+                return service ? parseInt(service.status) === 3 : true;
             },
             serviceStatus(type) {
                 return this.services.filter(service => service.type === type)[0];
