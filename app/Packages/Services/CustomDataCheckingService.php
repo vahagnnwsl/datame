@@ -50,17 +50,24 @@ class CustomDataCheckingService
         FindCustomData::where('app_id', $this->app->id)->delete();
         $fullName = $this->app->lastname . " " . $this->app->name  . " " . $this->app->patronymic;
         $birthday = $this->app->birthday;
-        $customData = CustomData::whereFullName($fullName)->whereBirthday($birthday)->first();
-        if (!$customData) {
+
+        $customData = CustomData::whereFullName($fullName)->whereBirthday($birthday)->get();
+
+        if ($customData->isEmpty()) {
             $this->logger->error("Ничего не найдена в базе данных");
             $this->setMessage($checkingItem, "Ничего не найдена в базе данных");
             $this->setIsCheckedCheckingList($checkingItem, Constants::CHECKING_STATUS_SUCCESS);
             return false;
         }
 
+        $mergedData = [];
+        foreach ($customData as $customDatum) {
+            $mergedData[$customDatum->database] = $customDatum->additional;
+        }
+
         $findCustomData = new FindCustomData();
         $findCustomData->app_id = $this->app->id;
-        $findCustomData->additional = $customData->additional;
+        $findCustomData->additional = $mergedData;
         $findCustomData->save();
         $this->setIsCheckedCheckingList($checkingItem, Constants::CHECKING_STATUS_SUCCESS);
 
