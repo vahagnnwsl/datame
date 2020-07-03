@@ -18,6 +18,8 @@ class CustomData extends Model
     protected $table = 'custom_data';
 
     protected $fillable = [
+        'hash',
+        'database',
         'full_name',
         'birthday',
         'additional'
@@ -28,4 +30,6 @@ class CustomData extends Model
     ];
 
     public $timestamps = false;
+
+    protected $hidden = ['hash'];
 }

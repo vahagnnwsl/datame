@@ -145,6 +145,9 @@ class CustomDataImport extends Command
                 if (count($columns) == count($line)) {
                     $data = array_combine($columns, $line);
                     $result = $this->mapData($data, $columnsMap);
+                    $result['database'] = $customDataImport->short_description;
+                    $result['hash'] = md5(json_encode($result));
+
                     yield $result;
                 }
             }
