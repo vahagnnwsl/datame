@@ -718,11 +718,16 @@
                                 <td>{{ serviceMessage(15, $services) }}</td>
                             </tr>
                         @else
-                            @foreach ($app['extend']['other']['custom_data'] as $key => $value)
+                            @foreach ($app['extend']['other']['custom_data'] as $database => $data)
                                 <tr>
-                                    <td>{{$key}}</td>
-                                    <td>{{$value}}</td>
+                                    <td colspan="2"><h4>{{$database}}</h4></td>
                                 </tr>
+                                @foreach ($data as $key => $value)
+                                    <tr>
+                                        <td>{{$key}}</td>
+                                        <td>{{$value}}</td>
+                                    </tr>
+                                @endforeach
                             @endforeach
                         @endif
                     @endif
