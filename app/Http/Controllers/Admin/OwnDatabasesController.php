@@ -74,6 +74,13 @@ class OwnDatabasesController extends Controller
 
     }
 
+    public function update(Request $request, $id)
+    {
+        $db = CustomDataImport::whereId($id)->first();
+        $db->update($request->all());
+        return response()->json([]);
+    }
+
 
     public function saveFileFields(Request $request)
     {
