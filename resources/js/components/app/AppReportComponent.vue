@@ -632,13 +632,19 @@
                                 Информация отсутствует
                             </td>
                         </tr>
-                        <template v-else>
-                            <tr  v-for="(value,key) in app.extend.other.custom_data" v-if="!['Паспорт','Дата выдачи паспорта'].includes(key)">
-                                <td v-if="value.length > 1">{{key}}</td>
-                                <td v-if="value.length > 1">{{value}}</td>
 
+                        <template v-else v-for="(data) in app.extend.other.custom_data">
+                            <tr v-for="(value,key) in data">
+                                <template v-if="key === 'База данных'">
+                                    <td v-if="value.length > 1"><h4>{{key}}</h4></td>
+                                    <td v-if="value.length > 1"><h4>{{value}}</h4></td>
+                                </template>
+
+                                <template v-else>
+                                    <td v-if="value.length > 1">{{key}}</td>
+                                    <td v-if="value.length > 1">{{value}}</td>
+                                </template>
                             </tr>
-
                         </template>
 
                         <tr v-if="serviceStatus(15).status !== 4">
@@ -647,6 +653,7 @@
                             </td>
                         </tr>
                     </table>
+
                     <table class="info_table">
                         <tr>
                             <th colspan="2">ИНЫЕ ИСТОЧНИКИ</th>
@@ -750,6 +757,7 @@
             }
         },
         mounted() {
+
             this.init();
         },
         data() {
@@ -842,7 +850,7 @@
                 let service = _.find(this.services, function (o) {
                     return parseInt(o.type) === parseInt(service_id);
                 });
-                return parseInt(service.status) === 3;
+                return service ? parseInt(service.status) === 3 : true;
             },
             serviceStatus(type) {
                 return this.services.filter(service => service.type === type)[0];
