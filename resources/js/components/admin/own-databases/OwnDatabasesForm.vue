@@ -16,14 +16,14 @@
                             <div class="form-group">
                                 <label or="short_description" style="margin-bottom:2px">Найдено коэффициент </label>
                                 <select class="form-control" v-model="form.founded_coefficient" name="founded_coefficient" >
-                                    <option  selected value="">Выбрат</option>
+                                    <option  selected value="">Выбрать</option>
                                     <option v-for="index in 20" :value="index" :key="index">{{index}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label or="short_description" style="margin-bottom:2px">Не найдено коэффициент </label>
                                 <select class="form-control" v-model="form.nodFounded_coefficient" name="nodFounded_coefficient" >
-                                    <option  selected value="">Выбрат</option>
+                                    <option  selected value="">Выбрать</option>
                                     <option value="0" key="0">0</option>
 
                                     <option v-for="index in 20" :value="index" :key="index">{{index}}</option>
