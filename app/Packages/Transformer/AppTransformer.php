@@ -447,7 +447,9 @@ class AppTransformer
             //В нашей базе
             $customData = $app->customData()->first();
             if (!is_null($customData)) {
-                $data['extend']['other']['custom_data'] = $customData->additional;
+                $customDataAdditional = $customData->additional;
+                $customDataAdditional['Источник поиска'] = $customData->customData->customDataImport->short_description;
+                $data['extend']['other']['custom_data'] = $customDataAdditional;
             }
 
 

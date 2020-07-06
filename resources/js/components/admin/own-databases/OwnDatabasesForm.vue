@@ -14,6 +14,20 @@
                                        v-model="form.short_description">
                             </div>
                             <div class="form-group">
+                                <label or="short_description" style="margin-bottom:2px">Найдено коэффициент </label>
+                                <select class="form-control" v-model="form.founded_coefficient" name="founded_coefficient" >
+                                    <option  selected value="">Выбрат</option>
+                                    <option v-for="index in 20" :value="index" :key="index">{{index}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label or="short_description" style="margin-bottom:2px">Не найдено коэффициент </label>
+                                <select class="form-control" v-model="form.nodFounded_coefficient" name="nodFounded_coefficient" >
+                                    <option  selected value="">Выбрат</option>
+                                    <option v-for="index in 20" :value="index" :key="index">{{index}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <select class="form-control" v-model="form.file" name="file" @change="setDelimiter">
                                     <option disabled selected value="">Выбрать файл</option>
                                     <option v-for="(file,key) in files" :value="file" :key="key">{{file}}</option>
@@ -71,7 +85,9 @@
                 form: {
                     file: '',
                     delimiter: '',
-                    short_description: ''
+                    short_description: '',
+                    founded_coefficient: '',
+                    nodFounded_coefficient: ''
                 },
                 form1: {},
                 unAllowed: [],

@@ -5,6 +5,7 @@ namespace App\Packages;
 
 
 use App\CheckingList;
+use App\FindCustomData;
 use Illuminate\Support\Arr;
 
 class AppRatingCalculation
@@ -226,6 +227,12 @@ class AppRatingCalculation
         if (empty($this->app['extend']['other']['custom_data'])) {
             $this->result['services'][7]['status'] = false;
         }
+        if(!is_null($this->app['extend']['other']['custom_data']))
+        {
+            $customData = FindCustomData::whereAppId($this->app['id'])->first();
+            $value =  $customData->customData->customDataImport->founded_coefficient;
+            $this->addRating('Коэффициент (найдено)', $value);
+        }
 
         /**
          * В самом верху, справа от коэффициента доверия добавим еще один пункт - "Общая задолженность: __ рублей".
@@ -255,6 +262,9 @@ class AppRatingCalculation
                 'status' => true,
             ];
         }
+
+
+
         foreach ($this->result['services'] as $key => $item) {
 
             if (isset($this->result['services'][$key]['services']) && is_array($this->result['services'][$key]['services'])) {

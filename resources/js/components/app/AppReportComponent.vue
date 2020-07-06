@@ -632,10 +632,15 @@
                                 Информация отсутствует
                             </td>
                         </tr>
-                        <tr v-else v-for="(value,key) in app.extend.other.custom_data">
-                            <td v-if="value.length > 1">{{key}}</td>
-                            <td v-if="value.length > 1">{{value}}</td>
-                        </tr>
+                        <template v-else>
+                            <tr  v-for="(value,key) in app.extend.other.custom_data" v-if="!['Паспорт','Дата выдачи паспорта'].includes(key)">
+                                <td v-if="value.length > 1">{{key}}</td>
+                                <td v-if="value.length > 1">{{value}}</td>
+
+                            </tr>
+
+                        </template>
+
                         <tr v-if="serviceStatus(15).status !== 4">
                             <td>
                                 <span class="sp"></span>
@@ -745,7 +750,6 @@
             }
         },
         mounted() {
-
             this.init();
         },
         data() {

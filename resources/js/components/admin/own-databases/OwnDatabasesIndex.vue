@@ -14,6 +14,8 @@
                             <th>Файл</th>
                             <th>Разделитель</th>
                             <th>Описание</th>
+                            <th>Коэффициент (<small>найдено</small>)</th>
+                            <th>Коэффициент (<small> не найдено</small>) </th>
                             <th>Status</th>
                         </tr>
                         </thead>
@@ -22,6 +24,8 @@
                             <td>{{item.file}}</td>
                             <td>{{item.delimiter}}</td>
                             <td>{{item.short_description}}</td>
+                            <td>{{item.founded_coefficient}}</td>
+                            <td>{{item.nodFounded_coefficient}}</td>
                             <td>{{item.status}}</td>
                         </tr>
                         </tbody>
