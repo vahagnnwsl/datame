@@ -27,7 +27,9 @@ class CustomDataImport extends Model
         'file',
         'delimiter',
         'short_description',
-        'columns_map'
+        'columns_map',
+        'nodFounded_coefficient',
+        'founded_coefficient',
     ];
 
     protected $casts = [

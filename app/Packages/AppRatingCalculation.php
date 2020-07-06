@@ -5,6 +5,7 @@ namespace App\Packages;
 
 
 use App\CheckingList;
+use App\CustomDataImport;
 use App\FindCustomData;
 use Illuminate\Support\Arr;
 
@@ -227,11 +228,23 @@ class AppRatingCalculation
         if (empty($this->app['extend']['other']['custom_data'])) {
             $this->result['services'][7]['status'] = false;
         }
-        if(!is_null($this->app['extend']['other']['custom_data']))
-        {
-            $customData = FindCustomData::whereAppId($this->app['id'])->first();
-            $value =  $customData->customData->customDataImport->founded_coefficient;
-            $this->addRating('Коэффициент (найдено)', $value);
+        if (!is_null($this->app['extend']['other']['custom_data'])) {
+            $custom_data = $this->app['extend']['other']['custom_data'];
+
+            $c_db_pluck_names = array_unique(Arr::pluck($custom_data, 'База данных'));
+            if (count($c_db_pluck_names) > 0) {
+                $c_db = CustomDataImport::whereIn('short_description', $c_db_pluck_names)->get();
+                $f_coefficient = 0;
+                $nf_coefficient = 0;
+
+                foreach ($c_db as $db) {
+                    $f_coefficient += $db->founded_coefficient;
+                    $nf_coefficient += $db->nodFounded_coefficient;
+                }
+
+                $this->addRating('Коэффициент', $f_coefficient-$nf_coefficient);
+            }
+
         }
 
         /**
@@ -262,7 +275,6 @@ class AppRatingCalculation
                 'status' => true,
             ];
         }
-
 
 
         foreach ($this->result['services'] as $key => $item) {
