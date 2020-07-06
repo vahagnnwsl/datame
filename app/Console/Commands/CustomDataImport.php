@@ -111,7 +111,7 @@ class CustomDataImport extends Command
             $birthday = $data[$birthdayKey];
             unset($data[$birthdayKey]);
         }
-        $newData['birthday'] = !$birthday ?: dt_parse($birthday);
+        $newData['birthday'] = !$birthday ?: dt_parse($birthday)->format('Y-m-d');
         $newData['additional'] = json_encode($data);
 
         return $newData;
@@ -145,8 +145,8 @@ class CustomDataImport extends Command
                 if (count($columns) == count($line)) {
                     $data = array_combine($columns, $line);
                     $result = $this->mapData($data, $columnsMap);
-                    $result['database'] = $customDataImport->short_description;
                     $result['hash'] = md5(json_encode($result));
+                    $result['database'] = $customDataImport->short_description;
 
                     yield $result;
                 }
