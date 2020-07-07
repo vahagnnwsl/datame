@@ -84,6 +84,11 @@ class OwnDatabasesController extends Controller
 
     public function saveFileFields(Request $request)
     {
+        if (CustomDataImport::whereUnique($request->all())->exists()) {
+            return response()->json([
+                'error' => 'Импорт с таким именем или файлом уже существует'
+            ]);
+        }
 
         CustomDataImport::create($request->all());
 

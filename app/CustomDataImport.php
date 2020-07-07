@@ -6,6 +6,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class CustomDataImport extends Model
 {
@@ -13,6 +14,8 @@ class CustomDataImport extends Model
     const STATUS_PROCESSING = 1;
     const STATUS_SUCCESS = 2;
     const STATUS_FAILED = 3;
+    const STATUS_DELETING = 4;
+    const STATUS_DELETED = 5;
 
     const MAP_TYPES = [
         'additional' => 'Дополнительная',
@@ -35,6 +38,29 @@ class CustomDataImport extends Model
     protected $casts = [
         'columns_map' => 'array'
     ];
+
+    /**
+     * @param Builder $query
+     * @param array $data
+     * @return Builder
+     */
+    public function scopeWhereUnique($query, array $data)
+    {
+        return $query->where('short_description', $data['short_description'])
+            ->orWhere('file', $data['file']);
+    }
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithoutDeleted($query)
+    {
+        return $query->whereNotIn('status', [
+            self::STATUS_DELETING,
+            self::STATUS_DELETED
+        ]);
+    }
 
     /**
      * @param Builder $query

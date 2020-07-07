@@ -69,6 +69,9 @@
                                 <button class="btn btn-primary" type="button" @click="save">
                                     Сохранять
                                 </button>
+                                <div class="text-right">
+                                    <span style="color:red"><small style="font-size: 0.8em">{{checkSaveResponse}}</small></span>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -95,11 +98,17 @@
                 unAllowed: [],
                 mapTypes: [],
                 fieldsObj: {},
-                showBtn: false
-
+                showBtn: false,
+                saveResponse: {}
             }
         },
         computed: {
+            checkSaveResponse: function() {
+                if (this.saveResponse.error === undefined) {
+                    return '';
+                }
+                return this.saveResponse.error;
+            },
             checkDelimiter: function () {
                 if (!this.form.delimiter) {
                     if (this.$refs.getFieldsBtn) {
@@ -149,6 +158,21 @@
             });
         },
         methods: {
+            validateSaveResponse() {
+                if (this.saveResponse.error !== undefined) {
+                    return;
+                }
+
+                $("#ownDatabasesForm").modal('hide');
+                this.clear();
+                this.reset();
+                this.form = {
+                    file: '',
+                    delimiter: '',
+                    short_description: ''
+                };
+                Event.$emit('event_refresh_index_component')
+            },
             getFiles() {
                 axios.get('files').then((responce) => {
                     this.files = responce.data.files;
@@ -205,6 +229,7 @@
                 this.form1 = {};
                 this.unAllowed = [];
                 this.showBtn = false;
+                this.saveResponse = {};
             },
             save() {
 
@@ -222,16 +247,9 @@
 
                 this.form.columns_map = filtered;
 
-                axios.post(`files/fields/save`, this.form).then((responce) => {
-                    $("#ownDatabasesForm").modal('hide');
-                    this.clear();
-                    this.reset();
-                    this.form = {
-                        file: '',
-                        delimiter: '',
-                        short_description: ''
-                    };
-                    Event.$emit('event_refresh_index_component')
+                axios.post(`files/fields/save`, this.form).then((response) => {
+                    this.saveResponse = response.data;
+                    this.validateSaveResponse();
                 })
             }
         }
