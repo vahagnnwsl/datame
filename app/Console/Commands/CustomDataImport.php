@@ -37,15 +37,14 @@ class CustomDataImport extends Command
             exit();
         }
         $customDataImports = \App\CustomDataImport::new()->get();
-
         foreach ($customDataImports as $customDataImport) {
+            $this->processStarted($customDataImport);
             $this->processImport($customDataImport);
         }
     }
 
     private function processImport(\App\CustomDataImport $customDataImport)
     {
-        $this->processStarted($customDataImport);
         $this->bulkData = [];
 
         try {
