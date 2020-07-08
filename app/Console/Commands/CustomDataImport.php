@@ -37,15 +37,14 @@ class CustomDataImport extends Command
             exit();
         }
         $customDataImports = \App\CustomDataImport::new()->get();
-
         foreach ($customDataImports as $customDataImport) {
+            $this->processStarted($customDataImport);
             $this->processImport($customDataImport);
         }
     }
 
     private function processImport(\App\CustomDataImport $customDataImport)
     {
-        $this->processStarted($customDataImport);
         $this->bulkData = [];
 
         try {
@@ -111,7 +110,7 @@ class CustomDataImport extends Command
             $birthday = $data[$birthdayKey];
             unset($data[$birthdayKey]);
         }
-        $newData['birthday'] = !$birthday ?: dt_parse($birthday);
+        $newData['birthday'] = !$birthday ?: dt_parse($birthday)->format('Y-m-d');
         $newData['additional'] = json_encode($data);
 
         return $newData;
@@ -146,7 +145,7 @@ class CustomDataImport extends Command
                     $data = array_combine($columns, $line);
                     $result = $this->mapData($data, $columnsMap);
                     $result['database'] = $customDataImport->short_description;
-                    $result['hash'] = md5(json_encode($result));
+                    $result['hash'] = md5($result['full_name'] . $result['birthday'] . $result['database']);
 
                     yield $result;
                 }
