@@ -636,13 +636,13 @@
                         <template v-else v-for="(data) in app.extend.other.custom_data">
                             <tr v-for="(value,key) in data">
                                 <template v-if="key === 'База данных'">
-                                    <td v-if="value.length > 1"><h4>{{key}}</h4></td>
-                                    <td v-if="value.length > 1"><h4>{{value}}</h4></td>
+                                    <td><h4>{{key}}</h4></td>
+                                    <td><h4>{{value}}</h4></td>
                                 </template>
 
                                 <template v-else>
-                                    <td v-if="value.length > 1">{{key}}</td>
-                                    <td v-if="value.length > 1">{{value}}</td>
+                                    <td>{{key}}</td>
+                                    <td>{{value}}</td>
                                 </template>
                             </tr>
                         </template>
