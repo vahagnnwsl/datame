@@ -241,8 +241,13 @@ class AppRatingCalculation
                     $f_coefficient += $db->founded_coefficient;
                     $nf_coefficient += $db->nodFounded_coefficient;
                 }
+                $dif = $f_coefficient - $nf_coefficient;
 
-                $this->addRating('Коэффициент', $f_coefficient-$nf_coefficient);
+                if ($dif < 0) {
+                    $dif = 0;
+                }
+
+                $this->addRating('Коэффициент', -$dif);
             }
 
         }

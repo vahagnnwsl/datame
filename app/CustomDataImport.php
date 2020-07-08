@@ -28,6 +28,7 @@ class CustomDataImport extends Model
         'delimiter',
         'short_description',
         'columns_map',
+        'is_active',
         'nodFounded_coefficient',
         'founded_coefficient',
     ];

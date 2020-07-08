@@ -18,6 +18,7 @@
                             <th>Коэффициент (<small>найдено</small>)</th>
                             <th>Коэффициент (<small> не найдено</small>) </th>
                             <th>Status</th>
+                            <th>Активный</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -29,6 +30,7 @@
                             <td>{{item.founded_coefficient}}</td>
                             <td>{{item.nodFounded_coefficient}}</td>
                             <td>{{item.status}}</td>
+                            <td>{{item.is_active}}</td>
                             <td>
                                 <div class="btn-group">
 

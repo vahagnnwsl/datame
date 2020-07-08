@@ -11,18 +11,26 @@
 
                             <div class="double_inputs">
                                 <label or="short_description" style="margin-bottom:2px">Найдено коэффициент </label>
-                                <select class="form-control" v-model="db.founded_coefficient" name="founded_coefficient" >
-                                    <option  selected value="">Выбрать</option>
+                                <select class="form-control" v-model="db.founded_coefficient"
+                                        name="founded_coefficient">
+                                    <option selected value="">Выбрать</option>
                                     <option v-for="index in 20" :value="index" :key="index">{{index}}</option>
                                 </select>
                             </div>
                             <div class="double_inputs" style="margin-bottom: 20px">
                                 <label or="short_description" style="margin-bottom:2px">Не найдено коэффициент </label>
-                                <select class="form-control" v-model="db.nodFounded_coefficient" name="nodFounded_coefficient" >
-                                    <option  selected value="">Выбрать</option>
+                                <select class="form-control" v-model="db.nodFounded_coefficient"
+                                        name="nodFounded_coefficient">
+                                    <option selected value="">Выбрать</option>
                                     <option value="0" key="0">0</option>
 
                                     <option v-for="index in 20" :value="index" :key="index">{{index}}</option>
+                                </select>
+                            </div>
+                            <div class="double_inputs" style="margin-bottom: 20px">
+                                <select class="form-control" v-model="db.is_active" name="is_active">
+                                    <option value="1">включить</option>
+                                    <option value="0">отлючить</option>
                                 </select>
                             </div>
 
@@ -42,7 +50,7 @@
 
     export default {
         name: "OwnDatabaseEdit",
-        data(){
+        data() {
             return {
                 db: {}
             }
@@ -55,7 +63,8 @@
 
             Event.$on('event_show_db_edit_modal', function (db) {
                 self.db = db;
-                $("#dbEdit").modal('show').on('hide.bs.modal', function () {});
+                $("#dbEdit").modal('show').on('hide.bs.modal', function () {
+                });
             });
 
             $("#dbEdit").modal('hide').on('hide.bs.modal', function () {
@@ -67,7 +76,7 @@
             submit() {
                 this.$validator.validate().then(valid => {
                     if (valid) {
-                        axios.post(`own-databases/${this.db.id}`,this.db).then(()=>{
+                        axios.post(`own-databases/${this.db.id}`, this.db).then(() => {
                             $.toast({
                                 heading: 'Успешно',
                                 text: 'обновлено',
