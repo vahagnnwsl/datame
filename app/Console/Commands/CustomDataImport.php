@@ -157,20 +157,20 @@ class CustomDataImport extends Command
 
     private function processFailed(\App\CustomDataImport $customDataImport, string $errorMessage)
     {
-//        $customDataImport->status = \App\CustomDataImport::STATUS_FAILED;
-//        $customDataImport->error_message = mb_substr($errorMessage,0, 500);
-//        $customDataImport->save();
+        $customDataImport->status = \App\CustomDataImport::STATUS_FAILED;
+        $customDataImport->error_message = mb_substr($errorMessage,0, 500);
+        $customDataImport->save();
     }
 
     private function processStarted(\App\CustomDataImport $customDataImport)
     {
-//        $customDataImport->status = \App\CustomDataImport::STATUS_PROCESSING;
-//        $customDataImport->save();
+        $customDataImport->status = \App\CustomDataImport::STATUS_PROCESSING;
+        $customDataImport->save();
     }
 
     private function processSuccess(\App\CustomDataImport $customDataImport)
     {
-//        $customDataImport->status = \App\CustomDataImport::STATUS_SUCCESS;
-//        $customDataImport->save();
+        $customDataImport->status = \App\CustomDataImport::STATUS_SUCCESS;
+        $customDataImport->save();
     }
 }
