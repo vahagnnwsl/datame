@@ -49,8 +49,7 @@ class CustomDataImport extends Command
 
         try {
             $i = 0;
-            $iterator = $this->generateData($customDataImport);
-            foreach ($iterator as $datum) {
+            foreach ($this->generateData($customDataImport) as $datum) {
                 $this->bulkData[] = $datum;
                 $i++;
 
@@ -76,6 +75,7 @@ class CustomDataImport extends Command
             $this->bulker->insertOrUpdate('custom_data', $this->bulkData, ['additional']);
         } catch (\Exception $e) {
             //Ignore exception
+            $this->warn(mb_substr($e->getMessage(), 0, 400));
         } finally {
             $this->bulkData = [];
             $this->info("Current bulk array length:" . count($this->bulkData));
@@ -157,20 +157,20 @@ class CustomDataImport extends Command
 
     private function processFailed(\App\CustomDataImport $customDataImport, string $errorMessage)
     {
-        $customDataImport->status = \App\CustomDataImport::STATUS_FAILED;
-        $customDataImport->error_message = mb_substr($errorMessage,0, 500);
-        $customDataImport->save();
+//        $customDataImport->status = \App\CustomDataImport::STATUS_FAILED;
+//        $customDataImport->error_message = mb_substr($errorMessage,0, 500);
+//        $customDataImport->save();
     }
 
     private function processStarted(\App\CustomDataImport $customDataImport)
     {
-        $customDataImport->status = \App\CustomDataImport::STATUS_PROCESSING;
-        $customDataImport->save();
+//        $customDataImport->status = \App\CustomDataImport::STATUS_PROCESSING;
+//        $customDataImport->save();
     }
 
     private function processSuccess(\App\CustomDataImport $customDataImport)
     {
-        $customDataImport->status = \App\CustomDataImport::STATUS_SUCCESS;
-        $customDataImport->save();
+//        $customDataImport->status = \App\CustomDataImport::STATUS_SUCCESS;
+//        $customDataImport->save();
     }
 }
