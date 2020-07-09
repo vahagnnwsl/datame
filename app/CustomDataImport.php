@@ -80,4 +80,22 @@ class CustomDataImport extends Model
     {
         return $query->where('status', self::STATUS_PROCESSING);
     }
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeActives($query)
+    {
+        return $query->where('is_active', 1);
+    }
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeImported($query)
+    {
+        return $query->where('status', self::STATUS_SUCCESS);
+    }
 }

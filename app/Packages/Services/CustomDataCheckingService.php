@@ -7,6 +7,7 @@ namespace App\Packages\Services;
 use App\App;
 use App\CheckingList;
 use App\CustomData;
+use App\CustomDataImport;
 use App\FindCustomData;
 use App\Packages\Constants;
 use App\Packages\Loggers\CustomLogger;
@@ -51,7 +52,25 @@ class CustomDataCheckingService
         $fullName = $this->app->lastname . " " . $this->app->name  . " " . $this->app->patronymic;
         $birthday = $this->app->birthday;
 
-        $customData = CustomData::whereFullName($fullName)->whereBirthday($birthday)->get();
+        //Активные базы данных
+        $databases = CustomDataImport::select('short_description')
+            ->actives()
+            ->imported()
+            ->get()
+            ->map(function($m) { return $m->short_description; })
+            ->toArray();
+
+        if (empty($databases)) {
+            $this->logger->error("Ничего не найдена в базе данных");
+            $this->setMessage($checkingItem, "Ничего не найдена в базе данных");
+            $this->setIsCheckedCheckingList($checkingItem, Constants::CHECKING_STATUS_SUCCESS);
+            return false;
+        }
+
+        $customData = CustomData::whereIn('database', $databases)
+            ->whereFullName($fullName)
+            ->whereBirthday($birthday)
+            ->get();
 
         if ($customData->isEmpty()) {
             $this->logger->error("Ничего не найдена в базе данных");
